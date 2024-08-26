@@ -1,0 +1,84 @@
+.images__item {
+  display: inline-block;
+  width: calc(28 * var(--variableUnitsSize));
+  height: calc(28 * var(--variableUnitsSize));
+  border-radius: 2rem;
+  overflow: hidden;
+  margin: 1rem;
+  width: calc(20 * var(--variableUnitsSize));
+  height: calc(20 * var(--variableUnitsSize));
+}
+.images__item img {
+  width: 100%;
+  height: 100%;
+}
+@media screen and (max-width: 1500px) {
+  .images__item {
+    width: calc(24 * var(--variableUnitsSize));
+    height: calc(24 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 1220px) {
+  .images__item {
+    width: calc(26 * var(--variableUnitsSize));
+    height: calc(26 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .images__item {
+    width: calc(36 * var(--variableUnitsSize));
+    height: calc(36 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .images__item {
+    width: calc(35 * var(--variableUnitsSize));
+    height: calc(35 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 800px) {
+  .images__item {
+    width: calc(33 * var(--variableUnitsSize));
+    height: calc(33 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 750px) {
+  .images__item {
+    width: calc(30 * var(--variableUnitsSize));
+    height: calc(30 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 700px) {
+  .images__item {
+    width: calc(55 * var(--variableUnitsSize));
+    height: calc(55 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 620px) {
+  .images__item {
+    width: calc(50 * var(--variableUnitsSize));
+    height: calc(50 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 550px) {
+  .images__item {
+    width: calc(45 * var(--variableUnitsSize));
+    height: calc(45 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 480px) {
+  .images__item {
+    width: calc(38 * var(--variableUnitsSize));
+    height: calc(38 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .images__item {
+    width: calc(32 * var(--variableUnitsSize));
+    height: calc(32 * var(--variableUnitsSize));
+  }
+}

@@ -1,0 +1,28 @@
+:root {
+  --logoColor: rgb(136, 121, 224);
+  --headerItemColor: rgb(73, 49, 228);
+  --headerAccountColor: rgb(55, 34, 170);
+  --bgLayoutColor: rgb(11, 29, 38);
+  --contentTextColor: rgb(255, 255, 255);
+  --contentUpperTextColor: rgb(231, 217, 15);
+  --sliderTextColor: rgb(253, 254, 255);
+  --variableUnitsSize: max(1vh, 1vw);
+  --countryNameColor: rgb(29, 189, 218);
+  --countryDescriptionColor: rgb(255, 255, 255);
+  --backgroundDropdownColor: rgb(224, 221, 221);
+  --loaderColor: rgb(56, 231, 40);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+*:visited {
+  color: inherit;
+}

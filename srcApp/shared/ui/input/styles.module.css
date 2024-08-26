@@ -1,0 +1,39 @@
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border-radius: 0.2rem;
+  border: 1px solid #0c05050c;
+  font-size: 1em;
+  padding-left: calc(0.8 * var(--variableUnitsSize));
+}
+.input:focus {
+  outline: 1px solid var(--logoColor);
+}
+
+.input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 0.7em;
+}
+
+.input::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 0.7em;
+}
+
+.input:-moz-placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  font-size: 0.7em;
+}
+
+.text {
+  font-size: 0.8em;
+  opacity: 0.8;
+  position: relative;
+  left: 2%;
+  top: -12%;
+}

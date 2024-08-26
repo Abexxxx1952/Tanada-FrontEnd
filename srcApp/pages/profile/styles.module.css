@@ -1,0 +1,37 @@
+.profileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: calc(-72 * var(--variableUnitsSize));
+  left: 5vw;
+  width: 90%;
+  background-color: var(--backgroundDropdownColor);
+  color: var(--headerAccountColor);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  filter: drop-shadow(2px 2px 10px var(--bgLayoutColor));
+}
+
+@media screen and (max-width: 1600px) {
+  .profileContainer {
+    top: calc(-68 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .profileContainer {
+    /*  top: calc(8 * var(--variableUnitsSize)); */
+  }
+}
+@media screen and (max-width: 900px) {
+  .profileContainer {
+    /*  top: calc(9 * var(--variableUnitsSize)); */
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .profileContainer {
+    /*  top: calc(7 * var(--variableUnitsSize)); */
+  }
+}

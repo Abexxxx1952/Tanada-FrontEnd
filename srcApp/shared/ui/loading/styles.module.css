@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 5;
+}
+.loader {
+  position: relative;
+  transform: rotate(calc(45deg * var(--j)));
+}
+
+.loader span {
+  position: absolute;
+  transform: rotate(calc(18deg * var(--i)));
+  filter: hue-rotate(calc(90deg * var(--i)));
+}
+
+.loader span::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--loaderColor);
+  border-radius: 2px;
+
+  animation: animate 5s linear infinite;
+  animation-delay: calc(-0.5s * var(--i));
+}
+
+.loader:nth-child(even) span::before {
+  background: var(--loaderColor);
+}
+
+@keyframes animate {
+  0% {
+    transform: translateX(250px) scale(4);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-10px) scale(0);
+  }
+}

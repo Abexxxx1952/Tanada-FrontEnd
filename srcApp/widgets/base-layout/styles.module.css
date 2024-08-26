@@ -1,0 +1,103 @@
+.body {
+  position: relative;
+  background-color: var(--bgLayoutColor);
+}
+.bgContainer {
+  overflow-x: hidden;
+  user-select: none;
+}
+
+.loadingIndicator {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: var(--bgLayoutColor);
+  z-index: 2;
+}
+.bgContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.bgContainer__hg {
+  height: calc(50 * var(--variableUnitsSize));
+}
+
+.bgContainer__upperGradient {
+  position: relative;
+  max-width: 100%;
+  height: calc(50 * var(--variableUnitsSize));
+  background: linear-gradient(330deg, rgba(7, 19, 26, 0) 11%, #0b1d26 109%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: calc(-50 * var(--variableUnitsSize));
+}
+.bgContainer__mg {
+  height: calc(35 * var(--variableUnitsSize));
+
+  margin-top: calc(-40 * var(--variableUnitsSize));
+}
+
+.bgContainer__vg {
+  height: calc(42 * var(--variableUnitsSize));
+  margin-top: calc(-15 * var(--variableUnitsSize));
+}
+
+.bgContainer__downGradient {
+  height: calc(60 * var(--variableUnitsSize));
+  background: linear-gradient(180deg, rgba(11, 29, 38, 0) 0%, #0b1d26 61.38%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: calc(-55 * var(--variableUnitsSize));
+  position: relative;
+}
+
+@media screen and (max-width: 1200px) {
+  .bgContainer__hg img {
+    width: 120%;
+  }
+  .bgContainer__mg img {
+    width: 120%;
+  }
+  .bgContainer__vg img {
+    width: 120%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .bgContainer__hg img {
+    width: 140%;
+  }
+  .bgContainer__mg img {
+    width: 140%;
+  }
+  .bgContainer__vg img {
+    width: 140%;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .bgContainer__hg img {
+    width: 170%;
+  }
+  .bgContainer__mg img {
+    width: 170%;
+  }
+  .bgContainer__vg img {
+    width: 170%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .bgContainer__hg img {
+    width: 200%;
+  }
+  .bgContainer__mg img {
+    width: 200%;
+  }
+  .bgContainer__vg img {
+    width: 200%;
+  }
+}

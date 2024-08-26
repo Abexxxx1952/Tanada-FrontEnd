@@ -1,0 +1,128 @@
+.footer {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  /* margin-top: calc(-60 * var(--variableUnitsSize)); */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footerContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-width: 71rem;
+  max-height: 18rem;
+  gap: 10rem;
+}
+
+.footer__colum {
+  width: 33.3%;
+  height: 100%;
+}
+.footer__colum a {
+  text-decoration: none;
+}
+.footer__logo {
+  font-size: 1rem;
+}
+.footer__text {
+  color: var(--contentTextColor);
+  font-family: Gilroy;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+.footer__title {
+  color: var(--contentUpperTextColor, #fbd784);
+  font-family: Gilroy;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .footerContainer {
+    max-width: 54rem;
+    max-height: 16rem;
+    gap: 6rem;
+  }
+
+  .footer__logo {
+    font-size: 0.9rem;
+  }
+  .footer__text {
+    font-size: 1rem;
+    line-height: 1.9rem;
+  }
+  .footer__title {
+    font-size: 1.25rem;
+    line-height: 1.9rem;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .footerContainer {
+    max-width: 38rem;
+    max-height: 14rem;
+    gap: 4rem;
+  }
+  .footer__colum {
+    width: calc(18 * var(--variableUnitsSize));
+  }
+
+  .footer__logo {
+    font-size: 0.8rem;
+  }
+  .footer__text {
+    font-size: 0.875rem;
+    line-height: 1.8rem;
+  }
+  .footer__title {
+    font-size: 1rem;
+    line-height: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .footerContainer {
+    max-width: 28rem;
+    max-height: 12rem;
+    gap: 2rem;
+  }
+  .footer__colum {
+    width: calc(22 * var(--variableUnitsSize));
+  }
+
+  .footer__logo {
+    font-size: 0.5rem;
+  }
+  .footer__text {
+    font-size: 0.7rem;
+    line-height: 1.6rem;
+  }
+  .footer__title {
+    font-size: 0.8rem;
+    line-height: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .footerContainer {
+    max-width: 22rem;
+    max-height: 10rem;
+    gap: 1rem;
+  }
+
+  .footer__text {
+    font-size: 0.5rem;
+    line-height: 1.4rem;
+  }
+  .footer__title {
+    font-size: 0.625rem;
+    line-height: 1.4rem;
+  }
+}

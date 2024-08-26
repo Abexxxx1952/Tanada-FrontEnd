@@ -1,0 +1,285 @@
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bgLayoutColor);
+  opacity: 0.4;
+  z-index: 15;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  height: 85%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  transform: translate(-50%, -50%);
+  background-color: rgb(249, 252, 252);
+  border-radius: 2rem;
+  border: 10px solid #fff;
+  z-index: 20;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.342);
+}
+
+.content__rectangle {
+  width: 55%;
+  height: 100%;
+  background-color: #ffe6c9;
+  transform: translate(-41%, -0.5%);
+  position: relative;
+}
+
+.content__frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.content__tagline {
+  position: absolute;
+  font-size: calc(1.5 * var(--variableUnitsSize));
+  font-weight: 800;
+  display: inline-block;
+  top: 87%;
+  left: calc(13 * var(--variableUnitsSize));
+}
+
+.loginContainer {
+  width: 45%;
+  height: 99%;
+  position: absolute;
+  top: 0.5%;
+  right: 0%;
+}
+
+.crossLogo {
+  position: absolute;
+  top: 4%;
+  left: 10%;
+  width: 7%;
+  height: 7%;
+  user-select: none;
+}
+
+.loginBox {
+  width: 65%;
+  height: 65%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+}
+
+.loginBox__title {
+  font-size: calc(1.8 * var(--variableUnitsSize));
+  font-weight: 800;
+  text-align: center;
+  user-select: none;
+}
+
+.loginBox__googleButton {
+  height: calc(2 * var(--variableUnitsSize));
+  margin-top: calc(3 * var(--variableUnitsSize));
+}
+
+.loginBox__githubButton {
+  height: calc(2 * var(--variableUnitsSize));
+  margin-top: calc(0.8 * var(--variableUnitsSize));
+}
+
+.loginBox__divider {
+  font-size: 0.8em;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(2.5 * var(--variableUnitsSize));
+}
+
+.loginBox__emailInput {
+  height: 2em;
+  margin-top: calc(2 * var(--variableUnitsSize));
+}
+
+.loginBox__passwordInput {
+  height: 2em;
+  margin-top: calc(2.5 * var(--variableUnitsSize));
+}
+
+.loginBox__loginButton {
+  height: calc(2.2 * var(--variableUnitsSize));
+  margin-top: calc(4 * var(--variableUnitsSize));
+}
+
+.loginBox__registerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(3 * var(--variableUnitsSize));
+  font-size: calc(1 * var(--variableUnitsSize));
+}
+.loginBox__registerText {
+  user-select: none;
+}
+
+.loginBox__registerLink {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: calc(1 * var(--variableUnitsSize));
+  color: var(--countryNameColor);
+}
+
+.loginBox__backButton {
+  height: calc(2 * var(--variableUnitsSize));
+  width: 80%;
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media screen and (max-width: 1480px) {
+  .content__tagline {
+    top: 92%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .content__rectangle {
+    width: 45%;
+    transform: translate(-61%, -0.5%);
+  }
+
+  .content__frame {
+    height: 75%;
+  }
+
+  .content__tagline {
+    top: 94%;
+    left: calc(8 * var(--variableUnitsSize));
+  }
+
+  .loginContainer {
+    width: 55%;
+    height: 99%;
+
+    top: 0.5%;
+    right: 0%;
+  }
+  .loginBox {
+    width: 65%;
+    height: 65%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+  }
+
+  .loginBox__title {
+    font-size: calc(2.2 * var(--variableUnitsSize));
+    font-weight: 800;
+    text-align: center;
+    user-select: none;
+  }
+
+  .loginBox__googleButton {
+    height: calc(3 * var(--variableUnitsSize));
+    margin-top: calc(3 * var(--variableUnitsSize));
+  }
+
+  .loginBox__githubButton {
+    height: calc(3 * var(--variableUnitsSize));
+    margin-top: calc(0.8 * var(--variableUnitsSize));
+  }
+
+  .loginBox__divider {
+    font-size: 0.6em;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: calc(2.5 * var(--variableUnitsSize));
+  }
+
+  .loginBox__emailInput {
+    height: 1.8em;
+    margin-top: calc(2 * var(--variableUnitsSize));
+  }
+
+  .loginBox__passwordInput {
+    height: 1.8em;
+    margin-top: calc(2.5 * var(--variableUnitsSize));
+  }
+
+  .loginBox__loginButton {
+    height: calc(3 * var(--variableUnitsSize));
+    margin-top: calc(4 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .content__frame {
+    height: 60%;
+  }
+}
+
+@media screen and (max-width: 756px) {
+  .content__rectangle {
+    width: 100%;
+    height: 40%;
+    transform: translate(0%, -0.5%);
+    overflow: hidden;
+  }
+
+  .content__frame {
+    top: calc(-6 * var(--variableUnitsSize));
+    width: 100%;
+    height: 140%;
+  }
+
+  .content__tagline {
+    top: 92%;
+    left: calc(2 * var(--variableUnitsSize));
+  }
+
+  .loginContainer {
+    width: 100%;
+    height: 60%;
+
+    top: 40%;
+    right: 0%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .content__frame {
+    top: calc(-2 * var(--variableUnitsSize));
+    width: 100%;
+    height: 120%;
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .loginBox {
+    width: 65%;
+    height: 80%;
+  }
+  .crossLogo {
+    display: none;
+  }
+}

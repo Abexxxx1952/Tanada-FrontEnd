@@ -1,0 +1,48 @@
+.dropdown {
+  width: 100%;
+  height: min-content;
+  background-color: var(--backgroundDropdownColor);
+  color: var(--headerAccountColor);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  filter: drop-shadow(2px 2px 10px var(--bgLayoutColor));
+}
+
+.email,
+.profile,
+.logOut {
+  font-size: 13px;
+  line-height: 1;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.profile,
+.logOut {
+  user-select: none;
+}
+
+.separator {
+  height: 1px;
+  background-color: var(--bgLayoutColor);
+  margin: 5px 0 5px;
+  text-decoration: none;
+}
+
+.logOut {
+  cursor: pointer;
+}
+
+.profile:hover,
+.profile:focus-visible,
+.logOut:hover,
+.logOut:focus-visible {
+  background-color: var(--logoColor);
+  color: var(--contentTextColor);
+}

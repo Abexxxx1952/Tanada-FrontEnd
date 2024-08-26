@@ -1,0 +1,17 @@
+.aboutContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  margin-top: calc(-67 * var(--variableUnitsSize));
+  margin-left: calc(5 * var(--variableUnitsSize));
+  margin-right: calc(5 * var(--variableUnitsSize));
+}
+
+@media screen and (max-width: 900px) {
+  .aboutContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
