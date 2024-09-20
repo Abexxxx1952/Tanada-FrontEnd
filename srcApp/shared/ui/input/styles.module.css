@@ -15,19 +15,19 @@
 }
 
 .input::placeholder {
-  color: rgba(0, 0, 0, 0.3);
-  font-size: 0.7em;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.8em;
 }
 
 .input::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, 0.3);
-  font-size: 0.7em;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.8em;
 }
 
 .input:-moz-placeholder {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.8em;
   opacity: 1;
-  font-size: 0.7em;
 }
 
 .text {
@@ -36,4 +36,11 @@
   position: relative;
   left: 2%;
   top: -12%;
+}
+
+.error {
+  color: red;
+  font-size: 0.7rem;
+  margin-top: 0.15rem;
+  margin-left: 0.5rem;
 }

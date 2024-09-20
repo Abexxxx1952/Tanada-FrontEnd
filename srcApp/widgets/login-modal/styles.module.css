@@ -95,11 +95,15 @@
 .loginBox__googleButton {
   height: calc(2 * var(--variableUnitsSize));
   margin-top: calc(3 * var(--variableUnitsSize));
+  border-radius: 0.5rem;
+  border: 1px solid rgba(27, 6, 6, 0.1);
 }
 
 .loginBox__githubButton {
   height: calc(2 * var(--variableUnitsSize));
   margin-top: calc(0.8 * var(--variableUnitsSize));
+  border-radius: 0.5rem;
+  border: 1px solid rgba(27, 6, 6, 0.1);
 }
 
 .loginBox__divider {
@@ -116,14 +120,23 @@
   margin-top: calc(2 * var(--variableUnitsSize));
 }
 
+.loginBox__emailInput input,
+.loginBox__passwordInput input {
+  border-radius: 0.5rem;
+  border: 1px solid rgba(27, 6, 6, 0.1);
+}
+
 .loginBox__passwordInput {
   height: 2em;
   margin-top: calc(2.5 * var(--variableUnitsSize));
 }
 
 .loginBox__loginButton {
-  height: calc(2.2 * var(--variableUnitsSize));
+  height: calc(2.5 * var(--variableUnitsSize));
   margin-top: calc(4 * var(--variableUnitsSize));
+  -webkit-box-shadow: 2px 2px 1px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 2px 2px 1px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 2px 2px 1px 0px rgba(34, 60, 80, 0.2);
 }
 
 .loginBox__registerContainer {
@@ -151,11 +164,17 @@
   bottom: 0%;
   left: 50%;
   transform: translateX(-50%);
+  -webkit-box-shadow: 2px 2px 1px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 2px 2px 1px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 2px 2px 1px 0px rgba(34, 60, 80, 0.2);
 }
 
 @media screen and (max-width: 1480px) {
   .content__tagline {
     top: 92%;
+  }
+  .loginBox__loginButton {
+    height: calc(2.8 * var(--variableUnitsSize));
   }
 }
 
@@ -227,7 +246,7 @@
   }
 
   .loginBox__loginButton {
-    height: calc(3 * var(--variableUnitsSize));
+    height: calc(3.2 * var(--variableUnitsSize));
     margin-top: calc(4 * var(--variableUnitsSize));
   }
 }
@@ -235,6 +254,9 @@
 @media screen and (max-width: 960px) {
   .content__frame {
     height: 60%;
+  }
+  .loginBox__loginButton {
+    height: calc(3.6 * var(--variableUnitsSize));
   }
 }
 
@@ -260,9 +282,14 @@
   .loginContainer {
     width: 100%;
     height: 60%;
-
     top: 40%;
     right: 0%;
+  }
+  .loginBox__loginButton {
+    height: calc(4 * var(--variableUnitsSize));
+  }
+  .loginBox__registerContainer {
+    margin-top: calc(2.5 * var(--variableUnitsSize));
   }
 }
 

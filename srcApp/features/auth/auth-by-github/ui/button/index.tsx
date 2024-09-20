@@ -11,8 +11,10 @@ export function LoginWithGithubButton({
     <Button
       onClick={onClickHandler}
       text="Login with Github"
+      textColor="black"
       backgroundColor="transparent"
       icon="/icons/github.svg"
+      focusBackgroundColor="var(--buttonBackgroundColor)"
     />
   );
 }

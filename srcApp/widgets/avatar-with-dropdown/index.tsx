@@ -1,36 +1,62 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { HeaderAccount } from "../../shared/ui/header-account";
-import { Dropdown } from "@/srcApp/shared/ui/dropdown";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LoginModal } from "../login-modal";
 import styles from "./styles.module.css";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
-import { fetchUserData } from "@/srcApp/features/user/model/fetchUserData";
-import { isUserFromServer } from "@/srcApp/features/user/lib/isUserFromServer";
-import { ErrorData } from "@/srcApp/features/user/model/types";
-import { isErrorData } from "@/srcApp/features/user/lib/isErrorData";
+import { fetchUserData } from "@/srcApp/entities/user/api/fetchUserData";
+import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
+import { logoutUser } from "@/srcApp/features/auth/logout/model/logout-user";
+import { ErrorData } from "@/srcApp/shared/model/types";
+import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { toast } from "react-toastify";
-import { Profile } from "../profile";
+import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
+import { useIcon } from "@/srcApp/shared/hooks/useIcon";
+import { useClickOutside } from "@/srcApp/shared/hooks/useClickOutside";
 
-/* type AvatarWithDropdownProps = {
-  fetchUserData: () => Promise<UserFromServer | undefined>;
-};
- */
 export function AvatarWithDropdown() {
-  const [user, setUser] = useState<UserFromServer | null>(null);
+  const { user, setUser } = useAppContext();
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
-  const [profileModalOpen, setProfileModalOpen] = useState<boolean>(false);
 
-  const ref = useRef<Element | null>(null);
+  const portalRef = useRef<Element | null>(null);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
+
+  useClickOutside(dropdownRef, () => setDropdownOpen(false));
+
+  const imageSrc = useIcon(
+    user?.icon,
+    "/icons/header-account.svg",
+    "/icons/logged.svg",
+    user
+  );
+
+  async function logOut() {
+    try {
+      await logoutUser();
+      setUser(null);
+      setDropdownOpen(false);
+      router.replace("/");
+    } catch (error) {
+      console.error("Failed to log out:", error);
+    }
+  }
+
   useEffect(() => {
-    ref.current = document.getElementById("portal");
+    portalRef.current = document.getElementById("portal");
 
     (async () => {
       const userOrError: UserFromServer | undefined | ErrorData =
         await fetchUserData();
+
+      if (userOrError === undefined) {
+        setUser(null);
+      }
 
       if (isErrorData(userOrError)) {
         toast.error(
@@ -41,6 +67,7 @@ export function AvatarWithDropdown() {
             position: "top-right",
           }
         );
+        setUser(null);
       }
 
       if (isUserFromServer(userOrError)) {
@@ -51,26 +78,53 @@ export function AvatarWithDropdown() {
 
   return (
     <div className={styles.avatarWithDropdownContainer}>
-      <HeaderAccount
-        user={user}
-        setDropdownOpen={() => setDropdownOpen((prev: boolean) => !prev)}
-        setLoginModalOpen={setLoginModalOpen}
-      />
+      <div
+        className={styles.headerAccount}
+        onClick={
+          user ? () => setDropdownOpen(true) : () => setLoginModalOpen(true)
+        }
+      >
+        <div className={styles.headerAccount__image}>
+          <img
+            className={styles.headerAccount__logo}
+            src={imageSrc.imageSrc}
+            alt="Account icon"
+          />
+        </div>
+
+        <div className={styles.headerAccount__text}>{user ? "" : "Log In"}</div>
+      </div>
       <div className={styles.dropdownContainer}>
         {dropdownOpen && (
-          <Dropdown
-            userEmail={user?.email}
-            setUser={setUser}
-            setDropdownOpen={setDropdownOpen}
-          />
+          <div className={styles.dropdown} ref={dropdownRef}>
+            <div className={styles.email}>{user?.email}</div>
+            <div className={styles.separator}></div>
+            <Link
+              href="/profile"
+              className={styles.profile}
+              onClick={() => setDropdownOpen(false)}
+            >
+              Profile
+            </Link>
+            <Link
+              href="/stats"
+              className={styles.stats}
+              onClick={() => setDropdownOpen(false)}
+            >
+              Statistics
+            </Link>
+            <div className={styles.logOut} onClick={logOut}>
+              Log Out
+            </div>
+          </div>
         )}
       </div>
 
-      {ref.current &&
+      {portalRef.current &&
         loginModalOpen &&
         createPortal(
           <LoginModal setModalOpen={setLoginModalOpen} setUser={setUser} />,
-          ref.current
+          portalRef.current
         )}
     </div>
   );

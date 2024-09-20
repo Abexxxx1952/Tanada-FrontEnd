@@ -10,7 +10,13 @@
   --countryNameColor: rgb(29, 189, 218);
   --countryDescriptionColor: rgb(255, 255, 255);
   --backgroundDropdownColor: rgb(224, 221, 221);
+  --backgroundProfileColor: rgba(250, 245, 245, 0.4);
   --loaderColor: rgb(56, 231, 40);
+  --imageUploadModalColor: rgb(250, 253, 255);
+  --imageUploadDndColor: rgba(146, 132, 211, 0.25);
+  --buttonBackgroundColor: rgb(233, 230, 252);
+  --buttonLoginBackgroundColor: rgb(113, 93, 223);
+  --buttonBoxShadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.5);
 }
 
 *,

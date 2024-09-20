@@ -1,9 +1,8 @@
 "use server";
-import { UserFromServer } from "../../../../entities/user/model/types";
-import { ErrorData } from "@/srcApp/features/user/model/types";
-import { isErrorData } from "@/srcApp/features/user/lib/isErrorData";
-import { HeaderList } from "./../../../../shared/ui/header-list/index";
-import { setCookies } from "../../cookies/model/setCookies";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
+import { ErrorData } from "@/srcApp/shared/model/types";
+import { isErrorData } from "@/srcApp/shared/model/isErrorData";
+import { setCookies } from "@/srcApp/features/auth/cookies/model/setCookies";
 
 export async function loginUser(
   email: string,

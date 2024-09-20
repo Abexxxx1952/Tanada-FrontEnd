@@ -1,10 +1,10 @@
 "use server";
-import { AttachedUser } from "../../../../entities/user/model/types";
-import { ErrorData } from "@/srcApp/features/user/model/types";
-import { isErrorData } from "@/srcApp/features/user/lib/isErrorData";
-import { getCookies } from "../../cookies/model/getCookies";
-import { refreshTokens } from "../../refresh-tokens/model/refresh-tokens";
-import { clearCookies } from "../../cookies/model/clearCookies";
+import { AttachedUser } from "@/srcApp/entities/user/model/types";
+import { ErrorData } from "@/srcApp/shared/model/types";
+import { isErrorData } from "@/srcApp/shared/model/isErrorData";
+import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
+import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
+import { clearCookies } from "@/srcApp/features/auth/cookies/model/clearCookies";
 
 export async function logoutUser(): Promise<
   AttachedUser | ErrorData | undefined

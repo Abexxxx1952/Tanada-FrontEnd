@@ -1,7 +1,7 @@
 "use server";
-import { UserFromServer } from "../../../../entities/user/model/types";
-import { ErrorData } from "@/srcApp/features/user/model/types";
-import { isErrorData } from "@/srcApp/features/user/lib/isErrorData";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
+import { ErrorData } from "@/srcApp/shared/model/types";
+import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 
 export async function registerUser(
   email: string,

@@ -8,30 +8,42 @@ import { Input } from "@/srcApp/shared/ui/input";
 import { registerUser } from "@/srcApp/features/auth/registration/model/register-user";
 import { RegistrationButton } from "@/srcApp/features/auth/registration/ui/button";
 import { toast } from "react-toastify";
-import styles from "./styles.module.css";
 import { LoginWithGoogleButton } from "@/srcApp/features/auth/auth-by-google/ui/button";
 import { LoginWithGithubButton } from "@/srcApp/features/auth/auth-by-github/ui/button";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
-import { ErrorData } from "@/srcApp/features/user/model/types";
-import { isUserFromServer } from "@/srcApp/features/user/lib/isUserFromServer";
-import { isErrorData } from "@/srcApp/features/user/lib/isErrorData";
+import { ErrorData } from "@/srcApp/shared/model/types";
 import { LoginButton } from "@/srcApp/features/auth/login/ui/button";
 import { loginUser } from "@/srcApp/features/auth/login/model/login-user";
-
+import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
+import styles from "./styles.module.css";
+import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
+import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
 
 type LoginModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setUser: React.Dispatch<React.SetStateAction<UserFromServer | null>>;
 };
 export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
-  const [createModal, setCreateModal] = useState<boolean>(false);
+  const [registerModal, setRegisterModal] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
   const body = document.querySelector("body");
   useImperativeDisableScroll(body, true);
+
+  useKeyboardHandler(body, [
+    ["Escape", () => setModalOpen(false)],
+    [
+      "Enter",
+      registerModal
+        ? () => handleRegisterUser(email, password)
+        : () => handleLoginUser(email, password),
+      [registerModal, email, password],
+    ],
+  ]);
 
   const googleLoginUrl: string = process.env.NEXT_PUBLIC_LOGIN_GOOGLE || "";
   const githubLoginUrl: string = process.env.NEXT_PUBLIC_LOGIN_GITHUB || "";
@@ -53,59 +65,45 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
     router.push(githubLoginUrl);
   }
 
-  async function handleLoginUser() {
+  async function handleLoginUser(email: string, password: string) {
+    setLoading(true);
     try {
       const userOrError: UserFromServer | undefined | ErrorData =
         await loginUser(email, password);
+
+      notifyResponse<UserFromServer>(
+        userOrError,
+        `Successfully logged ${userOrError?.email}`
+      );
       if (isUserFromServer(userOrError)) {
         setUser(userOrError);
-        toast.success(`Successfully logged ${userOrError.email}`, {
-          position: "top-right",
-        });
-        setModalOpen(false);
-      }
-      if (isErrorData(userOrError)) {
-        toast.error(
-          `Error: ${userOrError.status} ${
-            userOrError.statusText
-          }. Massage: ${JSON.stringify(userOrError)}`,
-          {
-            position: "top-right",
-          }
-        );
       }
     } catch (error) {
       toast.error("An unexpected error occurred.", {
         position: "top-right",
       });
     }
+    setLoading(false);
+    setModalOpen(false);
   }
 
-  async function handleRegisterUser() {
+  async function handleRegisterUser(email: string, password: string) {
+    setLoading(true);
     try {
       const userOrError: UserFromServer | undefined | ErrorData =
         await registerUser(email, password);
-      if (isUserFromServer(userOrError)) {
-        toast.success(`Successfully logged ${userOrError.email}`, {
-          position: "top-right",
-        });
-        setCreateModal(false);
-      }
-      if (isErrorData(userOrError)) {
-        toast.error(
-          `Error: ${userOrError.status} ${
-            userOrError.statusText
-          }. Massage: ${JSON.stringify(userOrError)}`,
-          {
-            position: "top-right",
-          }
-        );
-      }
+
+      notifyResponse<UserFromServer>(
+        userOrError,
+        `Successfully registered ${userOrError?.email}`
+      );
     } catch (error) {
       toast.error("An unexpected error occurred.", {
         position: "top-right",
       });
     }
+    setLoading(false);
+    setModalOpen(false);
   }
 
   return (
@@ -135,7 +133,7 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
             src="/icons/cross.svg"
             alt="Cross icon"
           />
-          {!createModal && (
+          {!registerModal && (
             <div className={styles.loginBox}>
               <h2 className={styles.loginBox__title}>Login to your Account</h2>
               <div className={styles.loginBox__googleButton}>
@@ -155,6 +153,7 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
                   type="email"
                   onChange={handleInput}
                   value={email}
+                  required={true}
                 />
               </div>
               <div className={styles.loginBox__passwordInput}>
@@ -164,10 +163,15 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
                   type="password"
                   onChange={handleInput}
                   value={password}
+                  required={true}
                 />
               </div>
               <div className={styles.loginBox__loginButton}>
-                <LoginButton onClickHandler={handleLoginUser} />
+                <LoginButton
+                  onClickHandler={() => handleLoginUser(email, password)}
+                  loading={loading}
+                  disabled={!email || !password}
+                />
               </div>
               <div className={styles.loginBox__registerContainer}>
                 <span className={styles.loginBox__registerText}>
@@ -175,14 +179,14 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
                 </span>
                 <span
                   className={styles.loginBox__registerLink}
-                  onClick={() => setCreateModal(true)}
+                  onClick={() => setRegisterModal(true)}
                 >
                   Create an account
                 </span>
               </div>
             </div>
           )}
-          {createModal && (
+          {registerModal && (
             <div className={styles.loginBox}>
               <h2 className={styles.loginBox__title}>Registration</h2>
 
@@ -205,11 +209,15 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
                 />
               </div>
               <div className={styles.loginBox__loginButton}>
-                <RegistrationButton onClickHandler={handleRegisterUser} />
+                <RegistrationButton
+                  onClickHandler={() => handleRegisterUser(email, password)}
+                  loading={loading}
+                  disabled={!email || !password}
+                />
               </div>
               <div className={styles.loginBox__backButton}>
                 <Button
-                  onClick={() => setCreateModal(false)}
+                  onClick={() => setRegisterModal(false)}
                   text="Back"
                   textColor="white"
                   backgroundColor="var(--logoColor)"

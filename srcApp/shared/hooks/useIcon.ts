@@ -1,18 +1,32 @@
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { useEffect, useState } from "react";
 
-export const useIcon = (user: UserFromServer | null) => {
-  const [imageSrc, setImageSrc] = useState("/icons/header-account.svg");
+export const useIcon = (
+  imageUrl: string | undefined,
+  logOut: string,
+  logIn: string,
+  user?: UserFromServer | null
+): { imageSrc: string; isImageLoaded: boolean | null } => {
+  const [imageSrc, setImageSrc] = useState<string>(logOut);
+  const [isImageLoaded, setIsImageLoaded] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (user && user.icon) {
+    if (imageUrl) {
       const img = new Image();
-      img.src = user.icon;
+      img.src = imageUrl;
 
-      img.onload = () => setImageSrc(user.icon || "/icons/logged.svg");
-      img.onerror = () => setImageSrc("/icons/logged.svg");
+      img.onload = () => {
+        setIsImageLoaded(true);
+        setImageSrc(imageUrl || logIn);
+      };
+      img.onerror = () => {
+        setImageSrc(logIn);
+        setIsImageLoaded(false);
+        return;
+      };
     }
-    setImageSrc(user ? "/icons/logged.svg" : "/icons/header-account.svg");
-  }, [user]);
-  return imageSrc;
+    setImageSrc(user ? logIn : logOut);
+  }, [imageUrl]);
+
+  return { imageSrc, isImageLoaded };
 };

@@ -12,7 +12,47 @@
   user-select: none;
 }
 
-.googleIcon {
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.icon {
   width: 10%;
   height: 60%;
+}
+
+.spinner {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.spinner svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.spinner svg circle {
+  fill: none;
+  stroke-width: 2px;
+  stroke: #ffffff;
+  stroke-linecap: round;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+  }
+  50% {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dasharray: 150;
+    stroke-dashoffset: -150;
+  }
 }

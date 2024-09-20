@@ -1,0 +1,187 @@
+.images__itemContainer {
+  position: relative;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: calc(20 * var(--variableUnitsSize));
+  height: calc(20 * var(--variableUnitsSize));
+  border-radius: 2rem;
+  overflow: hidden;
+  margin: 1rem;
+  transition: 0.3s;
+}
+
+.images__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  overflow: hidden;
+  z-index: 4;
+  cursor: pointer;
+}
+
+.moderation {
+  position: absolute;
+  bottom: -15%;
+  width: 100%;
+  height: 15%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.images__itemContainer:hover,
+.images__itemContainer:focus-visible {
+  scale: 1.06;
+}
+
+.images__itemContainer:hover .images__item,
+.images__itemContainer:focus-visible .images__item {
+  width: 99%;
+  height: 99%;
+}
+
+.images__itemContainer:hover .images__substrate,
+.images__itemContainer:focus-visible .images__substrate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(
+    from 45deg,
+    #38e0d2 0%,
+    #38e0d2 2%,
+    transparent 5%,
+    transparent 45%,
+    #38e0d2 50%
+  );
+  animation: animate 10s linear infinite;
+  filter: drop-shadow(-10px 10px 20px #38e0d2);
+  opacity: 0.9;
+}
+
+.images__itemContainer:active .images__substrate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #38e0d2;
+  filter: drop-shadow(0px 0px 30px #38e0d2);
+  opacity: 1;
+}
+
+@keyframes animate {
+  0% {
+    rotate: 0deg;
+  }
+
+  100% {
+    rotate: 360deg;
+  }
+}
+
+.images__itemContainer:hover .moderation,
+.images__itemContainer:focus-visible .moderation {
+  bottom: 0;
+}
+
+.moderation__viewsIcon {
+  position: relative;
+  margin-left: 0.5rem;
+  width: 20%;
+  height: 80%;
+}
+
+.moderation__upload {
+  position: absolute;
+  right: 20%;
+  width: 15%;
+  height: 60%;
+}
+
+.moderation__delete {
+  position: absolute;
+  right: 3%;
+  width: 15%;
+  height: 60%;
+}
+
+@media screen and (max-width: 1500px) {
+  .images__itemContainer {
+    width: calc(24 * var(--variableUnitsSize));
+    height: calc(24 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 1220px) {
+  .images__itemContainer {
+    width: calc(26 * var(--variableUnitsSize));
+    height: calc(26 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .images__itemContainer {
+    width: calc(36 * var(--variableUnitsSize));
+    height: calc(36 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .images__itemContainer {
+    width: calc(35 * var(--variableUnitsSize));
+    height: calc(35 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 800px) {
+  .images__itemContainer {
+    width: calc(33 * var(--variableUnitsSize));
+    height: calc(33 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 750px) {
+  .images__itemContainer {
+    width: calc(30 * var(--variableUnitsSize));
+    height: calc(30 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 700px) {
+  .images__itemContainer {
+    width: calc(55 * var(--variableUnitsSize));
+    height: calc(55 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 630px) {
+  .images__itemContainer {
+    width: calc(50 * var(--variableUnitsSize));
+    height: calc(50 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 550px) {
+  .images__itemContainer {
+    width: calc(45 * var(--variableUnitsSize));
+    height: calc(45 * var(--variableUnitsSize));
+  }
+}
+@media screen and (max-width: 480px) {
+  .images__itemContainer {
+    width: calc(38 * var(--variableUnitsSize));
+    height: calc(38 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .images__itemContainer {
+    width: calc(32 * var(--variableUnitsSize));
+    height: calc(32 * var(--variableUnitsSize));
+  }
+}

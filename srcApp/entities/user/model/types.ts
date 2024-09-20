@@ -7,9 +7,9 @@ export type UserFromServer = {
   createdAt: Date;
   updatedAt: Date;
   photo: [];
-  permissions: [];
-  registrationSources: [];
-  payload?: [];
+  permissions: UserPermissionsKeys[];
+  registrationSources: RegistrationSources[];
+  payload: Payload[];
 };
 
 export type AttachedUser = {
@@ -25,3 +25,21 @@ const UserPermissions = {
 };
 
 type UserPermissionsKeys = keyof typeof UserPermissions;
+
+enum RegistrationSources {
+  Google = "Google",
+  GitHub = "GitHub",
+  Local = "Local",
+}
+
+type Payload = {
+  key: string;
+  value: string;
+};
+
+export interface UpdateUserDto {
+  name?: string;
+  password?: string;
+  icon?: string;
+  payload: Payload[];
+}

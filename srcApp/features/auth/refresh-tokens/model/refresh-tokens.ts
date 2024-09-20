@@ -1,8 +1,7 @@
 "use server";
-import { cookies } from "next/headers";
-import { JwtRefreshTokenType } from "../../cookies/model/types";
-import { ErrorData } from "@/srcApp/features/user/model/types";
-import { setCookies } from "../../cookies/model/setCookies";
+import { JwtRefreshTokenType } from "@/srcApp/features/auth/cookies/model/types";
+import { ErrorData } from "@/srcApp/shared/model/types";
+import { setCookies } from "@/srcApp/features/auth/cookies/model/setCookies";
 
 export async function refreshTokens<T extends (...args: any) => any>(
   refresh_token: string,

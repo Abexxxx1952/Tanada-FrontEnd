@@ -1,0 +1,216 @@
+.statsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 95%;
+  background-color: var(--backgroundProfileColor);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-top: calc(-69 * var(--variableUnitsSize));
+  margin-left: auto;
+  margin-right: auto;
+}
+.statsContainer:last-child {
+  padding-bottom: 3rem;
+}
+.photoStatsHeader,
+.generalStatsHeader {
+  font-size: calc(1.5 * var(--variableUnitsSize));
+  padding: 0.5rem;
+  margin-top: 1rem;
+}
+
+.photoStats,
+.userStats,
+.generalUserStats,
+.generalPhotoStats {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2rem;
+  font-size: calc(1.2 * var(--variableUnitsSize));
+}
+
+.photoStatsByDate {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.photoStatsYear,
+.photoStatsMonth,
+.photoStatsWeek {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: calc(1.2 * var(--variableUnitsSize));
+  margin-bottom: calc(5 * var(--variableUnitsSize));
+}
+
+.photoStatsYear__title,
+.photoStatsMonth__title,
+.photoStatsWeek__title,
+.generalUserStatsHeader,
+.generalPhotoStatsHeader {
+  text-align: center;
+  font-size: calc(1.2 * var(--variableUnitsSize));
+}
+
+.photoStatsYear_charts,
+.photoStatsMonth_charts,
+.photoStatsWeek_charts {
+  display: flex;
+  flex-direction: row;
+  height: 90%;
+  margin-top: 2rem;
+  margin-right: 2rem;
+}
+
+.photoStatsYearCreated,
+.photoStatsYearViewed,
+.photoStatsYearDeleted,
+.photoStatsMonthCreated,
+.photoStatsMonthViewed,
+.photoStatsMonthDeleted,
+.photoStatsWeekCreated,
+.photoStatsWeekViewed,
+.photoStatsWeekDeleted {
+  width: 33.3%;
+  height: 100%;
+}
+
+.photoStatsYearCreated__title,
+.photoStatsYearViewed__title,
+.photoStatsYearDeleted__title,
+.photoStatsMonthCreated__title,
+.photoStatsMonthViewed__title,
+.photoStatsMonthDeleted__title,
+.photoStatsWeekCreated__title,
+.photoStatsWeekViewed__title,
+.photoStatsWeekDeleted__title {
+  text-align: center;
+  font-size: calc(1.2 * var(--variableUnitsSize));
+  font-weight: 500;
+  padding-left: 4rem;
+  margin-bottom: 1rem;
+}
+
+.generalStatsHeader {
+  font-size: calc(1.5 * var(--variableUnitsSize));
+  padding: 0.5rem;
+}
+.generalUserStatsHeader,
+.generalPhotoStatsHeader {
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 1600px) {
+  .photoStatsYear,
+  .photoStatsMonth,
+  .photoStatsWeek {
+    height: 300px;
+    margin-top: calc(1.2 * var(--variableUnitsSize));
+    margin-bottom: calc(5 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .photoStatsYear,
+  .photoStatsMonth,
+  .photoStatsWeek {
+    height: 200px;
+    margin-top: calc(1.2 * var(--variableUnitsSize));
+    margin-bottom: calc(5 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .photoStatsHeader,
+  .generalStatsHeader {
+    font-size: calc(2 * var(--variableUnitsSize));
+  }
+  .photoStats,
+  .userStats,
+  .generalUserStats,
+  .generalPhotoStats {
+    font-size: calc(1.5 * var(--variableUnitsSize));
+  }
+
+  .photoStatsYear,
+  .photoStatsMonth,
+  .photoStatsWeek {
+    height: auto;
+    margin-top: calc(0.5 * var(--variableUnitsSize));
+    margin-bottom: calc(5 * var(--variableUnitsSize));
+  }
+  .photoStatsYear__title,
+  .photoStatsMonth__title,
+  .photoStatsWeek__title,
+  .generalUserStatsHeader,
+  .generalPhotoStatsHeader {
+    font-size: calc(1.5 * var(--variableUnitsSize));
+  }
+
+  .photoStatsYearCreated__title,
+  .photoStatsYearViewed__title,
+  .photoStatsYearDeleted__title,
+  .photoStatsMonthCreated__title,
+  .photoStatsMonthViewed__title,
+  .photoStatsMonthDeleted__title,
+  .photoStatsWeekCreated__title,
+  .photoStatsWeekViewed__title,
+  .photoStatsWeekDeleted__title {
+    font-size: calc(1.5 * var(--variableUnitsSize));
+  }
+
+  .photoStatsYear_charts,
+  .photoStatsMonth_charts,
+  .photoStatsWeek_charts {
+    flex-direction: column;
+    margin-top: -0.5rem;
+  }
+  .photoStatsYearCreated,
+  .photoStatsYearViewed,
+  .photoStatsYearDeleted,
+  .photoStatsMonthCreated,
+  .photoStatsMonthViewed,
+  .photoStatsMonthDeleted,
+  .photoStatsWeekCreated,
+  .photoStatsWeekViewed,
+  .photoStatsWeekDeleted {
+    width: 100%;
+    height: 300px;
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .photoStatsYear_charts,
+  .photoStatsMonth_charts,
+  .photoStatsWeek_charts {
+    margin-left: -0.5rem;
+    margin-left: -0.5rem;
+    margin-top: -0.5rem;
+  }
+
+  .statsContainer {
+    padding: 0;
+  }
+
+  .photoStatsYearCreated,
+  .photoStatsYearViewed,
+  .photoStatsYearDeleted,
+  .photoStatsMonthCreated,
+  .photoStatsMonthViewed,
+  .photoStatsMonthDeleted,
+  .photoStatsWeekCreated,
+  .photoStatsWeekViewed,
+  .photoStatsWeekDeleted {
+    height: 200px;
+  }
+}

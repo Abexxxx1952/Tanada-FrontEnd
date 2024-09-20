@@ -2,6 +2,41 @@
   position: relative;
   background-color: var(--bgLayoutColor);
 }
+
+.body::before {
+  content: "";
+  position: absolute;
+  top: 60%;
+  left: 5%;
+  width: calc(30 * var(--variableUnitsSize));
+  height: calc(30 * var(--variableUnitsSize));
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+.body::after {
+  content: "";
+  position: absolute;
+  top: 70%;
+  left: 70%;
+  width: calc(25 * var(--variableUnitsSize));
+  height: calc(25 * var(--variableUnitsSize));
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
 .bgContainer {
   overflow-x: hidden;
   user-select: none;
@@ -14,6 +49,9 @@
   top: 0%;
   left: 0%;
   background-color: var(--bgLayoutColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
 }
 .bgContainer img {

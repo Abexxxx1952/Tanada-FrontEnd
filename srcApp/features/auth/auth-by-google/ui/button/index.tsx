@@ -11,8 +11,10 @@ export function LoginWithGoogleButton({
     <Button
       onClick={onClickHandler}
       text="Login with Google"
+      textColor="black"
       backgroundColor="transparent"
       icon="/icons/google.svg"
+      focusBackgroundColor="var(--buttonBackgroundColor)"
     />
   );
 }

@@ -1,0 +1,184 @@
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bgLayoutColor);
+  opacity: 0.4;
+  z-index: 15;
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  height: 85%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  transform: translate(-50%, -50%);
+  background-color: var(--imageUploadModalColor);
+  border-radius: 2rem;
+  border: 10px solid #fff;
+  z-index: 20;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.342);
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: calc(2 * var(--variableUnitsSize));
+  font-size: calc(1.5 * var(--variableUnitsSize));
+  color: var(--bgLayoutColor);
+}
+
+.imageUploader {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 60%;
+  border: 2px dashed #8743a7;
+  border-radius: 10px;
+  background-color: var(--imageUploadDndColor);
+}
+.dndText {
+  font-size: calc(1.5 * var(--variableUnitsSize));
+  color: var(--bgLayoutColor);
+  margin: calc(1.5 * var(--variableUnitsSize));
+}
+
+.strongText {
+  color: var(--headerAccountColor);
+  cursor: pointer;
+}
+
+.fileInput {
+  display: none;
+}
+.imageError {
+  cursor: pointer;
+}
+
+.uploadIcon {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 10%;
+  width: 6%;
+  height: calc(4 * var(--variableUnitsSize));
+  overflow: hidden;
+  cursor: pointer;
+  color: black;
+}
+
+.button {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 1%;
+  width: 40%;
+  height: calc(3 * var(--variableUnitsSize));
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 1480px) {
+  .title {
+    margin-top: calc(2.25 * var(--variableUnitsSize));
+  }
+  .button {
+    height: calc(3.5 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .title {
+    margin-top: calc(2.5 * var(--variableUnitsSize));
+  }
+
+  .button {
+    height: calc(4 * var(--variableUnitsSize));
+  }
+  .dndText {
+    font-size: calc(1.75 * var(--variableUnitsSize));
+    margin: calc(1.75 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .title {
+    margin-top: calc(2.75 * var(--variableUnitsSize));
+  }
+  .uploadIcon {
+    width: 7%;
+    height: calc(5 * var(--variableUnitsSize));
+  }
+
+  .button {
+    height: calc(5 * var(--variableUnitsSize));
+  }
+  .dndText {
+    font-size: calc(2 * var(--variableUnitsSize));
+    margin: calc(2 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 756px) {
+  .title {
+    margin-top: calc(3 * var(--variableUnitsSize));
+  }
+  .imageUploader {
+    width: 85%;
+    height: 75%;
+  }
+  .uploadIcon {
+    width: 8%;
+    height: calc(6 * var(--variableUnitsSize));
+  }
+
+  .button {
+    height: calc(6 * var(--variableUnitsSize));
+  }
+  .dndText {
+    font-size: calc(2 * var(--variableUnitsSize));
+    margin: calc(2 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .title {
+    margin-top: calc(3.25 * var(--variableUnitsSize));
+  }
+  .imageUploader {
+    width: 90%;
+    height: 75%;
+  }
+
+  .button {
+    height: calc(7 * var(--variableUnitsSize));
+  }
+  .uploadIcon {
+    width: 9%;
+    height: calc(7 * var(--variableUnitsSize));
+  }
+  .dndText {
+    font-size: calc(1.5 * var(--variableUnitsSize));
+    margin: calc(2.75 * var(--variableUnitsSize));
+  }
+}
