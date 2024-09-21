@@ -18,6 +18,10 @@ import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import styles from "./styles.module.css";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
 import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
+import { UserLoginFormData } from "./model/types";
+import { validationSchema } from "./lib/schema";
+import { transformZodErrors } from "./model/transformZodErrors";
+import { set } from "zod";
 
 type LoginModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +32,7 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<Partial<UserLoginFormData>>({});
 
   const router = useRouter();
 
@@ -51,9 +56,11 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.currentTarget.type === "email") {
       setEmail(e.currentTarget.value);
+      setErrors((prevErrors) => ({ ...prevErrors, email: undefined }));
     }
     if (e.currentTarget.type === "password") {
       setPassword(e.currentTarget.value);
+      setErrors((prevErrors) => ({ ...prevErrors, password: undefined }));
     }
   }
 
@@ -66,6 +73,14 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
   }
 
   async function handleLoginUser(email: string, password: string) {
+    const validationResult = validationSchema.safeParse({ email, password });
+    if (!validationResult.success) {
+      setErrors(
+        transformZodErrors(validationResult.error.formErrors.fieldErrors)
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       const userOrError: UserFromServer | undefined | ErrorData =
@@ -88,6 +103,14 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
   }
 
   async function handleRegisterUser(email: string, password: string) {
+    const validationResult = validationSchema.safeParse({ email, password });
+    if (!validationResult.success) {
+      setErrors(
+        transformZodErrors(validationResult.error.formErrors.fieldErrors)
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       const userOrError: UserFromServer | undefined | ErrorData =
@@ -154,6 +177,7 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
                   onChange={handleInput}
                   value={email}
                   required={true}
+                  error={errors.email}
                 />
               </div>
               <div className={styles.loginBox__passwordInput}>
@@ -164,6 +188,7 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
                   onChange={handleInput}
                   value={password}
                   required={true}
+                  error={errors.password}
                 />
               </div>
               <div className={styles.loginBox__loginButton}>
@@ -197,6 +222,8 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
                   type="email"
                   onChange={handleInput}
                   value={email}
+                  required={true}
+                  error={errors.email}
                 />
               </div>
               <div className={styles.loginBox__passwordInput}>
@@ -206,6 +233,8 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
                   type="password"
                   onChange={handleInput}
                   value={password}
+                  required={true}
+                  error={errors.password}
                 />
               </div>
               <div className={styles.loginBox__loginButton}>

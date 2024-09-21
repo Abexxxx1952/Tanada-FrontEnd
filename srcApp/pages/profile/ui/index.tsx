@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 import { UserProfileFormData } from "@/srcApp/pages/profile/model/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { validationSchema } from "@/srcApp/entities/user/lib/schema";
+import { validationSchema } from "@/srcApp/pages/profile/lib/schema";
 import { userFromServerToProfileFormData } from "@/srcApp/pages/profile/model/userFromServerToProfileFormData";
 import { updateUserData } from "@/srcApp/entities/user/api/updateUserData";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";

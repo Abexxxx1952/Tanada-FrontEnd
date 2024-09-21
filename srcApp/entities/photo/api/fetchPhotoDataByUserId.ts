@@ -19,6 +19,7 @@ export async function fetchAllPhotoByUserId(
     };
 
     const queryParam = encodeURIComponent(JSON.stringify(condition));
+
     const response = await fetch(
       `${process.env.GET_ALL_PHOTOS_BY_USER_ID_PATH}?condition=${queryParam}`,
       {

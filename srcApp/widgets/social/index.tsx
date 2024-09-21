@@ -9,10 +9,8 @@ type SocialProps = {
 };
 
 export function Social({ user }: SocialProps) {
-  const INSTAGRAM_LINK =
-    user && user.payload[0] ? user.payload[0].value : INSTAGRAM_LINK_BASIC;
-  const TWITTER_LINK =
-    user && user.payload[0] ? user.payload[0].value : TWITTER_LINK_BASIC;
+  const INSTAGRAM_LINK = user?.payload?.[0]?.value || INSTAGRAM_LINK_BASIC;
+  const TWITTER_LINK = user?.payload?.[1]?.value || TWITTER_LINK_BASIC;
   return (
     <nav className={styles.social}>
       <div className={styles.social__text}>
