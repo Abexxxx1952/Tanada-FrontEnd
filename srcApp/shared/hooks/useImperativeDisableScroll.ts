@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function useImperativeDisableScroll<T>(
+export function useImperativeDisableScroll(
   element: HTMLElement | null,
   disabled: boolean
 ) {

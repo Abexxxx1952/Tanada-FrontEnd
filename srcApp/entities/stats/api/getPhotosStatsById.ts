@@ -12,6 +12,10 @@ export async function getPhotosStatsById(
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "force-cache",
+      next: {
+        tags: ["photoStats"],
+      },
     });
    
     if (!response.ok) {

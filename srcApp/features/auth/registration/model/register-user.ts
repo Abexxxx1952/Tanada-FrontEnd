@@ -2,6 +2,7 @@
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
+import { revalidateTag } from "next/cache";
 
 export async function registerUser(
   email: string,
@@ -29,6 +30,7 @@ export async function registerUser(
     }
 
     const data: UserFromServer = await response.json();
+    revalidateTag("userStats");
 
     return data;
   } catch (error) {

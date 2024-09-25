@@ -1,101 +1,49 @@
 "use client";
-import Image from "next/image";
-import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
-import { useImage } from "@/srcApp/shared/hooks/useImage";
-import styles from "./styles.module.css";
 import { Chart } from "@/srcApp/widgets/chart";
-import { useEffect, useState } from "react";
-import { ErrorData } from "@/srcApp/shared/model/types";
 import {
   PhotosStatsResult,
   UsersStatsResult,
 } from "@/srcApp/entities/stats/model/types";
-import { getPhotosStatsById } from "@/srcApp/entities/stats/api/getPhotosStatsById";
-import { isErrorData } from "@/srcApp/shared/model/isErrorData";
-import { toast } from "react-toastify";
-import { fetchPhotosStatsWrapperWithId } from "@/srcApp/pages/stats/model/fetchPhotosStatsWrapperWithId";
-import { getPhotosStatsForCurrentMonthByWeekById } from "@/srcApp/entities/stats/api/getPhotosStatsForCurrentMonthByWeekById";
-import { getPhotosStatsForCurrentYearByMonthById } from "@/srcApp/entities/stats/api/getPhotosStatsForCurrentYearByMonthById";
-import { getPhotosStatsForLast7DaysById } from "@/srcApp/entities/stats/api/getPhotosStatsForLast7DaysById";
-import { fetchPhotosStatsWrapperWithOutId } from "../model/fetchPhotosStatsWrapperWithOutId";
-import { getGeneralUsersStats } from "@/srcApp/entities/stats/api/getGeneralUsersStats";
-import { getGeneralPhotosStats } from "@/srcApp/entities/stats/api/getGeneralPhotosStats";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
+import styles from "./styles.module.css";
 
-export function StatsPage() {
-  const { user } = useAppContext();
-  const [photosStatsUser, setPhotosStatsUser] =
-    useState<PhotosStatsResult | null>(null);
-  const [photosStatsUserYear, setPhotosStatsUserYear] = useState<
-    PhotosStatsResult[] | null
-  >(null);
-  const [photosStatsUserMonth, setPhotosStatsUserMonth] = useState<
-    PhotosStatsResult[] | null
-  >(null);
-  const [photosStatsUserWeek, setPhotosStatsUserWeek] = useState<
-    PhotosStatsResult[] | null
-  >(null);
-  const [userStatsGeneral, setUserStatsGeneral] =
-    useState<UsersStatsResult | null>(null);
-  const [photoStatsGeneral, setPhotoStatsGeneral] =
-    useState<PhotosStatsResult | null>(null);
+type StatsPageProps = {
+  currentUser: UserFromServer | null;
+  photosStatsUser: PhotosStatsResult | null;
+  photosStatsUserYear: PhotosStatsResult[] | null;
+  photosStatsUserMonth: PhotosStatsResult[] | null;
+  photosStatsUserWeek: PhotosStatsResult[] | null;
+  userStatsGeneral: UsersStatsResult | null;
+  photoStatsGeneral: PhotosStatsResult | null;
+};
 
-  useEffect(() => {
-    if (user?.id) {
-      (async () => {
-        const fetchPromises = [
-          fetchPhotosStatsWrapperWithId(
-            getPhotosStatsById,
-            setPhotosStatsUser,
-            user?.id
-          ),
-          fetchPhotosStatsWrapperWithId(
-            getPhotosStatsForCurrentYearByMonthById,
-            setPhotosStatsUserYear,
-            user?.id
-          ),
-          fetchPhotosStatsWrapperWithId(
-            getPhotosStatsForCurrentMonthByWeekById,
-            setPhotosStatsUserMonth,
-            user?.id
-          ),
-          fetchPhotosStatsWrapperWithId(
-            getPhotosStatsForLast7DaysById,
-            setPhotosStatsUserWeek,
-            user?.id
-          ),
-          fetchPhotosStatsWrapperWithOutId(
-            getGeneralUsersStats,
-            setUserStatsGeneral
-          ),
-          fetchPhotosStatsWrapperWithOutId(
-            getGeneralPhotosStats,
-            setPhotoStatsGeneral
-          ),
-        ];
-
-        try {
-          const result = await Promise.allSettled(fetchPromises);
-        } catch (error) {
-          console.error("Error fetching photos stats:", error);
-        }
-      })();
-    }
-  }, [user?.id]);
-
+export function StatsPage({
+  currentUser,
+  photosStatsUser,
+  photosStatsUserYear,
+  photosStatsUserMonth,
+  photosStatsUserWeek,
+  userStatsGeneral,
+  photoStatsGeneral,
+}: StatsPageProps) {
   return (
     <div className={styles.statsContainer}>
-      <h2 className={styles.photoStatsHeader}>Your photos stats</h2>
-      <div className={styles.photoStats}>
-        <div className={styles.photoStats__created}>
-          <span>Created: {photosStatsUser?.created}</span>
+      <h2 className={styles.photoStatsHeader}>
+        {currentUser ? `${currentUser.email} photos stats` : "Photos stats"}
+      </h2>
+      {currentUser && (
+        <div className={styles.photoStats}>
+          <div className={styles.photoStats__created}>
+            <span>Created: {photosStatsUser?.created}</span>
+          </div>
+          <div className={styles.PhotoStats__viewed}>
+            <span>Viewed: {photosStatsUser?.views}</span>
+          </div>
+          <div className={styles.PhotoStats__deleted}>
+            <span>Deleted: {photosStatsUser?.deleted}</span>
+          </div>
         </div>
-        <div className={styles.PhotoStats__viewed}>
-          <span>Viewed: {photosStatsUser?.views}</span>
-        </div>
-        <div className={styles.PhotoStats__deleted}>
-          <span>Deleted: {photosStatsUser?.deleted}</span>
-        </div>
-      </div>
+      )}
       <div className={styles.photoStatsByDate}>
         <div className={styles.photoStatsYear}>
           <h3 className={styles.photoStatsYear__title}>Photo stats by Year</h3>

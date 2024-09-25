@@ -2,6 +2,7 @@
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { PhotoStats } from "@/srcApp/entities/photo/model/types";
+import { revalidateTag } from "next/cache";
 
 export async function addViewPhoto(
   id: number
@@ -13,6 +14,10 @@ export async function addViewPhoto(
         "Content-Type": "application/json",
       },
     });
+
+    revalidateTag("photoAll");
+    revalidateTag("photoById");
+    revalidateTag("photoStats");
 
     if (!response?.ok) {
       const errorData: ErrorData = await response.json();

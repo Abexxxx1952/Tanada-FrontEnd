@@ -5,6 +5,7 @@ import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
 import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
 import { clearCookies } from "@/srcApp/features/auth/cookies/model/clearCookies";
+import { revalidateTag } from "next/cache";
 
 export async function logoutUser(): Promise<
   AttachedUser | ErrorData | undefined
@@ -27,8 +28,10 @@ export async function logoutUser(): Promise<
         const errorData: ErrorData = await response.json();
         throw errorData;
       }
+
       const data: AttachedUser = await response.json();
       await clearCookies();
+      revalidateTag("userByCookies");
       return data;
     }
     if (!access_token && refresh_token) {

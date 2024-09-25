@@ -12,6 +12,10 @@ export async function getGeneralUsersStats(): Promise<
       headers: {
         "Content-Type": "application/json",
       },
+       cache: "force-cache",
+      next: {
+        tags: ["userStats"],
+      },
     });
 
     if (!response.ok) {

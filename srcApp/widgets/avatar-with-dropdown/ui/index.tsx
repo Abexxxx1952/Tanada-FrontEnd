@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { LoginModal } from "../login-modal";
+import { useRouter, permanentRedirect } from "next/navigation";
+import { LoginModal } from "../../login-modal";
 import styles from "./styles.module.css";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { fetchUserData } from "@/srcApp/entities/user/api/fetchUserData";
@@ -17,7 +17,7 @@ import { useIcon } from "@/srcApp/shared/hooks/useIcon";
 import { useClickOutside } from "@/srcApp/shared/hooks/useClickOutside";
 
 export function AvatarWithDropdown() {
-  const { user, setUser } = useAppContext();
+  const { user, setUser, currentUser, setCurrentUser } = useAppContext();
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
 
@@ -36,12 +36,17 @@ export function AvatarWithDropdown() {
     user
   );
 
-  async function logOut() {
+  async function handelEmail() {
+    setCurrentUser(user);
+    setDropdownOpen(false);
+  }
+
+  async function handelLogOut() {
     try {
       await logoutUser();
       setUser(null);
-      setDropdownOpen(false);
       router.replace("/");
+      setDropdownOpen(false);
     } catch (error) {
       console.error("Failed to log out:", error);
     }
@@ -72,9 +77,15 @@ export function AvatarWithDropdown() {
 
       if (isUserFromServer(userOrError)) {
         setUser(userOrError);
+
+        setCurrentUser(userOrError);
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (user !== null) router.push(`/${user.id}`);
+  }, [user]);
 
   return (
     <div className={styles.avatarWithDropdownContainer}>
@@ -97,7 +108,9 @@ export function AvatarWithDropdown() {
       <div className={styles.dropdownContainer}>
         {dropdownOpen && (
           <div className={styles.dropdown} ref={dropdownRef}>
-            <div className={styles.email}>{user?.email}</div>
+            <div className={styles.email} onClick={handelEmail}>
+              {user?.email}
+            </div>
             <div className={styles.separator}></div>
             <Link
               href="/profile"
@@ -111,9 +124,9 @@ export function AvatarWithDropdown() {
               className={styles.stats}
               onClick={() => setDropdownOpen(false)}
             >
-              Statistics
+              My statistics
             </Link>
-            <div className={styles.logOut} onClick={logOut}>
+            <div className={styles.logOut} onClick={handelLogOut}>
               Log Out
             </div>
           </div>
@@ -123,7 +136,7 @@ export function AvatarWithDropdown() {
       {portalRef.current &&
         loginModalOpen &&
         createPortal(
-          <LoginModal setModalOpen={setLoginModalOpen} setUser={setUser} />,
+          <LoginModal setModalOpen={setLoginModalOpen} />,
           portalRef.current
         )}
     </div>

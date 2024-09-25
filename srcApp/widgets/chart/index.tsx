@@ -8,74 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import styles from "./styles.module.css";
-import {
-  PhotosStatsResult,
-  UsersStatsResult,
-} from "@/srcApp/entities/stats/model/types";
-
-const data = [
-  {
-    created: 14,
-    views: 55,
-    deleted: 87,
-  },
-  {
-    created: 27,
-    views: 72,
-    deleted: 62,
-  },
-  {
-    created: 65,
-    views: 69,
-    deleted: 72,
-  },
-  {
-    created: 12,
-    views: 62,
-    deleted: 35,
-  },
-  {
-    created: 45,
-    views: 65,
-    deleted: 75,
-  },
-  {
-    created: 24,
-    views: 65,
-    deleted: 78,
-  },
-  {
-    created: 32,
-    views: 45,
-    deleted: 85,
-  },
-  {
-    created: 32,
-    views: 11,
-    deleted: 4,
-  },
-  {
-    created: 0,
-    views: 0,
-    deleted: 0,
-  },
-  {
-    created: 0,
-    views: 0,
-    deleted: 0,
-  },
-  {
-    created: 0,
-    views: 0,
-    deleted: 0,
-  },
-  {
-    created: 15,
-    views: 14,
-    deleted: 0,
-  },
-];
+import { PhotosStatsResult } from "@/srcApp/entities/stats/model/types";
 
 type ChartProps = {
   data: PhotosStatsResult[];

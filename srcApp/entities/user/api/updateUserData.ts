@@ -6,6 +6,7 @@ import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refre
 import { ErrorData, UpdateResult } from "@/srcApp/shared/model/types";
 import { profileFormToUserFromServer } from "@/srcApp/entities/user/model/profileFormToUserFromServer";
 import { UserProfileFormData } from "@/srcApp/pages/profile/model/types";
+import { revalidateTag } from "next/cache";
 
 export async function updateUserData(
   data: UserProfileFormData
@@ -24,6 +25,8 @@ export async function updateUserData(
         },
         body: JSON.stringify(body),
       });
+
+      revalidateTag("userByCookies");
 
       if (!response.ok) {
         const errorData: ErrorData = await response.json();

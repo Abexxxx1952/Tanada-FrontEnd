@@ -3,6 +3,7 @@ import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { setCookies } from "@/srcApp/features/auth/cookies/model/setCookies";
+import { revalidateTag } from "next/cache";
 
 export async function loginUser(
   email: string,
@@ -35,6 +36,7 @@ export async function loginUser(
     refresh_token = refresh_token.split(";")[0].split("=")[1];
 
     await setCookies(access_token, refresh_token);
+    revalidateTag("userByCookies");
 
     const data: UserFromServer = await response.json();
 

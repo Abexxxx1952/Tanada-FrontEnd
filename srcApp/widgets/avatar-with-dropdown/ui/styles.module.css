@@ -56,10 +56,13 @@
   text-decoration: none;
 }
 
-.logOut {
+.logOut,
+.email {
   cursor: pointer;
 }
 
+.email:hover,
+.email:focus-visible,
 .profile:hover,
 .profile:focus-visible,
 .stats:hover,

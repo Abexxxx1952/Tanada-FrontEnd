@@ -15,19 +15,19 @@ import { ErrorData } from "@/srcApp/shared/model/types";
 import { LoginButton } from "@/srcApp/features/auth/login/ui/button";
 import { loginUser } from "@/srcApp/features/auth/login/model/login-user";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
-import styles from "./styles.module.css";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
 import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
 import { UserLoginFormData } from "./model/types";
 import { validationSchema } from "./lib/schema";
 import { transformZodErrors } from "./model/transformZodErrors";
-import { set } from "zod";
+import styles from "./styles.module.css";
+import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 
 type LoginModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setUser: React.Dispatch<React.SetStateAction<UserFromServer | null>>;
 };
-export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
+export function LoginModal({ setModalOpen }: LoginModalProps) {
+  const { user, setUser, currentUser, setCurrentUser } = useAppContext();
   const [registerModal, setRegisterModal] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -92,12 +92,17 @@ export function LoginModal({ setModalOpen, setUser }: LoginModalProps) {
       );
       if (isUserFromServer(userOrError)) {
         setUser(userOrError);
+        if (currentUser === null) {
+          setCurrentUser(userOrError);
+        }
+        router.push("/");
       }
     } catch (error) {
       toast.error("An unexpected error occurred.", {
         position: "top-right",
       });
     }
+
     setLoading(false);
     setModalOpen(false);
   }

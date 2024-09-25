@@ -12,8 +12,12 @@ export async function getGeneralPhotosStats(): Promise<
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "force-cache",
+      next: {
+        tags: ["photoStats"],
+      },
     });
-    console.log("response", response);
+
     if (!response.ok) {
       const errorData: ErrorData = await response.json();
 

@@ -13,15 +13,20 @@ import {
 } from "@/srcApp/entities/photo/model/types";
 import { fetchPhotoByUser } from "@/srcApp/entities/photo/api/fetchPhotoByUser";
 import { deletePhoto } from "@/srcApp/entities/photo/api/deletePhoto";
-import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
 import {
   addStep,
   initialMaxCount,
 } from "@/srcApp/shared/constants/lazyScrollParams";
 import { useLazyScrollLoading } from "@/srcApp/shared/hooks/useLazyScrollLoading";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
 
-export function Images() {
+type ImagesProps = {
+  currentUser: UserFromServer | null;
+  owner: boolean;
+};
+
+export function Images({ currentUser, owner }: ImagesProps) {
   const [imageModalOpen, setImageModalOpen] = useState<boolean>(false);
   const [imageUploadModalOpen, setImageUploadModalOpen] =
     useState<boolean>(false);
@@ -34,7 +39,7 @@ export function Images() {
   const [imageModificationMod, setImageModificationMod] =
     useState<ImageModificationMod | null>(null);
   const [updateLink, setUpdateLink] = useState<string | null>(null);
-  const { user } = useAppContext();
+
   const portalRef = useRef<HTMLElement | null>(null);
   const photoRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
@@ -44,16 +49,16 @@ export function Images() {
     addStep
   );
 
-  if (!photoRefs.current.length && photosSliced !== null) {
+  if (photosSliced !== null) {
     photoRefs.current = photosSliced.map(() => createRef<HTMLDivElement>());
   }
 
   useEffect(() => {
     portalRef.current = document.getElementById("portal");
-    (async () => {
-      await fetchPhotoByUser(user, setPhotos);
+    (async function () {
+      await fetchPhotoByUser(currentUser, setPhotos);
     })();
-  }, [user]);
+  }, [currentUser]);
 
   useEffect(() => {
     if (
@@ -61,7 +66,7 @@ export function Images() {
       currentPhotoIdx !== null &&
       photos !== null
     ) {
-      (async () => {
+      (async function () {
         const deletedResult = await deletePhoto(photos[currentPhotoIdx].id);
         notifyResponse<Photo>(
           deletedResult,
@@ -78,8 +83,8 @@ export function Images() {
       setImageModificationMod(null);
     }
     if (imageModificationMod === "added") {
-      (async () => {
-        await fetchPhotoByUser(user, setPhotos);
+      (async function () {
+        await fetchPhotoByUser(currentUser, setPhotos);
       })();
       setImageModificationMod(null);
     }
@@ -137,11 +142,13 @@ export function Images() {
           <div className={styles.slider__line}></div>
         </nav>
         <div className={styles.addButton}>
-          <AddPhoto
-            setImageUploadMod={setImageUploadMod}
-            setImageUploadModalOpen={setImageUploadModalOpen}
-            setCurrentPhotoIdx={setCurrentPhotoIdx}
-          />
+          {owner && (
+            <AddPhoto
+              setImageUploadMod={setImageUploadMod}
+              setImageUploadModalOpen={setImageUploadModalOpen}
+              setCurrentPhotoIdx={setCurrentPhotoIdx}
+            />
+          )}
         </div>
       </div>
 
@@ -156,6 +163,7 @@ export function Images() {
                 ref={photoRefs.current[idx]}
                 photo={elem}
                 idx={idx}
+                owner={owner}
                 setImageModalOpen={setImageModalOpen}
                 setImageUploadModalOpen={setImageUploadModalOpen}
                 setCurrentPhotoIdx={setCurrentPhotoIdx}
@@ -172,6 +180,7 @@ export function Images() {
           <ImageModal
             photos={photosSliced}
             currentPhotoIdx={currentPhotoIdx}
+            owner={owner}
             setCurrentPhotoIdx={setCurrentPhotoIdx}
             setImageModalOpen={setImageModalOpen}
             setImageUploadModalOpen={setImageUploadModalOpen}

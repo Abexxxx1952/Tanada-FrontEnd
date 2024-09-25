@@ -1,23 +1,36 @@
 "use client";
 import Image from "next/image";
-import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
-import { useImage } from "@/srcApp/shared/hooks/useImage";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import styles from "./styles.module.css";
-export function TravelsPage() {
-  const { user } = useAppContext();
 
-  const countryUrl1 = useImage(user?.payload[6]?.value, "/images/schonada.jpg");
-  const countryUrl2 = useImage(user?.payload[9]?.value, "/images/schonada.jpg");
-  const countryUrl3 = useImage(
-    user?.payload[12]?.value,
-    "/images/schonada.jpg"
-  );
+type TravelsPageProps = {
+  currentUser: UserFromServer | null;
+  countryUrl1: {
+    imageSrc: string;
+    isImageLoaded: boolean | null;
+  };
+  countryUrl2: {
+    imageSrc: string;
+    isImageLoaded: boolean | null;
+  };
+  countryUrl3: {
+    imageSrc: string;
+    isImageLoaded: boolean | null;
+  };
+};
+
+export function TravelsPage({
+  currentUser,
+  countryUrl1,
+  countryUrl2,
+  countryUrl3,
+}: TravelsPageProps) {
   return (
     <div className={styles.travelsContainer}>
       <div className={styles.schonada}>
         <h2 className={styles.schonada__text}>
-          {user && user.payload && user.payload[5]
-            ? user.payload[5].value
+          {currentUser && currentUser.payload && currentUser.payload[5]
+            ? currentUser.payload[5].value
             : "SCHONADA"}
         </h2>
         <div className={styles.schonada__img}>
@@ -30,14 +43,16 @@ export function TravelsPage() {
           />
         </div>
         <p className={styles.schonada__description}>
-          {user && user.payload && user.payload[7]
-            ? user.payload[7].value
+          {currentUser && currentUser.payload && currentUser.payload[7]
+            ? currentUser.payload[7].value
             : "Welcome to Schonada, a small kingdom nestled among emerald hills and framed by the blue waters of a mysterious lake. Schonada is a place where dreams come true, and the breath of nature fills hearts with freshness. The country is renowned for its unique architecture, where ancient buildings coexist harmoniously with modern innovations. The capital, Totonto, captivates the imagination with its aerial bridges and the refined beauty of palaces, each a true masterpiece. Schonada is a land where every season transforms into a magical spectacle. In spring, gardens bloom with vibrant colors, and golden autumn welcomes with its warmth. Winter blankets the mountains in fluffy snow, creating perfect slopes for skiers and an atmosphere of coziness in every home. Schonada is known for its diversity of cultural events. Festivals and fairs fill the streets with the aromas of exotic cuisine and local crafts. Creativity, art, and music thrive here, bringing a sense of inspiration to every resident. The people of Schonada are renowned for their hospitality and warmth. The locals take pride in their cultural heritage and are eager to share their traditions with visitors. The harmony of nature and cultural richness makes Schonada a unique place where everyone can find something special. Welcome to the enchanting world of Schonada, where fairy tales come to life!"}
         </p>
-        {user && user.payload && user.payload[8] ? (
-          <h2 className={styles.schonada__text}>{user.payload[8].value}</h2>
+        {currentUser && currentUser.payload && currentUser.payload[8] ? (
+          <h2 className={styles.schonada__text}>
+            {currentUser.payload[8].value}
+          </h2>
         ) : null}
-        {user && user.payload && user.payload[9] ? (
+        {currentUser && currentUser.payload && currentUser.payload[9] ? (
           <div className={styles.schonada__img}>
             <Image
               src={countryUrl2.imageSrc}
@@ -48,15 +63,17 @@ export function TravelsPage() {
             />
           </div>
         ) : null}
-        {user && user.payload && user.payload[10] ? (
+        {currentUser && currentUser.payload && currentUser.payload[10] ? (
           <p className={styles.schonada__description}>
-            {user.payload[10].value}
+            {currentUser.payload[10].value}
           </p>
         ) : null}
-        {user && user.payload && user.payload[11] ? (
-          <h2 className={styles.schonada__text}>{user.payload[11].value}</h2>
+        {currentUser && currentUser.payload && currentUser.payload[11] ? (
+          <h2 className={styles.schonada__text}>
+            {currentUser.payload[11].value}
+          </h2>
         ) : null}
-        {user && user.payload && user.payload[12] ? (
+        {currentUser && currentUser.payload && currentUser.payload[12] ? (
           <div className={styles.schonada__img}>
             <Image
               src={countryUrl3.imageSrc}
@@ -67,9 +84,9 @@ export function TravelsPage() {
             />
           </div>
         ) : null}
-        {user && user.payload && user.payload[13] ? (
+        {currentUser && currentUser.payload && currentUser.payload[13] ? (
           <p className={styles.schonada__description}>
-            {user.payload[13].value}
+            {currentUser.payload[13].value}
           </p>
         ) : null}
       </div>

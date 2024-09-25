@@ -4,6 +4,7 @@ import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
 import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
 import { UpdateResult } from "@/srcApp/shared/model/types";
+import { revalidateTag } from "next/cache";
 
 export async function updatePhoto(
   currentPhotoId: number,
@@ -23,6 +24,9 @@ export async function updatePhoto(
           link: link,
         }),
       });
+
+      revalidateTag("photoAll");
+      revalidateTag("photoById");
 
       if (!response.ok) {
         const errorData: ErrorData = await response.json();

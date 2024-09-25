@@ -14,6 +14,10 @@ export async function getPhotosStatsForCurrentMonthByWeekById(
         headers: {
           "Content-Type": "application/json",
         },
+         cache: "force-cache",
+      next: {
+        tags: ["photoStats"],
+      },
       }
     );
 

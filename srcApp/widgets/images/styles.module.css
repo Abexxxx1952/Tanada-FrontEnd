@@ -131,7 +131,7 @@
 @media screen and (max-width: 630px) {
   .sliderContainer {
     top: calc(14 * var(--variableUnitsSize));
-    right: calc(9 * var(--variableUnitsSize));
+    right: calc(3 * var(--variableUnitsSize));
   }
   .slider {
     width: 2.5rem;
@@ -158,7 +158,7 @@
 @media screen and (max-width: 500px) {
   .sliderContainer {
     top: calc(12 * var(--variableUnitsSize));
-    right: calc(12 * var(--variableUnitsSize));
+    /*  right: calc(12 * var(--variableUnitsSize)); */
   }
   .slider {
     width: 2rem;
@@ -183,11 +183,6 @@
   .addButton {
     width: calc(2.2 * var(--variableUnitsSize));
     height: calc(2.2 * var(--variableUnitsSize));
-  }
-}
-@media screen and (max-width: 430px) {
-  .sliderContainer {
-    right: calc(14 * var(--variableUnitsSize));
   }
 }
 
@@ -219,16 +214,16 @@
 
 @media screen and (max-height: 700px) and (max-width: 630px) {
   .sliderContainer {
-    right: calc(4 * var(--variableUnitsSize));
+    right: calc(1 * var(--variableUnitsSize));
   }
 }
 @media screen and (max-height: 700px) and (max-width: 500px) {
   .sliderContainer {
-    right: calc(6 * var(--variableUnitsSize));
+    right: calc(2 * var(--variableUnitsSize));
   }
 }
 @media screen and (max-height: 700px) and (max-width: 430px) {
   .sliderContainer {
-    right: calc(8 * var(--variableUnitsSize));
+    right: calc(3 * var(--variableUnitsSize));
   }
 }

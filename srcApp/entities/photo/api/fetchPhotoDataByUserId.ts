@@ -2,10 +2,21 @@
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { Photo } from "@/srcApp/entities/photo/model/types";
+import { revalidateTag } from "next/cache";
+
+let controller: AbortController | null = null;
 
 export async function fetchAllPhotoByUserId(
   userId: string
 ): Promise<Photo[] | undefined | ErrorData> {
+  if (controller) {
+    controller.abort();
+  }
+
+  controller = new AbortController();
+  const { signal } = controller;
+
+
   try {
     const condition = {
       where: {
@@ -27,6 +38,11 @@ export async function fetchAllPhotoByUserId(
         headers: {
           "Content-Type": "application/json",
         },
+        cache: "force-cache",
+        next: {
+          tags: ["photoById"],
+        },
+        signal,
       }
     );
 
@@ -36,6 +52,7 @@ export async function fetchAllPhotoByUserId(
       throw errorData;
     }
 
+    revalidateTag("photoAll");
     const data: Photo[] = await response.json();
 
     return data;

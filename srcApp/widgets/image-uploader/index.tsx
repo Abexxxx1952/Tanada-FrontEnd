@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { useImperativeDisableScroll } from "@/srcApp/shared/hooks/useImperativeDisableScroll";
@@ -15,9 +16,11 @@ import {
   Photo,
 } from "@/srcApp/entities/photo/model/types";
 import { addPhoto } from "@/srcApp/entities/photo/api/addPhoto";
-import styles from "./styles.module.css";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
+import styles from "./styles.module.css";
+import { revalidateTag } from "next/cache";
+import { revalidateCache } from "@/srcApp/shared/model/revalidateCache";
 
 type ImageUploaderProps = {
   imageUploadMod: ImageUploadMod | null;
@@ -88,6 +91,7 @@ export const ImageUploader = ({
       reader.readAsDataURL(file);
     }
   };
+
   async function handleUploadButton() {
     setLoading(true);
     let signedUrlResult: CreateSignedUrlResponse | undefined | ErrorData;
@@ -117,6 +121,8 @@ export const ImageUploader = ({
         signedUrlResult,
         selectedPhoto
       );
+      revalidateCache("photo");
+      revalidateCache("photoStats");
     }
 
     if (isErrorData(uploadedPhotoUrlResult)) {

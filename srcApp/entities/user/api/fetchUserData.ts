@@ -5,9 +5,17 @@ import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
 import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
 
+let controller: AbortController | null = null;
 export async function fetchUserData(): Promise<
   UserFromServer | undefined | ErrorData
 > {
+  if (controller) {
+    controller.abort();
+  }
+
+  controller = new AbortController();
+  const { signal } = controller;
+
   const { access_token, refresh_token } = await getCookies();
   if (!access_token && !refresh_token) {
     return;
@@ -21,6 +29,12 @@ export async function fetchUserData(): Promise<
           "Content-Type": "application/json",
           Authorization: `Bearer ${access_token}`,
         },
+
+        next: {
+          tags: ["userByCookies"],
+          revalidate: Number(process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME),
+        },
+        signal,
       });
 
       if (!response?.ok) {

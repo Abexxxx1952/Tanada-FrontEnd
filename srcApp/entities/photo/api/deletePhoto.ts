@@ -4,6 +4,7 @@ import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
 import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
 import { Photo } from "@/srcApp/entities/photo/model/types";
+import { revalidateTag } from "next/cache";
 
 export async function deletePhoto(
   currentPhotoId: number
@@ -21,6 +22,10 @@ export async function deletePhoto(
           },
         }
       );
+
+      revalidateTag("photoAll");
+      revalidateTag("photoById");
+      revalidateTag("photoStats");
 
       if (!response.ok) {
         const errorData: ErrorData = await response.json();

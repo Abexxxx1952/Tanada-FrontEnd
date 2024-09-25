@@ -3,19 +3,20 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useImperativeDisableScroll } from "@/srcApp/shared/hooks/useImperativeDisableScroll";
 import { Photo } from "@/srcApp/entities/photo/model/types";
-import { Loading } from "@/srcApp/shared/ui/loading";
+import { LoadingPhoto } from "@/srcApp/shared/ui/loadingPhoto";
 import { addViewPhoto } from "@/srcApp/entities/photo/api/addViewPhoto";
 import {
   ImageModificationMod,
   ImageUploadMod,
 } from "@/srcApp/entities/photo/model/types";
-import styles from "./styles.module.css";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import { useImage } from "@/srcApp/shared/hooks/useImage";
+import styles from "./styles.module.css";
 
 type LoginModalProps = {
   photos: Photo[] | null;
   currentPhotoIdx: number | null;
+  owner: boolean;
   setCurrentPhotoIdx: React.Dispatch<React.SetStateAction<number | null>>;
   setImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setImageUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,6 +30,7 @@ type LoginModalProps = {
 export function ImageModal({
   photos,
   currentPhotoIdx,
+  owner,
   setCurrentPhotoIdx,
   setImageModalOpen,
   setImageUploadModalOpen,
@@ -105,7 +107,7 @@ export function ImageModal({
       ></div>
 
       <div className={styles.content}>
-        {photoUrl.isImageLoaded === null && <Loading />}
+        {photoUrl.isImageLoaded === null && <LoadingPhoto />}
         {photoUrl.isImageLoaded && (
           <Image
             src={photoUrl.imageSrc}
@@ -148,18 +150,22 @@ export function ImageModal({
             </div>
           </div>
 
-          <i
-            className={styles.moderation__upload}
-            onClick={handleImageUploadClick}
-          >
-            <Image src="/icons/upload.svg" fill={true} alt="upload" />
-          </i>
-          <i
-            className={styles.moderation__delete}
-            onClick={handleImageDeleteClick}
-          >
-            <Image src="/icons/delete.svg" fill={true} alt="delete" />
-          </i>
+          {owner && (
+            <i
+              className={styles.moderation__upload}
+              onClick={handleImageUploadClick}
+            >
+              <Image src="/icons/upload.svg" fill={true} alt="upload" />
+            </i>
+          )}
+          {owner && (
+            <i
+              className={styles.moderation__delete}
+              onClick={handleImageDeleteClick}
+            >
+              <Image src="/icons/delete.svg" fill={true} alt="delete" />
+            </i>
+          )}
         </div>
       </div>
     </div>

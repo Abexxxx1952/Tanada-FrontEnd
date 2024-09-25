@@ -2,8 +2,9 @@
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { Photo } from "@/srcApp/entities/photo/model/types";
-import { getCookies } from "../../../features/auth/cookies/model/getCookies";
-import { refreshTokens } from "../../../features/auth/refresh-tokens/model/refresh-tokens";
+import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
+import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
+import { revalidateTag } from "next/cache";
 
 export async function addPhoto(
   link: string
@@ -27,6 +28,9 @@ export async function addPhoto(
 
         throw errorData;
       }
+      revalidateTag("photoAll");
+      revalidateTag("photoById");
+      revalidateTag("photoStats");
 
       const data: Photo = await response.json();
 

@@ -1,4 +1,3 @@
-import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { useEffect, useState } from "react";
 
 export const useImage = (

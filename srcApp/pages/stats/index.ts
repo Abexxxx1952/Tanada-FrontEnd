@@ -1,1 +1,2 @@
-export { StatsPage } from "./ui";
+export { StatsWithOutUserPage } from "./ui/statsWithOutUser";
+export { StatsWithUserPage } from "./ui/statsWithUser";

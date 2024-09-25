@@ -1,6 +1,8 @@
 .body {
   position: relative;
   background-color: var(--bgLayoutColor);
+  width: 100%;
+  /*   overflow-x: hidden; */
 }
 
 .body::before {
@@ -61,11 +63,12 @@
 
 .bgContainer__hg {
   height: calc(50 * var(--variableUnitsSize));
+  overflow: hidden;
 }
 
 .bgContainer__upperGradient {
   position: relative;
-  max-width: 100%;
+  width: 100%;
   height: calc(50 * var(--variableUnitsSize));
   background: linear-gradient(330deg, rgba(7, 19, 26, 0) 11%, #0b1d26 109%);
   background-repeat: no-repeat;
@@ -74,13 +77,14 @@
 }
 .bgContainer__mg {
   height: calc(35 * var(--variableUnitsSize));
-
+  overflow: hidden;
   margin-top: calc(-40 * var(--variableUnitsSize));
 }
 
 .bgContainer__vg {
   height: calc(42 * var(--variableUnitsSize));
   margin-top: calc(-15 * var(--variableUnitsSize));
+  overflow: hidden;
 }
 
 .bgContainer__downGradient {
@@ -114,6 +118,10 @@
   .bgContainer__vg img {
     width: 140%;
   }
+
+  .body::after {
+    left: 60%;
+  }
 }
 
 @media screen and (max-width: 630px) {
@@ -137,5 +145,9 @@
   }
   .bgContainer__vg img {
     width: 200%;
+  }
+
+  .body::after {
+    left: 40%;
   }
 }

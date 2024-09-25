@@ -1,3 +1,11 @@
-import { AboutPage } from "../../srcApp/pages/about";
+import { AboutWithOutUserPage } from "@/srcApp/pages/about";
 
-export default AboutPage;
+ import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tanada",
+  description: "Travel Blog",
+  icons: "/icons/logo.svg",
+}; 
+
+export default AboutWithOutUserPage;

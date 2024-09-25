@@ -1,19 +1,29 @@
 "use client";
 import { ErrorData } from "@/srcApp/shared/model/types";
-import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { Photo } from "@/srcApp/entities/photo/model/types";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
-import { fetchAllPhoto } from "@/srcApp/entities/photo/api/fetchAllPhotoData";
 import { toast } from "react-toastify";
-import { fetchAllPhotoByUserId } from "@/srcApp/entities/photo/api/fetchPhotoDataByUserId";
+import { shuffleArray } from "@/srcApp/shared/model/shuffleArray";
+import { fetchAllPhoto } from "./fetchAllPhotoData";
+import { isErrorData } from "@/srcApp/shared/model/isErrorData";
+import { fetchAllPhotoByUserId } from "./fetchPhotoDataByUserId";
 
 export async function fetchPhotoByUser(
   user: UserFromServer | null,
   setPhotos: React.Dispatch<React.SetStateAction<Photo[] | null>>
 ): Promise<undefined> {
-  if (user === null) {
-    const photoOrError: Photo[] | undefined | ErrorData = await fetchAllPhoto();
+  let controller = new AbortController();
+  let signal = controller.signal;
 
+  if (user === null) {
+    if (controller) {
+      controller.abort();
+    }
+
+    controller = new AbortController();
+    signal = controller.signal;
+
+    const photoOrError: Photo[] | undefined | ErrorData = await fetchAllPhoto();
     if (isErrorData(photoOrError)) {
       toast.error(
         `Error: ${photoOrError.status} ${
@@ -26,11 +36,18 @@ export async function fetchPhotoByUser(
     }
 
     if (photoOrError !== undefined && Array.isArray(photoOrError)) {
-      setPhotos(photoOrError);
+      setPhotos(shuffleArray<Photo>(photoOrError));
     }
   }
 
   if (user !== null) {
+    if (controller) {
+      controller.abort();
+    }
+
+    controller = new AbortController();
+    signal = controller.signal;
+
     const photoOrError: Photo[] | undefined | ErrorData =
       await fetchAllPhotoByUserId(user.id);
 

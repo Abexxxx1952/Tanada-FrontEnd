@@ -1,8 +1,6 @@
 import styles from "./styles.module.css";
 
-type LoadingProps = {};
-
-export function Loading({}: LoadingProps) {
+export function LoadingSite() {
   return (
     <div className={styles.container}>
       <div

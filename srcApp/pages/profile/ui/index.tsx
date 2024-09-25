@@ -86,7 +86,6 @@ export function ProfilePage() {
             <Controller
               name="name"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Name"
@@ -102,7 +101,6 @@ export function ProfilePage() {
             <Controller
               name="password"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Password"
@@ -119,7 +117,6 @@ export function ProfilePage() {
             <Controller
               name="icon"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Icon"
@@ -135,7 +132,6 @@ export function ProfilePage() {
             <Controller
               name="permissions"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Permissions"
@@ -152,7 +148,6 @@ export function ProfilePage() {
             <Controller
               name="registrationSources"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="RegistrationSources"
@@ -169,7 +164,6 @@ export function ProfilePage() {
             <Controller
               name="instagramUrl"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Instagram url"
@@ -185,7 +179,6 @@ export function ProfilePage() {
             <Controller
               name="twitterUrl"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Twitter url"
@@ -201,7 +194,6 @@ export function ProfilePage() {
             <Controller
               name="mainTextContent"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <TextArea
                   text="Main text content"
@@ -217,7 +209,6 @@ export function ProfilePage() {
             <Controller
               name="countryName"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Country name"
@@ -233,7 +224,6 @@ export function ProfilePage() {
             <Controller
               name="countryImageUrl"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Country image url"
@@ -249,7 +239,6 @@ export function ProfilePage() {
             <Controller
               name="countryDescription"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <TextArea
                   text="Country descriptions"
@@ -265,7 +254,6 @@ export function ProfilePage() {
             <Controller
               name="yourPhotoUrl"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input
                   text="Your photo url"
@@ -281,7 +269,6 @@ export function ProfilePage() {
             <Controller
               name="aboutYourself"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <TextArea
                   text="About yourself"

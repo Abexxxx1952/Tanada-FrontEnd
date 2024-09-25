@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles.module.css";
-import { Loading } from "@/srcApp/shared/ui/loading";
+import { LoadingSite } from "@/srcApp/shared/ui/loadingSite";
 
 export function BaseLayout({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -17,7 +17,7 @@ export function BaseLayout({ children }: PropsWithChildren) {
       <ToastContainer autoClose={8000} />
       {isLoading && (
         <div className={styles.loadingIndicator}>
-          <Loading />
+          <LoadingSite />
         </div>
       )}
       <div className={styles.bgContainer}>

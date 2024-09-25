@@ -1,5 +1,5 @@
+"use client";
 import Image from "next/image";
-import styles from "./styles.module.css";
 import { Photo } from "../../model/types";
 import { forwardRef } from "react";
 import { addViewPhoto } from "@/srcApp/entities/photo/api/addViewPhoto";
@@ -7,14 +7,14 @@ import {
   ImageModificationMod,
   ImageUploadMod,
 } from "@/srcApp/entities/photo/model/types";
-
-import { useIcon } from "@/srcApp/shared/hooks/useIcon";
-import { Loading } from "@/srcApp/shared/ui/loading";
+import { LoadingPhoto } from "@/srcApp/shared/ui/loadingPhoto";
 import { useImage } from "@/srcApp/shared/hooks/useImage";
+import styles from "./styles.module.css";
 
 type PhotoBoxProps = {
   photo: Photo;
   idx: number;
+  owner: boolean;
   setCurrentPhotoIdx: React.Dispatch<React.SetStateAction<number | null>>;
   setImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setImageUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,6 +31,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
     {
       photo,
       idx,
+      owner,
       setCurrentPhotoIdx,
       setImageModalOpen,
       setImageUploadModalOpen,
@@ -45,7 +46,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       setCurrentPhotoIdx(idx);
       setImageModalOpen(true);
 
-      (async () => {
+      (async function () {
         await addViewPhoto(photo.id);
       })();
     }
@@ -72,10 +73,9 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       <div className={styles.images__itemContainer} ref={ref}>
         <div className={styles.images__substrate}></div>
         <div className={styles.images__item} onClick={handleImageClick}>
-          {photoUrl.isImageLoaded === null && <Loading />}
+          {photoUrl.isImageLoaded === null && <LoadingPhoto />}
           {photoUrl.isImageLoaded !== null && (
             <>
-              {" "}
               <Image
                 src={photoUrl.imageSrc}
                 fill={true}
@@ -91,27 +91,31 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
                 <span className={styles.moderation__viewsCount}>
                   {photo.stats.viewsCount}
                 </span>
-                <i
-                  className={styles.moderation__upload}
-                  onClick={(event) => {
-                    handleImageUploadClick(event);
-                  }}
-                >
-                  <Image
-                    src="/icons/upload.svg"
-                    fill={true}
-                    alt="upload"
-                    style={{ color: "white" }}
-                  />
-                </i>
-                <i
-                  className={styles.moderation__delete}
-                  onClick={(event) => {
-                    handleImageDeleteClick(event);
-                  }}
-                >
-                  <Image src="/icons/delete.svg" fill={true} alt="delete" />
-                </i>
+                {owner && (
+                  <i
+                    className={styles.moderation__upload}
+                    onClick={(event) => {
+                      handleImageUploadClick(event);
+                    }}
+                  >
+                    <Image
+                      src="/icons/upload.svg"
+                      fill={true}
+                      alt="upload"
+                      style={{ color: "white" }}
+                    />
+                  </i>
+                )}
+                {owner && (
+                  <i
+                    className={styles.moderation__delete}
+                    onClick={(event) => {
+                      handleImageDeleteClick(event);
+                    }}
+                  >
+                    <Image src="/icons/delete.svg" fill={true} alt="delete" />
+                  </i>
+                )}
               </div>
             </>
           )}
