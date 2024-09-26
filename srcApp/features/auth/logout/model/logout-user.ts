@@ -32,6 +32,7 @@ export async function logoutUser(): Promise<
       const data: AttachedUser = await response.json();
       await clearCookies();
       revalidateTag("userByCookies");
+
       return data;
     }
     if (!access_token && refresh_token) {

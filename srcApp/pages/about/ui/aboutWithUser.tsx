@@ -9,8 +9,9 @@ type AboutWithUserPageProps = {
 };
 
 export function AboutWithUserPage({ userId }: AboutWithUserPageProps) {
-  const { currentUser } = useAppContext();
   useSetCurrentUser(userId);
+  const { currentUser } = useAppContext();
+
   const photoUrl = useImage(currentUser?.payload[3]?.value, "/images/me.png");
 
   return <AboutPage currentUser={currentUser} photoUrl={photoUrl} />;

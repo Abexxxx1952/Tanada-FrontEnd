@@ -2,39 +2,42 @@
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
-import { revalidateTag } from "next/cache";
 
-export async function registerUser(
-  email: string,
-  password: string
-): Promise<UserFromServer | undefined | ErrorData> {
-  const url: string = process.env.REGISTRATION_URL || "";
 
-  const requestBody = {
-    email: email,
-    password: password,
-  };
+let controller: AbortController | null = null;
+export async function fetchAllUserData(): Promise<
+  UserFromServer[] | undefined | ErrorData
+> {
+  if (controller) {
+    controller.abort();
+  }
+
+  controller = new AbortController();
+  const { signal } = controller;
 
   try {
-    const response = await fetch(url, {
-      method: "POST",
+    const response = await fetch(`${process.env.GET_ALL_USER_DATA_PATH}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(requestBody),
+      cache: "force-cache",
+      next: {
+        tags: ["userAll"],
+      },
+      signal,
     });
 
-    if (!response.ok) {
+    if (!response?.ok) {
       const errorData: ErrorData = await response.json();
+
       throw errorData;
     }
 
     const data: UserFromServer = await response.json();
-    revalidateTag("userStats");
-    revalidateTag("userAll");
 
     return data;
-  } catch (error) {
+  } catch (error: unknown) {
     if (isErrorData(error)) {
       return error;
     } else {

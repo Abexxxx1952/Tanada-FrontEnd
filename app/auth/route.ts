@@ -13,6 +13,7 @@ export function GET(request: NextRequest) {
     (async () => {
       await setCookies(access_token, refresh_token);
       revalidateTag("userByCookies");
+      revalidateTag("userAll");
       revalidateTag("userStats");
     })();
   }

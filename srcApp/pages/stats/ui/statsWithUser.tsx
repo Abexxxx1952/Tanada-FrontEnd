@@ -6,11 +6,12 @@ import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 
 type StatsWithUserPageProps = {
   userId: string;
+  stats: string;
 };
 
-export function StatsWithUserPage({ userId }: StatsWithUserPageProps) {
-  const { currentUser } = useAppContext();
+export function StatsWithUserPage({ userId, stats }: StatsWithUserPageProps) {
   useSetCurrentUser(userId);
+  const { user, currentUser } = useAppContext();
 
   const [
     photosStatsUser,
@@ -23,7 +24,7 @@ export function StatsWithUserPage({ userId }: StatsWithUserPageProps) {
 
   return (
     <StatsPage
-      currentUser={currentUser}
+      currentUser={stats === "stats" ? user : currentUser}
       photosStatsUser={photosStatsUser}
       photosStatsUserYear={photosStatsUserYear}
       photosStatsUserMonth={photosStatsUserMonth}

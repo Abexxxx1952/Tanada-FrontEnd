@@ -3,7 +3,7 @@ import { PrivacyPolicy } from "@/srcApp/pages/privacy-policy";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tanada - Privacy Policy",
+  title: "Privacy Policy",
   description: "Travel Blog",
   icons: "/icons/logo.svg",
 };

@@ -9,8 +9,8 @@ type TravelsWithUserPageProps = {
 };
 
 export function TravelsWithUserPage({ userId }: TravelsWithUserPageProps) {
-  const { currentUser } = useAppContext();
   useSetCurrentUser(userId);
+  const { currentUser } = useAppContext();
 
   const countryUrl1 = useImage(
     currentUser?.payload[6]?.value,

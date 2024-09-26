@@ -31,5 +31,5 @@ export function useSetCurrentUser(userId: string) {
         }
       })();
     }
-  }, [currentUser]);
+  }, []);
 }

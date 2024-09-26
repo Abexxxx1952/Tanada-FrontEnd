@@ -40,7 +40,10 @@ export function AvatarWithDropdown() {
     setCurrentUser(user);
     setDropdownOpen(false);
   }
-
+  async function handelStats() {
+    setDropdownOpen(false);
+    router.push(`/stats/${user?.id}/stats`);
+  }
   async function handelLogOut() {
     try {
       await logoutUser();
@@ -119,13 +122,9 @@ export function AvatarWithDropdown() {
             >
               Profile
             </Link>
-            <Link
-              href="/stats"
-              className={styles.stats}
-              onClick={() => setDropdownOpen(false)}
-            >
+            <div className={styles.stats} onClick={handelStats}>
               My statistics
-            </Link>
+            </div>
             <div className={styles.logOut} onClick={handelLogOut}>
               Log Out
             </div>
