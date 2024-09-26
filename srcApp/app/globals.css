@@ -17,6 +17,8 @@
   --buttonBackgroundColor: rgb(233, 230, 252);
   --buttonLoginBackgroundColor: rgb(113, 93, 223);
   --buttonBoxShadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.5);
+  --notFoundBackgroundColor: rgb(189, 224, 235);
+  --notFoundOtherTextColor: rgb(164, 185, 184);
 }
 
 *,

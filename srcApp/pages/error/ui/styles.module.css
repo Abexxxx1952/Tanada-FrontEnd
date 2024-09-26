@@ -1,0 +1,205 @@
+.errorContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--notFoundBackgroundColor);
+}
+
+.error {
+  position: relative;
+  width: 80%;
+  height: 45%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6rem;
+}
+
+.mainText {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: Inter;
+}
+
+.mainText__header {
+  font-size: 4rem;
+  font-weight: 900;
+}
+
+.mainText__body {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 2rem;
+}
+
+.back {
+  position: relative;
+  top: 34rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: Inter;
+}
+.backText {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.backLink {
+  color: var(--notFoundOtherTextColor);
+  font-size: 1.75rem;
+  line-height: 2.5rem;
+}
+
+.link {
+  color: #d269cc;
+  font-size: 1.75rem;
+  line-height: 2.5rem;
+  text-decoration-line: underline;
+}
+
+@media screen and (max-width: 1750px) {
+  .error {
+    height: 50%;
+    margin-top: 7rem;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .error {
+    height: 55%;
+    margin-top: 8rem;
+  }
+}
+@media screen and (max-width: 1300px) {
+  .error {
+    height: 60%;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .mainText__header {
+    font-size: 3rem;
+  }
+
+  .mainText__body {
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .back {
+    top: 32rem;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .mainText__header {
+    font-size: 2.5rem;
+  }
+
+  .mainText__body {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  .back {
+    top: 30rem;
+  }
+  .backText {
+    font-size: 1.25rem;
+  }
+
+  .backLink {
+    font-size: 1.5rem;
+    line-height: 2.25rem;
+  }
+  .link {
+    font-size: 1.5rem;
+    line-height: 2.25rem;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .error {
+    width: 85%;
+  }
+  .mainText__header {
+    font-size: 2rem;
+  }
+
+  .mainText__body {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  .back {
+    top: 28rem;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .error {
+    height: 70%;
+    margin-top: 4rem;
+  }
+  .mainText {
+    top: 4rem;
+  }
+
+  .back {
+    top: 27rem;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .error {
+    width: 90%;
+  }
+  .mainText__header {
+    font-size: 2rem;
+  }
+
+  .mainText__body {
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
+  }
+  .backText {
+    font-size: 1rem;
+  }
+
+  .backLink {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+  .link {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .error {
+    margin-top: 2rem;
+  }
+  .mainText {
+    top: 6rem;
+  }
+
+  .back {
+    top: 25rem;
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .error {
+    top: -2rem;
+  }
+  .back {
+    top: 27rem;
+  }
+}
+@media screen and (max-width: 770px) and (max-height: 450px) {
+  .back {
+    top: 24rem;
+  }
+}

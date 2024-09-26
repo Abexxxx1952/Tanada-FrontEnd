@@ -2,7 +2,6 @@
   position: relative;
   background-color: var(--bgLayoutColor);
   width: 100%;
-  /*   overflow-x: hidden; */
 }
 
 .body::before {

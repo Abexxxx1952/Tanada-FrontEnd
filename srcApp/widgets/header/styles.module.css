@@ -16,7 +16,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.5s;
   margin-left: calc(-7 * var(--variableUnitsSize));
 }
 
@@ -82,6 +81,12 @@
   }
 }
 
+@media screen and (max-width: 730px) {
+  .navigation {
+    margin-left: calc(-4 * var(--variableUnitsSize));
+  }
+}
+
 @media screen and (max-width: 630px) {
   .header {
     font-size: 1rem;
@@ -106,5 +111,17 @@
   }
   .navigation__list li a {
     font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .navigation {
+    margin-left: calc(-2 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .navigation {
+    margin-left: calc(-1 * var(--variableUnitsSize));
   }
 }

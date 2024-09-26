@@ -3,4 +3,5 @@ export const HEADER_ITEMS = [
   { value: "Travels", path: "/travels" },
   { value: "About Me", path: "/about" },
   { value: "Statistics", path: "/stats" },
+  { value: "not", path: "/not-found" },
 ];
