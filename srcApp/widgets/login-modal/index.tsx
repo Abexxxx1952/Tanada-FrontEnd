@@ -20,14 +20,14 @@ import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer"
 import { UserLoginFormData } from "./model/types";
 import { validationSchema } from "./lib/schema";
 import { transformZodErrors } from "./model/transformZodErrors";
-import styles from "./styles.module.css";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
+import styles from "./styles.module.css";
 
 type LoginModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export function LoginModal({ setModalOpen }: LoginModalProps) {
-  const { user, setUser, currentUser, setCurrentUser } = useAppContext();
+  const { setUser, currentUser, setCurrentUser } = useAppContext();
   const [registerModal, setRegisterModal] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

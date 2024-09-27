@@ -21,7 +21,7 @@ import styles from "./styles.module.css";
 export function ProfilePage() {
   const { user } = useAppContext();
   const [loading, setLoading] = useState(false);
-  const body = document.querySelector("body");
+  const [body, setBody] = useState<HTMLBodyElement | null>(null);
   const router = useRouter();
 
   const imageSrc = useIcon(
@@ -47,6 +47,10 @@ export function ProfilePage() {
     ["Enter", handleSubmit(onSubmit)],
     ["Escape", () => router.push("/")],
   ]);
+
+  useEffect(() => {
+    setBody(document.querySelector("body"));
+  }, []);
 
   useEffect(() => {
     reset(defaultValues);

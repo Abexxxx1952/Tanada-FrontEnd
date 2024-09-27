@@ -2,9 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { useRouter, permanentRedirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { LoginModal } from "../../login-modal";
-import styles from "./styles.module.css";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { fetchUserData } from "@/srcApp/entities/user/api/fetchUserData";
 import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
@@ -15,6 +14,7 @@ import { toast } from "react-toastify";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 import { useIcon } from "@/srcApp/shared/hooks/useIcon";
 import { useClickOutside } from "@/srcApp/shared/hooks/useClickOutside";
+import styles from "./styles.module.css";
 
 export function AvatarWithDropdown() {
   const { user, setUser, currentUser, setCurrentUser } = useAppContext();

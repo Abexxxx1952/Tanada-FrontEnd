@@ -1,0 +1,154 @@
+.userItem {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  width: 100%;
+  height: calc(5 * var(--variableUnitsSize));
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+}
+
+.userItem:hover,
+.userItem:focus-visible {
+  cursor: pointer;
+  box-shadow: 2px 2px 10px var(--bgLayoutColor);
+  transform: scale(1.01);
+  transition: transform 0.2s ease;
+}
+
+.userItem__icon {
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  width: 5%;
+  aspect-ratio: 1 / 1;
+  margin: 1rem;
+}
+
+.userItem__email {
+  font-size: 1.5rem;
+  width: 30%;
+}
+
+.userItem__name {
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  width: 25%;
+}
+
+.userItem__createdAt {
+  margin-left: 1rem;
+  font-size: 1rem;
+  width: 20%;
+}
+
+.userItem__photoLength {
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  width: 20%;
+}
+
+@media screen and (max-width: 1400px) {
+  .userItem__email {
+    font-size: 1.3rem;
+  }
+
+  .userItem__name {
+    font-size: 1.3rem;
+  }
+
+  .userItem__createdAt {
+    font-size: 0.85rem;
+  }
+
+  .userItem__photoLength {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .userItem__email {
+    font-size: 1.1rem;
+    width: 35%;
+  }
+
+  .userItem__name {
+    font-size: 1.1rem;
+    width: 22%;
+  }
+
+  .userItem__createdAt {
+    font-size: 0.7rem;
+    width: 18%;
+  }
+
+  .userItem__photoLength {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .userItem {
+    flex-direction: column;
+    width: calc((100% - 1rem) / 2);
+    height: auto;
+    padding: 0.5rem;
+  }
+  .userItem__icon {
+    width: 12%;
+    aspect-ratio: 1 / 1;
+    margin: 0.5rem 0 0 0;
+  }
+  .userItem__email,
+  .userItem__name,
+  .userItem__createdAt,
+  .userItem__photoLength {
+    margin-top: 0.5rem;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .userItem {
+    width: calc(100% - 1rem);
+    height: auto;
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .userItem__email {
+    font-size: 1rem;
+  }
+
+  .userItem__name {
+    font-size: 1rem;
+  }
+
+  .userItem__createdAt {
+    font-size: 0.6rem;
+  }
+
+  .userItem__photoLength {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .userItem__email {
+    font-size: 0.9rem;
+  }
+
+  .userItem__name {
+    font-size: 0.9rem;
+  }
+
+  .userItem__createdAt {
+    font-size: 0.6rem;
+  }
+
+  .userItem__photoLength {
+    font-size: 0.8rem;
+  }
+}
