@@ -1,25 +1,31 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export const useLazyScrollLoading = (
   initialMaxCount: number,
   productsLength: number,
-  addStep: number
-): [(node: HTMLElement | null) => void, number] => {
+  addStep: number,
+  lastElementRef: React.RefObject<HTMLElement>
+): number => {
   const [maxCount, setMaxCount] = useState<number>(initialMaxCount);
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const refContainer = useCallback(
-    (node: HTMLElement | null) => {
-      if (observer.current) observer.current.disconnect();
+  useEffect(() => {
+    if (lastElementRef && lastElementRef.current) {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && maxCount < productsLength) {
           setMaxCount((count) => count + addStep);
         }
       });
-      if (node) observer.current.observe(node);
-    },
-    [maxCount, productsLength, addStep]
-  );
 
-  return [refContainer, maxCount];
+      observer.current.observe(lastElementRef.current);
+    }
+
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, [lastElementRef, maxCount, productsLength, addStep]);
+
+  return maxCount;
 };

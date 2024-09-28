@@ -1,6 +1,7 @@
 export type Photo = {
   id: number;
   link: string;
+  sortId: number;
   createdAt: string;
   updatedAt: string;
   stats: PhotoStats;

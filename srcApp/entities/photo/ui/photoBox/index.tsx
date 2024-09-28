@@ -9,7 +9,10 @@ import {
 } from "@/srcApp/entities/photo/model/types";
 import { LoadingPhoto } from "@/srcApp/shared/ui/loadingPhoto";
 import { useImage } from "@/srcApp/shared/hooks/useImage";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import styles from "./styles.module.css";
+import { log } from "console";
 
 type PhotoBoxProps = {
   photo: Photo;
@@ -42,7 +45,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
   ) => {
     const photoUrl = useImage(photo?.link, "/icons/image-off.svg");
 
-    function handleImageClick() {
+    function handleImageClick(event: React.MouseEvent<HTMLElement>) {
       setCurrentPhotoIdx(idx);
       setImageModalOpen(true);
 
@@ -69,10 +72,34 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       }
     }
 
+    /*  ----------------- DnD ---------------- */
+
+    const { attributes, listeners, setNodeRef, transform, transition } =
+      useSortable({
+        id: photo.id,
+      });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+    };
+
+    /*   ---------------------------------------------------------------------- */
+
     return (
-      <div className={styles.images__itemContainer} ref={ref}>
+      <div
+        className={styles.images__itemContainer}
+        id={`${photo.id}`}
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+      >
         <div className={styles.images__substrate}></div>
-        <div className={styles.images__item} onClick={handleImageClick}>
+        <div
+          className={styles.images__item}
+          ref={ref}
+          onClick={handleImageClick}
+        >
           {photoUrl.isImageLoaded === null && <LoadingPhoto />}
           {photoUrl.isImageLoaded !== null && (
             <>

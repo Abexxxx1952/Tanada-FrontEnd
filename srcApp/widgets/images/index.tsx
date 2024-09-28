@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, createRef } from "react";
 import { createPortal } from "react-dom";
 import { ImageModal } from "../image-modal";
 import { Photo } from "@/srcApp/entities/photo/model/types";
-import styles from "./styles.module.css";
 import { ImageUploader } from "../image-uploader";
 import { AddPhoto } from "@/srcApp/entities/photo/ui/addPhoto";
 import {
@@ -20,6 +19,8 @@ import {
 } from "@/srcApp/shared/constants/lazyScrollParams";
 import { useLazyScrollLoading } from "@/srcApp/shared/hooks/useLazyScrollLoading";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
+import { DragAndDropContext } from "@/srcApp/app/providers/dndContext";
+import styles from "./styles.module.css";
 
 type ImagesProps = {
   currentUser: UserFromServer | null;
@@ -43,15 +44,16 @@ export function Images({ currentUser, owner }: ImagesProps) {
   const portalRef = useRef<HTMLElement | null>(null);
   const photoRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
-  const [refContainer, maxCount] = useLazyScrollLoading(
-    initialMaxCount,
-    photos?.length || 0,
-    addStep
-  );
-
   if (photosSliced !== null) {
     photoRefs.current = photosSliced.map(() => createRef<HTMLDivElement>());
   }
+
+  const maxCount = useLazyScrollLoading(
+    initialMaxCount,
+    photos?.length || 0,
+    addStep,
+    photoRefs.current[photoRefs.current.length - 1]
+  );
 
   useEffect(() => {
     portalRef.current = document.getElementById("portal");
@@ -108,7 +110,7 @@ export function Images({ currentUser, owner }: ImagesProps) {
       setPhotosSliced(photos.slice(0, maxCount));
     }
   }, [maxCount, photos]);
-
+  /*  ----------------- Slider ---------------- */
   const handleSliderClick = (idx: number) => {
     if (
       photoRefs.current &&
@@ -152,14 +154,16 @@ export function Images({ currentUser, owner }: ImagesProps) {
         </div>
       </div>
 
-      {photosSliced &&
-        photosSliced.map((elem, idx) => {
-          return (
-            <div
-              key={elem.id}
-              ref={idx === photosSliced.length - 1 ? refContainer : null}
-            >
+      <DragAndDropContext
+        photos={photos}
+        photosSliced={photosSliced}
+        setPhotos={setPhotos}
+      >
+        {photosSliced &&
+          photosSliced.map((elem, idx) => {
+            return (
               <PhotoBox
+                key={elem.id}
                 ref={photoRefs.current[idx]}
                 photo={elem}
                 idx={idx}
@@ -170,10 +174,9 @@ export function Images({ currentUser, owner }: ImagesProps) {
                 setImageUploadMod={setImageUploadMod}
                 setImageModificationMod={setImageModificationMod}
               />
-            </div>
-          );
-        })}
-
+            );
+          })}
+      </DragAndDropContext>
       {portalRef.current &&
         imageModalOpen &&
         createPortal(
