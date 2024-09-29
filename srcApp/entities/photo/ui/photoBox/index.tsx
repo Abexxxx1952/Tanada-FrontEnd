@@ -12,7 +12,6 @@ import { useImage } from "@/srcApp/shared/hooks/useImage";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import styles from "./styles.module.css";
-import { log } from "console";
 
 type PhotoBoxProps = {
   photo: Photo;

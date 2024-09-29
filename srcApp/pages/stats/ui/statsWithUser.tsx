@@ -1,5 +1,5 @@
 "use client";
-import { StatsPage } from "./stats";
+import { StatsPage } from "./statsPage";
 import { useFetchStatsById } from "../model/useFetchStatsById";
 import { useSetCurrentUser } from "@/srcApp/entities/user/model/useSetCurrentUser";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";

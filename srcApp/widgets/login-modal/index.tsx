@@ -146,8 +146,6 @@ export function LoginModal({ setModalOpen }: LoginModalProps) {
               fill={true}
               alt="loginPageFrame"
               sizes="(max-width: 412px) 70vw, (max-width: 816px) 80vw, (max-width: 1200px) 90vw, 100vw"
-              placeholder="blur"
-              blurDataURL="/images/loginPageFrame_blur.png"
             />
           </div>
           <span className={styles.content__tagline}>

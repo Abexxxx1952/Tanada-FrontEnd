@@ -1,7 +1,7 @@
 "use client";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 import { useImage } from "@/srcApp/shared/hooks/useImage";
-import { TravelsPage } from "./travel";
+import { TravelsPage } from "./travelsPage";
 import { useLayoutEffect } from "react";
 import { permanentRedirect } from "next/navigation";
 

@@ -1,9 +1,7 @@
 "use client";
 import { useSetCurrentUser } from "@/srcApp/entities/user/model/useSetCurrentUser";
-import { MainPage } from "./main";
+import { MainPage } from "./mainPage";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
-import { useLayoutEffect } from "react";
-import { useRouter } from "next/navigation";
 
 type MainWithUserPageProps = {
   userId: string;

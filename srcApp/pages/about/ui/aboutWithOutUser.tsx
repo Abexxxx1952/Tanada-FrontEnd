@@ -3,7 +3,7 @@ import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 import { useImage } from "@/srcApp/shared/hooks/useImage";
 import { permanentRedirect } from "next/navigation";
 import { useLayoutEffect } from "react";
-import { AboutPage } from "./about";
+import { AboutPage } from "./aboutPage";
 
 export function AboutWithOutUserPage() {
   const { currentUser } = useAppContext();

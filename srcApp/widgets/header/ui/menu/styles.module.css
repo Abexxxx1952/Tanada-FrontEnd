@@ -1,0 +1,114 @@
+.menu {
+  display: none;
+}
+
+.menuContainer {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    cursor: pointer;
+    height: 60%;
+    aspect-ratio: 1.5 / 1;
+    margin-right: calc(8 * var(--variableUnitsSize));
+    color: var(--contentTextColor);
+    border: none;
+    outline: none;
+    background: none;
+    user-select: none;
+  }
+
+  .menu__line {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 2px;
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    background: var(--contentTextColor);
+    color: var(--contentTextColor);
+    transition: 0.25s ease-in-out;
+  }
+
+  .menu .active:nth-child(1) {
+    transform: rotate(45deg);
+    top: 45%;
+  }
+  .menu .active:nth-child(1)::after {
+    background-color: var(--contentTextColor);
+    filter: drop-shadow(5px 5px 10px var(--contentTextColor));
+  }
+
+  .menu .active:nth-child(2) {
+    width: 0%;
+    left: 50%;
+  }
+  .menu .active:nth-child(3) {
+    transform: rotate(-45deg);
+    bottom: 45%;
+  }
+  .menu .active:nth-child(3)::after {
+    background-color: var(--contentTextColor);
+    filter: drop-shadow(5px 5px 10px var(--contentTextColor));
+  }
+
+  .menuContainer {
+    display: flex;
+    position: absolute;
+    left: -1.5rem;
+    right: 0;
+    bottom: 0;
+    top: 150%;
+    display: flex;
+    width: calc(100% + 3rem);
+    height: 80vh;
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .menu {
+    margin-right: calc(5 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .menu {
+    margin-right: calc(4.5 * var(--variableUnitsSize));
+  }
+
+  .menuContainer {
+    position: absolute;
+    left: -1rem;
+    right: 0;
+    bottom: 0;
+    top: 150%;
+    display: flex;
+    width: calc(100% + 2rem);
+    height: 80vh;
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .menu {
+    margin-right: calc(4 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .menu {
+    margin-right: calc(5 * var(--variableUnitsSize));
+  }
+  .menuContainer {
+    left: 0;
+
+    width: 100%;
+  }
+}

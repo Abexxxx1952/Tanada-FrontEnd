@@ -1,0 +1,196 @@
+.navigationContent {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  user-select: none;
+}
+
+.navigationContent__item:hover,
+.navigationContent__item:focus-visible {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+.navigationContent li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--headerItemColor);
+  font-family: Chronicle Display;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-shadow: 2px 2px 25px var(--contentTextColor);
+}
+
+.active::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 3rem;
+  background-color: var(--headerItemColor);
+  filter: drop-shadow(5px 5px 10px var(--headerItemColor));
+}
+
+@media screen and (max-width: 1200px) {
+  .navigationContent {
+    gap: 1.8rem;
+  }
+  .navigationContent li a {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .navigationContent {
+    gap: 1.5rem;
+  }
+  .navigationContent li a {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .navigationContent {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 0;
+  }
+
+  .navigationContent .navigationContent__item:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .navigationContent .navigationContent__item:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .navigationContent__item {
+    width: 100%;
+    height: auto;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .navigationContent li a {
+    font-size: 2rem;
+  }
+  .navigationContent .navigationContent__item:nth-child(1) {
+    background: linear-gradient(
+      134deg,
+      rgba(255, 81, 0, 0.7) 20%,
+      rgba(220, 255, 0, 0.9)
+    );
+  }
+  .navigationContent .navigationContent__item:nth-child(2) {
+    background: linear-gradient(
+      194deg,
+      rgba(0, 255, 235, 0.82) 44%,
+      rgba(9, 0, 255, 0.77)
+    );
+  }
+  .navigationContent .navigationContent__item:nth-child(3) {
+    background: linear-gradient(
+      294deg,
+      rgba(255, 251, 0, 0.82) 23%,
+      rgba(0, 253, 255, 1)
+    );
+  }
+  .navigationContent .navigationContent__item:nth-child(4) {
+    background: linear-gradient(
+      333deg,
+      rgba(255, 0, 4, 0.82) 8%,
+      rgba(0, 214, 255, 1)
+    );
+  }
+  .navigationContent .navigationContent__item:nth-child(5) {
+    background: linear-gradient(
+      314deg,
+      rgba(175, 0, 255, 0.82) 8%,
+      rgba(0, 255, 3, 1)
+    );
+  }
+  .navigationContent__item:hover,
+  .navigationContent__item:focus-visible {
+    transform: scale(1.02);
+  }
+  .active::after {
+    display: none;
+  }
+  .active a {
+    transform: scale(1.4);
+    
+  }
+
+  .navigationContent .navigationContent__item:nth-child(1) a::before {
+    content: "";
+    position: relative;
+    left: -10%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background-image: url("/icons/main.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .navigationContent .navigationContent__item:nth-child(2) a::before {
+    content: "";
+    position: relative;
+    left: -10%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background-image: url("/icons/travels.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .navigationContent .navigationContent__item:nth-child(3) a::before {
+    content: "";
+    position: relative;
+    left: -10%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background-image: url("/icons/about.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .navigationContent .navigationContent__item:nth-child(4) a::before {
+    content: "";
+    position: relative;
+    left: -10%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background-image: url("/icons/stats.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .navigationContent .navigationContent__item:nth-child(5) a::before {
+    content: "";
+    position: relative;
+    left: -10%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background-image: url("/icons/travelers.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  /* .navigation {
+    margin-left: calc(-2 * var(--variableUnitsSize));
+  } */
+}
+
+@media screen and (max-width: 400px) {
+  /*  .navigation {
+    margin-left: calc(-1 * var(--variableUnitsSize));
+  } */
+}

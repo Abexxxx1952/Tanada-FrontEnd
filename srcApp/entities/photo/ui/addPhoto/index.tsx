@@ -25,12 +25,11 @@ export function AddPhoto({
 
   return (
     <div className={styles.addPhoto} onClick={handleAddPhotoClick}>
-      <Image
-        src="/icons/circle-plus.svg"
-        fill={true}
-        style={{ objectFit: "cover", padding: "0.3rem" }}
-        alt="circle-plus"
-      />
+      <div className={styles.addPhoto__image}>
+        
+        <Image src="/icons/circle-plus.svg" fill={true} alt="circle-plus" />
+      </div>
+
       <div className={styles.tooltip}>
         <Tooltip text="Add new photo" />
       </div>

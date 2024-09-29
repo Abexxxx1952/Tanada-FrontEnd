@@ -59,10 +59,6 @@
 }
 
 @media screen and (max-width: 630px) {
-  /*  .logo {
-    max-width: 11rem;
-    max-height: 1rem;
-  } */
   .logo__icon {
     max-width: 1.5rem;
     max-height: 3.5rem;
@@ -82,7 +78,7 @@
     margin-bottom: 0.5rem;
   }
 }
-
+/* 
 @media screen and (max-width: 450px) {
   .logo {
     font-size: 0.4rem;
@@ -108,3 +104,4 @@
     margin-bottom: 0.2rem;
   }
 }
+ */

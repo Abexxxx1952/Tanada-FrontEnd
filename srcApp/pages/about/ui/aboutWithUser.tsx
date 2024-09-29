@@ -1,7 +1,7 @@
 "use client";
 import { useSetCurrentUser } from "@/srcApp/entities/user/model/useSetCurrentUser";
 import { useImage } from "@/srcApp/shared/hooks/useImage";
-import { AboutPage } from "./about";
+import { AboutPage } from "./aboutPage";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 
 type AboutWithUserPageProps = {

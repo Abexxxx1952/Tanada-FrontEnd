@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LoginModal } from "../../login-modal";
+import { LoginModal } from "@/srcApp/widgets/login-modal";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { fetchUserData } from "@/srcApp/entities/user/api/fetchUserData";
 import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";

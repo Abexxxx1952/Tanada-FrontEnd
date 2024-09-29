@@ -1,6 +1,6 @@
 "use client";
 import { useLayoutEffect } from "react";
-import { StatsPage } from "./stats";
+import { StatsPage } from "./statsPage";
 import { useFetchStats } from "@/srcApp/pages/stats/model/useFetchStats";
 import { permanentRedirect } from "next/navigation";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";

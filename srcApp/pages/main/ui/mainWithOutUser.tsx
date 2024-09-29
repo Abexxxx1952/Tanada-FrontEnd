@@ -5,6 +5,7 @@ import { Images } from "@/srcApp/widgets/images";
 import { permanentRedirect, useRouter } from "next/navigation";
 import { useLayoutEffect } from "react";
 import styles from "./styles.module.css";
+import { MainPage } from "./mainPage";
 
 export function MainWithOutUserPage() {
   const { currentUser } = useAppContext();
@@ -15,24 +16,5 @@ export function MainWithOutUserPage() {
     }
   }, []);
 
-  return (
-    <>
-      <div className={styles.socialContainer}>
-        <Social currentUser={currentUser} />
-      </div>
-      <div className={styles.contentContainer}>
-        <div className={styles.content}>
-          <span className={styles.content__upperText}>A Hiking guide</span>
-          <h1 className={styles.content__text}>
-            {currentUser && currentUser.payload && currentUser.payload[2]
-              ? currentUser.payload[2].value
-              : "My adventures in Schonada!"}
-          </h1>
-        </div>
-      </div>
-      <div className={styles.imagesContainer}>
-        <Images currentUser={null} owner={false} />
-      </div>
-    </>
-  );
+  return <MainPage currentUser={null} owner={false} />;
 }

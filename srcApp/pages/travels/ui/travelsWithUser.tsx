@@ -1,6 +1,6 @@
 "use client";
 import { useImage } from "@/srcApp/shared/hooks/useImage";
-import { TravelsPage } from "./travel";
+import { TravelsPage } from "./travelsPage";
 import { useSetCurrentUser } from "@/srcApp/entities/user/model/useSetCurrentUser";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 
