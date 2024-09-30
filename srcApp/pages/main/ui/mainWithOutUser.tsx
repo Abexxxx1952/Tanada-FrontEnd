@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import { MainPage } from "./mainPage";
 
 export function MainWithOutUserPage() {
-  const { currentUser } = useAppContext();
+  const { user, currentUser } = useAppContext();
   const router = useRouter();
   useLayoutEffect(() => {
     if (currentUser !== null) {
@@ -16,5 +16,5 @@ export function MainWithOutUserPage() {
     }
   }, []);
 
-  return <MainPage currentUser={null} owner={false} />;
+  return <MainPage user={null} currentUser={null} owner={false} />;
 }

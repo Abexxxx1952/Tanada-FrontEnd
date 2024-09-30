@@ -4,11 +4,15 @@ import { useImage } from "@/srcApp/shared/hooks/useImage";
 import { permanentRedirect } from "next/navigation";
 import { useLayoutEffect } from "react";
 import { AboutPage } from "./aboutPage";
+import { userDataFromPayload } from "@/srcApp/entities/user/model/userDataFromPayload";
 
 export function AboutWithOutUserPage() {
   const { currentUser } = useAppContext();
 
-  const photoUrl = useImage(currentUser?.payload[3]?.value, "/images/me.png");
+  const photoUrl = useImage(
+    userDataFromPayload(currentUser, "yourPhotoUrl"),
+    "/images/me.png"
+  );
   useLayoutEffect(() => {
     if (currentUser !== null) {
       permanentRedirect(`/about/${currentUser.id}`);

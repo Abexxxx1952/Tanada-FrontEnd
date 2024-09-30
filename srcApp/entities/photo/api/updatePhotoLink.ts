@@ -3,26 +3,30 @@ import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
 import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
-import { Photo } from "@/srcApp/entities/photo/model/types";
+import { UpdateResult } from "@/srcApp/shared/model/types";
 import { revalidateTag } from "next/cache";
 
-export async function deletePhoto(
-  photoId: number,
+export async function updatePhotoLink(
+  currentPhotoId: number,
+  link: string,
   userId: string | undefined
-): Promise<Photo | undefined | ErrorData> {
+): Promise<UpdateResult | undefined | ErrorData> {
   const { access_token, refresh_token } = await getCookies();
   try {
     if (access_token) {
-      const response = await fetch(
-        `${process.env.DELETE_PHOTO_PATH}/${photoId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
-          },
-        }
-      );
+      const bodyParams = {
+        id: currentPhotoId,
+        link: link,
+      };
+
+      const response = await fetch(`${process.env.UPDATE_PHOTO_PATH}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
+        },
+        body: JSON.stringify(bodyParams),
+      });
 
       revalidateTag("photoAll");
       revalidateTag(`photoById${userId}`);
@@ -34,12 +38,12 @@ export async function deletePhoto(
         throw errorData;
       }
 
-      const data: Photo = await response.json();
+      const data: UpdateResult = await response.json();
 
       return data;
     }
     if (!access_token && refresh_token) {
-      return await refreshTokens(refresh_token, deletePhoto);
+      return await refreshTokens(refresh_token, updatePhotoLink);
     }
   } catch (error: unknown) {
     if (isErrorData(error)) {

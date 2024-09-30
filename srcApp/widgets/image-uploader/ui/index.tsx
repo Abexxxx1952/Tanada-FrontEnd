@@ -7,7 +7,7 @@ import { createSignedUrl } from "@/srcApp/entities/photo/api/createSignedUrl";
 import { ErrorData, UpdateResult } from "@/srcApp/shared/model/types";
 import { uploadPhoto } from "@/srcApp/entities/photo/api/uploadPhoto";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
-import { updatePhoto } from "@/srcApp/entities/photo/api/updatePhoto";
+import { updatePhotoLink } from "@/srcApp/entities/photo/api/updatePhotoLink";
 import { toast } from "react-toastify";
 import {
   CreateSignedUrlResponse,
@@ -19,8 +19,7 @@ import { addPhoto } from "@/srcApp/entities/photo/api/addPhoto";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
 import styles from "./styles.module.css";
-import { revalidateTag } from "next/cache";
-import { revalidateCache } from "@/srcApp/shared/model/revalidateCache";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
 
 type ImageUploaderProps = {
   imageUploadMod: ImageUploadMod | null;
@@ -33,6 +32,7 @@ type ImageUploaderProps = {
     React.SetStateAction<ImageModificationMod | null>
   >;
   setUpdateLink: React.Dispatch<React.SetStateAction<string | null>>;
+  user: UserFromServer | null;
 };
 
 export const ImageUploader = ({
@@ -42,6 +42,7 @@ export const ImageUploader = ({
   setImageUploadMod,
   setImageModificationMod,
   setUpdateLink,
+  user,
 }: ImageUploaderProps) => {
   const [selectedPhotoBase64, setSelectedPhotoBase64] = useState<string | null>(
     null
@@ -121,8 +122,6 @@ export const ImageUploader = ({
         signedUrlResult,
         selectedPhoto
       );
-      revalidateCache("photo");
-      revalidateCache("photoStats");
     }
 
     if (isErrorData(uploadedPhotoUrlResult)) {
@@ -141,9 +140,10 @@ export const ImageUploader = ({
       !isErrorData(uploadedPhotoUrlResult) &&
       uploadedPhotoUrlResult !== undefined
     ) {
-      const updatePhotoResult = await updatePhoto(
+      const updatePhotoResult = await updatePhotoLink(
         currentPhotoId,
-        uploadedPhotoUrlResult
+        uploadedPhotoUrlResult,
+        user?.id
       );
 
       notifyResponse<UpdateResult>(
@@ -163,7 +163,7 @@ export const ImageUploader = ({
       !isErrorData(uploadedPhotoUrlResult) &&
       uploadedPhotoUrlResult !== undefined
     ) {
-      const addPhotoResult = await addPhoto(uploadedPhotoUrlResult);
+      const addPhotoResult = await addPhoto(uploadedPhotoUrlResult, user?.id);
 
       notifyResponse<Photo>(addPhotoResult, "Photo successfully added");
 

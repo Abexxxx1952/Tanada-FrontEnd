@@ -22,12 +22,15 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { Photo } from "@/srcApp/entities/photo/model/types";
+import { swapSortId } from "@/srcApp/entities/photo/api/swapSortId";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
 
 interface DragAndDropContextProps {
   children: React.ReactNode;
   photos: Photo[] | null;
   photosSliced: Photo[] | null;
   setPhotos: Dispatch<SetStateAction<Photo[] | null>>;
+  user: UserFromServer | null;
 }
 
 export const DragAndDropContext = ({
@@ -35,6 +38,7 @@ export const DragAndDropContext = ({
   photos,
   photosSliced,
   setPhotos,
+  user,
 }: DragAndDropContextProps) => {
   const onDragStart = (event: DragStartEvent) => {
     const activeElement = document.getElementById(`${event.active.id}`);
@@ -52,15 +56,17 @@ export const DragAndDropContext = ({
       activeElement.style.transitionTimingFunction = "ease";
       activeElement.style.transitionDelay = "0s";
     }
-    if (active.id !== over?.id && photos !== null) {
+
+    if (active.id !== over?.id && photos !== null && user !== null) {
+      const oldIndex = photos.findIndex((photo) => photo.id === active.id);
+      const newIndex = photos.findIndex((photo) => photo.id === over?.id);
+
+      swapSortId(photos[oldIndex], photos[newIndex], user.id, setPhotos);
+
       setPhotos((prevPhotos: Photo[] | null) => {
         if (prevPhotos === null) {
           return null;
         }
-        const oldIndex = prevPhotos.findIndex(
-          (photo) => photo.id === active.id
-        );
-        const newIndex = prevPhotos.findIndex((photo) => photo.id === over?.id);
         return arrayMove(prevPhotos, oldIndex, newIndex);
       });
     }

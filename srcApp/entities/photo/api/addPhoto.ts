@@ -7,7 +7,8 @@ import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refre
 import { revalidateTag } from "next/cache";
 
 export async function addPhoto(
-  link: string
+  link: string,
+  userId: string | undefined
 ): Promise<Photo | undefined | ErrorData> {
   const { access_token, refresh_token } = await getCookies();
   try {
@@ -29,7 +30,7 @@ export async function addPhoto(
         throw errorData;
       }
       revalidateTag("photoAll");
-      revalidateTag("photoById");
+      revalidateTag(`photoById${userId}`);
       revalidateTag("photoStats");
 
       const data: Photo = await response.json();

@@ -33,32 +33,32 @@ export function profileFormToUserFromServer(
   if (data.countryName) {
     const countryNames = data.countryName.split("; ");
     if (countryNames[0]) {
-      body.payload[5] = { key: "countryName 1", value: countryNames[0] };
+      body.payload[5] = { key: "countryName_1", value: countryNames[0] };
     }
     if (countryNames[1]) {
-      body.payload[8] = { key: "countryName 2", value: countryNames[1] };
+      body.payload[8] = { key: "countryName_2", value: countryNames[1] };
     }
     if (countryNames[2]) {
-      body.payload[11] = { key: "countryName 3", value: countryNames[2] };
+      body.payload[11] = { key: "countryName_3", value: countryNames[2] };
     }
   }
   if (data.countryImageUrl) {
     const countryImageUrls = data.countryImageUrl.split("; ");
     if (countryImageUrls[0]) {
       body.payload[6] = {
-        key: "countryImageUrl 1",
+        key: "countryImageUrl_1",
         value: countryImageUrls[0],
       };
     }
     if (countryImageUrls[1]) {
       body.payload[9] = {
-        key: "countryImageUrl 2",
+        key: "countryImageUrl_2",
         value: countryImageUrls[1],
       };
     }
     if (countryImageUrls[2]) {
       body.payload[12] = {
-        key: "countryImageUrl 3",
+        key: "countryImageUrl_3",
         value: countryImageUrls[2],
       };
     }
@@ -67,19 +67,19 @@ export function profileFormToUserFromServer(
     const countryDescriptions = data.countryDescription.split("; ");
     if (countryDescriptions[0]) {
       body.payload[7] = {
-        key: "countryDescriptions 1",
+        key: "countryDescriptions_1",
         value: countryDescriptions[0],
       };
     }
     if (countryDescriptions[1]) {
       body.payload[10] = {
-        key: "countryDescriptions 2",
+        key: "countryDescriptions_2",
         value: countryDescriptions[1],
       };
     }
     if (countryDescriptions[2]) {
       body.payload[13] = {
-        key: "countryDescriptions 3",
+        key: "countryDescriptions_3",
         value: countryDescriptions[2],
       };
     }

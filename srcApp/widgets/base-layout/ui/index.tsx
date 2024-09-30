@@ -3,8 +3,8 @@ import { useState, type PropsWithChildren } from "react";
 import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styles from "./styles.module.css";
 import { LoadingSite } from "@/srcApp/shared/ui/loadingSite";
+import styles from "./styles.module.css";
 
 export function BaseLayout({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState<boolean>(true);

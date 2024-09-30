@@ -2,9 +2,9 @@
 import { PhotoBox } from "@/srcApp/entities/photo/ui/photoBox";
 import { useEffect, useRef, useState, createRef } from "react";
 import { createPortal } from "react-dom";
-import { ImageModal } from "../image-modal";
+import { ImageModal } from "@/srcApp/widgets/image-modal";
 import { Photo } from "@/srcApp/entities/photo/model/types";
-import { ImageUploader } from "../image-uploader";
+import { ImageUploader } from "@/srcApp/widgets/image-uploader";
 import { AddPhoto } from "@/srcApp/entities/photo/ui/addPhoto";
 import {
   ImageModificationMod,
@@ -23,11 +23,12 @@ import { DragAndDropContext } from "@/srcApp/app/providers/dndContext";
 import styles from "./styles.module.css";
 
 type ImagesProps = {
+  user: UserFromServer | null;
   currentUser: UserFromServer | null;
   owner: boolean;
 };
 
-export function Images({ currentUser, owner }: ImagesProps) {
+export function Images({ user, currentUser, owner }: ImagesProps) {
   const [imageModalOpen, setImageModalOpen] = useState<boolean>(false);
   const [imageUploadModalOpen, setImageUploadModalOpen] =
     useState<boolean>(false);
@@ -69,7 +70,10 @@ export function Images({ currentUser, owner }: ImagesProps) {
       photos !== null
     ) {
       (async function () {
-        const deletedResult = await deletePhoto(photos[currentPhotoIdx].id);
+        const deletedResult = await deletePhoto(
+          photos[currentPhotoIdx].id,
+          user?.id
+        );
         notifyResponse<Photo>(
           deletedResult,
           `Photo with id: ${photos[currentPhotoIdx].id} deleted successfully`
@@ -153,30 +157,49 @@ export function Images({ currentUser, owner }: ImagesProps) {
           )}
         </div>
       </div>
-
-      <DragAndDropContext
-        photos={photos}
-        photosSliced={photosSliced}
-        setPhotos={setPhotos}
-      >
-        {photosSliced &&
-          photosSliced.map((elem, idx) => {
-            return (
-              <PhotoBox
-                key={elem.id}
-                ref={photoRefs.current[idx]}
-                photo={elem}
-                idx={idx}
-                owner={owner}
-                setImageModalOpen={setImageModalOpen}
-                setImageUploadModalOpen={setImageUploadModalOpen}
-                setCurrentPhotoIdx={setCurrentPhotoIdx}
-                setImageUploadMod={setImageUploadMod}
-                setImageModificationMod={setImageModificationMod}
-              />
-            );
-          })}
-      </DragAndDropContext>
+      {owner ? (
+        <DragAndDropContext
+          photos={photos}
+          photosSliced={photosSliced}
+          setPhotos={setPhotos}
+          user={user}
+        >
+          {photosSliced &&
+            photosSliced.map((elem, idx) => {
+              return (
+                <PhotoBox
+                  key={elem.id}
+                  ref={photoRefs.current[idx]}
+                  photo={elem}
+                  idx={idx}
+                  owner={owner}
+                  user={user}
+                  setImageModalOpen={setImageModalOpen}
+                  setImageUploadModalOpen={setImageUploadModalOpen}
+                  setCurrentPhotoIdx={setCurrentPhotoIdx}
+                  setImageUploadMod={setImageUploadMod}
+                  setImageModificationMod={setImageModificationMod}
+                />
+              );
+            })}
+        </DragAndDropContext>
+      ) : (
+        photosSliced?.map((elem, idx) => (
+          <PhotoBox
+            key={elem.id}
+            ref={photoRefs.current[idx]}
+            photo={elem}
+            idx={idx}
+            owner={owner}
+            user={user}
+            setImageModalOpen={setImageModalOpen}
+            setImageUploadModalOpen={setImageUploadModalOpen}
+            setCurrentPhotoIdx={setCurrentPhotoIdx}
+            setImageUploadMod={setImageUploadMod}
+            setImageModificationMod={setImageModificationMod}
+          />
+        ))
+      )}
       {portalRef.current &&
         imageModalOpen &&
         createPortal(
@@ -184,6 +207,7 @@ export function Images({ currentUser, owner }: ImagesProps) {
             photos={photosSliced}
             currentPhotoIdx={currentPhotoIdx}
             owner={owner}
+            user={user}
             setCurrentPhotoIdx={setCurrentPhotoIdx}
             setImageModalOpen={setImageModalOpen}
             setImageUploadModalOpen={setImageUploadModalOpen}
@@ -204,6 +228,7 @@ export function Images({ currentUser, owner }: ImagesProps) {
             setImageUploadMod={setImageUploadMod}
             setImageModificationMod={setImageModificationMod}
             setUpdateLink={setUpdateLink}
+            user={user}
           />,
           portalRef.current
         )}

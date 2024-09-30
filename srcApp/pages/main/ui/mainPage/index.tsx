@@ -2,15 +2,16 @@
 import { Social } from "@/srcApp/widgets/social";
 import { Images } from "@/srcApp/widgets/images";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
-
+import { userDataFromPayload } from "@/srcApp/entities/user/model/userDataFromPayload";
 import styles from "./styles.module.css";
 
 type MainPageProps = {
+  user: UserFromServer | null;
   currentUser: UserFromServer | null;
   owner: boolean;
 };
 
-export function MainPage({ currentUser, owner }: MainPageProps) {
+export function MainPage({ user, currentUser, owner }: MainPageProps) {
   return (
     <>
       <div className={styles.socialContainer}>
@@ -20,14 +21,13 @@ export function MainPage({ currentUser, owner }: MainPageProps) {
         <div className={styles.content}>
           <span className={styles.content__upperText}>A Hiking guide</span>
           <h1 className={styles.content__text}>
-            {currentUser && currentUser.payload && currentUser.payload[2]
-              ? currentUser.payload[2].value
-              : "My adventures in Schonada!"}
+            {userDataFromPayload(currentUser, "mainTextContent") ??
+              "My adventures in Schonada!"}
           </h1>
         </div>
       </div>
       <div className={styles.imagesContainer}>
-        <Images currentUser={currentUser} owner={owner} />
+        <Images user={user} currentUser={currentUser} owner={owner} />
       </div>
     </>
   );

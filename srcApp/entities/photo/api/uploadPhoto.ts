@@ -26,6 +26,7 @@ export async function uploadPhoto(
 
       throw errorData;
     }
+
     const data: UploadFileResponse = await response.json();
 
     return `${process.env.NEXT_PUBLIC_BUCKET_PREFIX_URL}${data.Key}`;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const useImage = (
-  imageUrl: string | undefined,
+  imageUrl: string | null | undefined,
   defaultUrl: string
 ): { imageSrc: string; isImageLoaded: boolean | null } => {
   const [imageSrc, setImageSrc] = useState<string>(defaultUrl);

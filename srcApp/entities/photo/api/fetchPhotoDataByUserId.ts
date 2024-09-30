@@ -2,7 +2,6 @@
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { Photo } from "@/srcApp/entities/photo/model/types";
-import { revalidateTag } from "next/cache";
 
 let controller: AbortController | null = null;
 
@@ -16,7 +15,6 @@ export async function fetchAllPhotoByUserId(
   controller = new AbortController();
   const { signal } = controller;
 
-
   try {
     const condition = {
       where: {
@@ -25,7 +23,7 @@ export async function fetchAllPhotoByUserId(
         },
       },
       order: {
-        id: "ASC",
+        sortId: "ASC",
       },
     };
 
@@ -40,7 +38,7 @@ export async function fetchAllPhotoByUserId(
         },
         cache: "force-cache",
         next: {
-          tags: ["photoById"],
+          tags: [`photoById${userId}`],
         },
         signal,
       }
@@ -52,7 +50,6 @@ export async function fetchAllPhotoByUserId(
       throw errorData;
     }
 
-    revalidateTag("photoAll");
     const data: Photo[] = await response.json();
 
     return data;

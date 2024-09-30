@@ -5,7 +5,8 @@ import { PhotoStats } from "@/srcApp/entities/photo/model/types";
 import { revalidateTag } from "next/cache";
 
 export async function addViewPhoto(
-  id: number
+  id: number,
+  userId: string | undefined
 ): Promise<PhotoStats | undefined | ErrorData> {
   try {
     const response = await fetch(`${process.env.ADD_VIEW_PHOTO}/${id}`, {
@@ -16,7 +17,7 @@ export async function addViewPhoto(
     });
 
     revalidateTag("photoAll");
-    revalidateTag("photoById");
+    revalidateTag(`photoById${userId}`);
     revalidateTag("photoStats");
 
     if (!response?.ok) {

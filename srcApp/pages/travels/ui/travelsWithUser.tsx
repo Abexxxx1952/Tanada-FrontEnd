@@ -3,6 +3,7 @@ import { useImage } from "@/srcApp/shared/hooks/useImage";
 import { TravelsPage } from "./travelsPage";
 import { useSetCurrentUser } from "@/srcApp/entities/user/model/useSetCurrentUser";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
+import { userDataFromPayload } from "@/srcApp/entities/user/model/userDataFromPayload";
 
 type TravelsWithUserPageProps = {
   userId: string;
@@ -13,15 +14,15 @@ export function TravelsWithUserPage({ userId }: TravelsWithUserPageProps) {
   const { currentUser } = useAppContext();
 
   const countryUrl1 = useImage(
-    currentUser?.payload[6]?.value,
+    userDataFromPayload(currentUser, "countryImageUrl_1"),
     "/images/schonada.jpg"
   );
   const countryUrl2 = useImage(
-    currentUser?.payload[9]?.value,
+    userDataFromPayload(currentUser, "countryImageUrl_2"),
     "/images/schonada.jpg"
   );
   const countryUrl3 = useImage(
-    currentUser?.payload[12]?.value,
+    userDataFromPayload(currentUser, "countryImageUrl_3"),
     "/images/schonada.jpg"
   );
 

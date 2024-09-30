@@ -17,9 +17,9 @@ import { loginUser } from "@/srcApp/features/auth/login/model/login-user";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
 import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
-import { UserLoginFormData } from "./model/types";
-import { validationSchema } from "./lib/schema";
-import { transformZodErrors } from "./model/transformZodErrors";
+import { UserLoginFormData } from "@/srcApp/widgets/login-modal/model/types";
+import { validationSchema } from "@/srcApp/widgets/login-modal/lib/schema";
+import { transformZodErrors } from "@/srcApp/widgets/login-modal/model/transformZodErrors";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 import styles from "./styles.module.css";
 

@@ -12,11 +12,13 @@ import { useImage } from "@/srcApp/shared/hooks/useImage";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import styles from "./styles.module.css";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
 
 type PhotoBoxProps = {
   photo: Photo;
   idx: number;
   owner: boolean;
+  user: UserFromServer | null;
   setCurrentPhotoIdx: React.Dispatch<React.SetStateAction<number | null>>;
   setImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setImageUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,6 +36,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       photo,
       idx,
       owner,
+      user,
       setCurrentPhotoIdx,
       setImageModalOpen,
       setImageUploadModalOpen,
@@ -49,7 +52,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       setImageModalOpen(true);
 
       (async function () {
-        await addViewPhoto(photo.id);
+        await addViewPhoto(photo.id, user?.id);
       })();
     }
 

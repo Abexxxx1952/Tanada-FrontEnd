@@ -11,5 +11,11 @@ export function MainWithUserPage({ userId }: MainWithUserPageProps) {
   useSetCurrentUser(userId);
   const { user, currentUser } = useAppContext();
 
-  return <MainPage currentUser={currentUser} owner={user?.id === userId} />;
+  return (
+    <MainPage
+      user={user}
+      currentUser={currentUser}
+      owner={user?.id === userId}
+    />
+  );
 }

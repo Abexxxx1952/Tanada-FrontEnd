@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
-import { INSTAGRAM_LINK_BASIC } from "../../shared/constants/socialLink-list";
-import { TWITTER_LINK_BASIC } from "../../shared/constants/socialLink-list";
+import { INSTAGRAM_LINK_BASIC } from "@/srcApp/shared/constants/socialLink-list";
+import { TWITTER_LINK_BASIC } from "@/srcApp/shared/constants/socialLink-list";
+import { userDataFromPayload } from "@/srcApp/entities/user/model/userDataFromPayload";
 import styles from "./styles.module.css";
 
 type SocialProps = {
@@ -11,8 +12,9 @@ type SocialProps = {
 
 export function Social({ currentUser }: SocialProps) {
   const INSTAGRAM_LINK =
-    currentUser?.payload?.[0]?.value || INSTAGRAM_LINK_BASIC;
-  const TWITTER_LINK = currentUser?.payload?.[1]?.value || TWITTER_LINK_BASIC;
+    userDataFromPayload(currentUser, "instagramUrl") || INSTAGRAM_LINK_BASIC;
+  const TWITTER_LINK =
+    userDataFromPayload(currentUser, "twitterUrl") || TWITTER_LINK_BASIC;
   return (
     <nav className={styles.social}>
       <div className={styles.social__text}>
