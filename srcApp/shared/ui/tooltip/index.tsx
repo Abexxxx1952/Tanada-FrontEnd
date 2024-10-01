@@ -7,7 +7,7 @@ type TooltipProps = {
 
 export function Tooltip({ text }: TooltipProps) {
   return (
-    <div className={styles.tooltipContainer}>
+    <div className={styles.tooltipContainer} role="tooltip">
       <div className={styles.tooltipContainer__content}>{text}</div>
     </div>
   );

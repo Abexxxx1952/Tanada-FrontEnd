@@ -21,8 +21,11 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ) => {
     return (
       <div className={styles.textareaContainer}>
-        <span className={styles.text}>{text}</span>
+        <label htmlFor={`textarea-${text}`} className={styles.text}>
+          {text}
+        </label>
         <textarea
+          id={`textarea-${text}`}
           className={styles.textarea}
           style={{ backgroundColor: color, resize: "none" }}
           onChange={onChange}
@@ -31,8 +34,14 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           disabled={disabled || false}
           value={value}
           ref={ref}
+          aria-invalid={error ? "true" : "false"}
+          aria-describedby={error ? `error-${text}` : undefined}
         />
-        {error && <span className={styles.error}>{error}</span>}
+        {error && (
+          <span id={`error-${text}`} className={styles.error} role="alert">
+            {error}
+          </span>
+        )}
       </div>
     );
   }

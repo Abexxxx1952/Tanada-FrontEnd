@@ -34,6 +34,7 @@
 }
 
 .header__logo {
+  display: flex;
   position: relative;
   min-width: calc(3 * var(--variableUnitsSize));
   min-height: calc(3 * var(--variableUnitsSize));

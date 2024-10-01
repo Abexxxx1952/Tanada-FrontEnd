@@ -135,30 +135,38 @@ export function LoginModal({ setModalOpen }: LoginModalProps) {
   }
 
   return (
-    <div className={styles.modal}>
-      <div className={styles.overlay} onClick={() => setModalOpen(false)}></div>
+    <div
+      className={styles.modal}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+    >
+      <div
+        className={styles.overlay}
+        onClick={() => setModalOpen(false)}
+        aria-hidden="true"
+      ></div>
 
       <div className={styles.content}>
         <div className={styles.content__rectangle}>
-          <div className={styles.content__frame}>
+          <span className={styles.content__frame}>
             <Image
               src="/images/loginPageFrame.png"
               fill={true}
               alt="loginPageFrame"
-              sizes="(max-width: 412px) 70vw, (max-width: 816px) 80vw, (max-width: 1200px) 90vw, 100vw"
             />
-          </div>
+          </span>
           <span className={styles.content__tagline}>
             Turn your ideas into reality.
           </span>
         </div>
 
         <div className={styles.loginContainer}>
-          <img
-            className={styles.crossLogo}
-            src="/icons/cross.svg"
-            alt="Cross icon"
-          />
+          <span className={styles.crossLogo}>
+            <Image src="/icons/cross.svg" fill={true} alt="Cross icon" />
+          </span>
+
           {!registerModal && (
             <div className={styles.loginBox}>
               <h2 className={styles.loginBox__title}>Login to your Account</h2>
@@ -208,6 +216,9 @@ export function LoginModal({ setModalOpen }: LoginModalProps) {
                 <span
                   className={styles.loginBox__registerLink}
                   onClick={() => setRegisterModal(true)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Create an account"
                 >
                   Create an account
                 </span>

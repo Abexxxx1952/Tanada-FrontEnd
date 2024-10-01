@@ -28,6 +28,7 @@
   text-shadow: 5px 5px 7px var(--bgLayoutColor, (144, 21, 228, 1));
 }
 .country__img {
+  display: flex;
   position: relative;
   margin-top: calc(1.5 * var(--variableUnitsSize));
   border-radius: calc(2 * var(--variableUnitsSize));

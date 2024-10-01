@@ -9,6 +9,7 @@
 }
 
 .about__img {
+  display: flex;
   border-radius: calc(3 * var(--variableUnitsSize));
   overflow: hidden;
   width: calc(50 * var(--variableUnitsSize));

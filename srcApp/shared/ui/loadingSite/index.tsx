@@ -2,7 +2,12 @@ import styles from "./styles.module.css";
 
 export function LoadingSite() {
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      role="alert"
+      aria-live="assertive"
+      aria-busy="true"
+    >
       <div
         className={styles.loader}
         style={{ "--j": 1 } as React.CSSProperties}

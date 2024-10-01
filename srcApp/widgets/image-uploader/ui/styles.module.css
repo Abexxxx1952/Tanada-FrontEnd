@@ -84,7 +84,6 @@
   height: calc(4 * var(--variableUnitsSize));
   overflow: hidden;
   cursor: pointer;
-  color: black;
 }
 
 .button {
@@ -96,6 +95,13 @@
   height: calc(3 * var(--variableUnitsSize));
   border-radius: 20px;
   overflow: hidden;
+}
+
+.imageError,
+.uploadIcon {
+  border: none;
+  outline: none;
+  background: none;
 }
 
 @media screen and (max-width: 1480px) {

@@ -27,8 +27,12 @@ export function StatsPage({
   photoStatsGeneral,
 }: StatsPageProps) {
   return (
-    <div className={styles.statsContainer}>
-      <h2 className={styles.photoStatsHeader}>
+    <div
+      className={styles.statsContainer}
+      role="article"
+      aria-labelledby="stats-heading"
+    >
+      <h2 className={styles.photoStatsHeader} id="stats-heading">
         {currentUser ? `${currentUser.email} photos stats` : "Photos stats"}
       </h2>
       {currentUser && (

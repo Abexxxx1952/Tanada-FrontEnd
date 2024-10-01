@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 export function ErrorPage() {
   return (
-    <div className={styles.errorContainer}>
+    <div className={styles.errorContainer} role="alert" aria-live="assertive">
       <div className={styles.error}>
         <div className={styles.mainText}>
           <h3 className={styles.mainText__header}>Oops!</h3>
@@ -22,7 +22,11 @@ export function ErrorPage() {
             There are only&nbsp;<strong>ERRORS</strong>&nbsp;
             <span className={styles.backLink}>
               back to&nbsp;
-              <Link href="/" className={styles.link}>
+              <Link
+                href="/"
+                className={styles.link}
+                aria-label="Go back to Home"
+              >
                 Home
               </Link>
             </span>

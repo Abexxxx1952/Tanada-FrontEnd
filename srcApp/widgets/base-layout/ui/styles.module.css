@@ -95,6 +95,12 @@
   position: relative;
 }
 
+.bgContainer__hg,
+.bgContainer__mg,
+.bgContainer__vg {
+  display: block;
+}
+
 @media screen and (max-width: 1200px) {
   .bgContainer__hg img {
     width: 120%;

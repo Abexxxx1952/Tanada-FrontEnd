@@ -13,15 +13,15 @@ export function BaseLayout({ children }: PropsWithChildren) {
     setIsLoading(false);
   };
   return (
-    <body className={styles.body} id="portal">
+    <body className={styles.body} id="portal" aria-live="polite">
       <ToastContainer autoClose={8000} />
       {isLoading && (
-        <div className={styles.loadingIndicator}>
+        <div className={styles.loadingIndicator} role="alert" aria-busy="true">
           <LoadingSite />
         </div>
       )}
       <div className={styles.bgContainer}>
-        <div className={styles.bgContainer__hg}>
+        <span className={styles.bgContainer__hg}>
           <Image
             src="/images/HG.png"
             width={1920}
@@ -31,11 +31,11 @@ export function BaseLayout({ children }: PropsWithChildren) {
             priority={true}
             onLoad={handleImageLoadComplete}
           />
-        </div>
+        </span>
 
         <div className={styles.bgContainer__upperGradient} />
         <Parallax translateY={[0, 50]} scale={[1, 1.4]}>
-          <div className={styles.bgContainer__mg}>
+          <span className={styles.bgContainer__mg}>
             <Image
               src="/images/MG.png"
               width={1920}
@@ -45,10 +45,10 @@ export function BaseLayout({ children }: PropsWithChildren) {
               priority={true}
               onLoad={handleImageLoadComplete}
             />
-          </div>
+          </span>
         </Parallax>
         <Parallax translateY={[0, -40]}>
-          <div className={styles.bgContainer__vg}>
+          <span className={styles.bgContainer__vg}>
             <Image
               src="/images/VG.png"
               width={1920}
@@ -58,7 +58,7 @@ export function BaseLayout({ children }: PropsWithChildren) {
               priority={true}
               onLoad={handleImageLoadComplete}
             />
-          </div>
+          </span>
         </Parallax>
         <div className={styles.bgContainer__downGradient} />
       </div>

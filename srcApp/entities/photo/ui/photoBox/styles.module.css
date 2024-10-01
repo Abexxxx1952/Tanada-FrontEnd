@@ -36,6 +36,12 @@
   color: #fff;
   transition: 0.2s;
 }
+.moderation__upload,
+.moderation__delete {
+  border: none;
+  outline: none;
+  background: none;
+}
 
 .images__itemContainer:hover,
 .images__itemContainer:focus-visible {

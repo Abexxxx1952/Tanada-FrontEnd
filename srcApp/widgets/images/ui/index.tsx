@@ -131,7 +131,11 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
   return (
     <>
       <div className={styles.sliderContainer}>
-        <nav className={styles.slider}>
+        <nav
+          className={styles.slider}
+          role="navigation"
+          aria-label="Slider navigation"
+        >
           <div className={styles.slider__text}>
             {photosSliced?.map((_, idx) => {
               return (
@@ -139,6 +143,14 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
                   className={styles.slider__content}
                   key={idx}
                   onClick={() => handleSliderClick(idx)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleSliderClick(idx);
+                    }
+                  }}
                 >
                   {idx + 1}
                 </div>

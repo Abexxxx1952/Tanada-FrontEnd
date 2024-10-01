@@ -32,8 +32,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <>
-        <span className={styles.text}>{text}</span>
+        <label htmlFor={`input-${text}`} className={styles.text}>
+          {text}
+        </label>
         <input
+          id={`input-${text}`}
           className={styles.input}
           style={{ backgroundColor: color }}
           onChange={onChange}
@@ -44,8 +47,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           pattern={pattern || undefined}
           value={value}
           ref={ref}
+          aria-invalid={error ? "true" : "false"}
+          aria-describedby={error ? `error-${text}` : undefined}
         />
-        {error && <span className={styles.error}>{error}</span>}
+        {error && (
+          <span id={`error-${text}`} className={styles.error} role="alert">
+            {error}
+          </span>
+        )}
       </>
     );
   }

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { LoginModal } from "@/srcApp/widgets/login-modal";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
@@ -97,21 +98,33 @@ export function AvatarWithDropdown() {
         onClick={
           user ? () => setDropdownOpen(true) : () => setLoginModalOpen(true)
         }
+        role="button"
+        tabIndex={0}
+        aria-haspopup="true"
+        aria-expanded={dropdownOpen}
+        aria-label={user ? "Open user menu" : "Open login modal"}
       >
-        <div className={styles.headerAccount__image}>
-          <img
-            className={styles.headerAccount__logo}
-            src={imageSrc.imageSrc}
-            alt="Account icon"
-          />
-        </div>
+        <span className={styles.headerAccount__image}>
+          <Image src={imageSrc.imageSrc} fill={true} alt="Account icon" />
+        </span>
 
         <div className={styles.headerAccount__text}>{user ? "" : "Log In"}</div>
       </div>
       <div className={styles.dropdownContainer}>
         {dropdownOpen && (
-          <div className={styles.dropdown} ref={dropdownRef}>
-            <div className={styles.email} onClick={handelEmail}>
+          <div
+            className={styles.dropdown}
+            ref={dropdownRef}
+            role="menu"
+            aria-labelledby="dropdown-menu"
+          >
+            <div
+              className={styles.email}
+              onClick={handelEmail}
+              role="menuitem"
+              tabIndex={0}
+              aria-label={`Email: ${user?.email}`}
+            >
               {user?.email}
             </div>
             <div className={styles.separator}></div>
@@ -119,13 +132,28 @@ export function AvatarWithDropdown() {
               href="/profile"
               className={styles.profile}
               onClick={() => setDropdownOpen(false)}
+              role="menuitem"
+              tabIndex={0}
+              aria-label="Profile"
             >
               Profile
             </Link>
-            <div className={styles.stats} onClick={handelStats}>
+            <div
+              className={styles.stats}
+              onClick={handelStats}
+              role="menuitem"
+              tabIndex={0}
+              aria-label="My statistics"
+            >
               My statistics
             </div>
-            <div className={styles.logOut} onClick={handelLogOut}>
+            <div
+              className={styles.logOut}
+              onClick={handelLogOut}
+              role="menuitem"
+              tabIndex={0}
+              aria-label="Log Out"
+            >
               Log Out
             </div>
           </div>

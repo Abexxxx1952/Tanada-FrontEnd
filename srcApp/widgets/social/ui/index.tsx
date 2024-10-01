@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { INSTAGRAM_LINK_BASIC } from "@/srcApp/shared/constants/socialLink-list";
@@ -16,16 +17,20 @@ export function Social({ currentUser }: SocialProps) {
   const TWITTER_LINK =
     userDataFromPayload(currentUser, "twitterUrl") || TWITTER_LINK_BASIC;
   return (
-    <nav className={styles.social}>
+    <nav
+      className={styles.social}
+      role="navigation"
+      aria-label="Social media links"
+    >
       <div className={styles.social__text}>
         <span>Follow us</span>
       </div>
       <Link href={INSTAGRAM_LINK} className={styles.social__item}>
-        <img src="/icons/instagram.svg" alt="Instagram icon" />
+        <Image src="/icons/instagram.svg" fill={true} alt="Instagram icon" />
       </Link>
 
       <Link href={TWITTER_LINK} className={styles.social__item}>
-        <img src="/icons/twitter.svg" alt="Twitter icon" />
+        <Image src="/icons/twitter.svg" fill={true} alt="Twitter icon" />
       </Link>
     </nav>
   );

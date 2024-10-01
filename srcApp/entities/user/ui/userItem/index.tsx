@@ -10,22 +10,28 @@ type UserItemProps = {
 
 export function UserItem({ user, handleUserClick }: UserItemProps) {
   return (
-    <li className={styles.userItem} onClick={() => handleUserClick(user)}>
-      <i className={styles.userItem__icon}>
+    <li
+      className={styles.userItem}
+      onClick={() => handleUserClick(user)}
+      role="button"
+      tabIndex={0}
+      aria-label={`View details for ${user.name || "user"}`}
+    >
+      <span className={styles.userItem__icon}>
         <Image
           src={user.icon || "/icons/header-account.svg"}
           fill={true}
-          alt="user_icon"
+          alt={`${user.name || "User"} icon`}
         />
-      </i>
+      </span>
       <div className={styles.userItem__email}>{user.email}</div>
       <div className={styles.userItem__name}>
         {user.name ? `${user.name}` : "NO NAME"}
       </div>
-      <div className={styles.userItem__createdAt}>
+      <time className={styles.userItem__createdAt}>
         Created at:&nbsp;
         {user?.createdAt?.toLocaleString().split("T")[0] || "N/A"}
-      </div>
+      </time>
       <div className={styles.userItem__photoLength}>
         Number of photos:&nbsp;{user.photo.length}
       </div>

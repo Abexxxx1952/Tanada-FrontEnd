@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 
 export function Logo() {
   return (
-    <Link href="/" className={styles.logo}>
+    <Link href="/" className={styles.logo} aria-label="Website Logo">
       Sanya Prod<sup>®</sup>
       <img src="/icons/logo.svg" className={styles.logo__icon} alt="Logo" />
     </Link>

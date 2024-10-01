@@ -24,11 +24,21 @@ export function AddPhoto({
   }
 
   return (
-    <div className={styles.addPhoto} onClick={handleAddPhotoClick}>
-      <div className={styles.addPhoto__image}>
-        
-        <Image src="/icons/circle-plus.svg" fill={true} alt="circle-plus" />
-      </div>
+    <div
+      className={styles.addPhoto}
+      onClick={handleAddPhotoClick}
+      role="button"
+      tabIndex={0}
+      aria-label="Add new photo"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          handleAddPhotoClick();
+        }
+      }}
+    >
+      <span className={styles.addPhoto__image}>
+        <Image src="/icons/circle-plus.svg" fill={true} alt="Add photo" />
+      </span>
 
       <div className={styles.tooltip}>
         <Tooltip text="Add new photo" />

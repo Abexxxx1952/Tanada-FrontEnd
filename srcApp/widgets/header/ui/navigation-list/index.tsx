@@ -12,7 +12,7 @@ export function NavigationList({ setMenuOpen }: NavigationListProps) {
   const pathname = usePathname();
 
   return (
-    <ul className={styles.navigationContent}>
+    <ul className={styles.navigationContent} role="list">
       {HEADER_ITEMS.map((elem) => {
         return (
           <li
@@ -20,8 +20,16 @@ export function NavigationList({ setMenuOpen }: NavigationListProps) {
             className={`${styles.navigationContent__item} ${
               isActivePath(pathname, elem.path) && styles.active
             }`}
+            role="listitem"
+            aria-current={
+              isActivePath(pathname, elem.path) ? "page" : undefined
+            }
           >
-            <Link href={elem.path} onClick={setMenuOpen}>
+            <Link
+              href={elem.path}
+              onClick={setMenuOpen}
+              aria-label={`Go to ${elem.value}`}
+            >
               {elem.value}
             </Link>
           </li>

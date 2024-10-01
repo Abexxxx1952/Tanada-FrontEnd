@@ -47,7 +47,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
   ) => {
     const photoUrl = useImage(photo?.link, "/icons/image-off.svg");
 
-    function handleImageClick(event: React.MouseEvent<HTMLElement>) {
+    function handleImageClick(event: React.SyntheticEvent<HTMLElement>) {
       setCurrentPhotoIdx(idx);
       setImageModalOpen(true);
 
@@ -56,7 +56,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       })();
     }
 
-    function handleImageUploadClick(event: React.MouseEvent<HTMLElement>) {
+    function handleImageUploadClick(event: React.SyntheticEvent<HTMLElement>) {
       event.stopPropagation();
       setCurrentPhotoIdx(idx);
       setImageUploadMod("update");
@@ -64,7 +64,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
     }
 
     async function handleImageDeleteClick(
-      event: React.MouseEvent<HTMLElement>
+      event: React.SyntheticEvent<HTMLElement>
     ) {
       event.stopPropagation();
       const isConfirmed = window.confirm("Are you sure?");
@@ -101,6 +101,14 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
           className={styles.images__item}
           ref={ref}
           onClick={handleImageClick}
+          role="button"
+          tabIndex={0}
+          aria-label="View photo"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              handleImageClick(e);
+            }
+          }}
         >
           {photoUrl.isImageLoaded === null && <LoadingPhoto />}
           {photoUrl.isImageLoaded !== null && (
@@ -109,41 +117,53 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
                 src={photoUrl.imageSrc}
                 fill={true}
                 style={{ objectFit: "cover" }}
-                alt="photo"
+                alt="Photo"
                 sizes="(max-width: 416px) 70vw, (max-width: 816px) 80vw, (max-width: 1900px) 90vw, 100vw"
               />
               <div className={styles.moderation}>
-                <i className={styles.moderation__viewsIcon}>
-                  <Image src="/icons/eye.svg" fill={true} alt="eye" />
-                </i>
+                <span className={styles.moderation__viewsIcon}>
+                  <Image src="/icons/eye.svg" fill={true} alt="View icon" />
+                </span>
 
                 <span className={styles.moderation__viewsCount}>
                   {photo.stats.viewsCount}
                 </span>
                 {owner && (
-                  <i
+                  <button
                     className={styles.moderation__upload}
-                    onClick={(event) => {
-                      handleImageUploadClick(event);
+                    onClick={handleImageUploadClick}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Upload photo"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        handleImageUploadClick(e);
+                      }
                     }}
                   >
                     <Image
-                      src="/icons/upload.svg"
+                      src="/icons/upload_1.svg"
                       fill={true}
-                      alt="upload"
-                      style={{ color: "white" }}
+                      alt="Upload"
+                     
                     />
-                  </i>
+                  </button>
                 )}
                 {owner && (
-                  <i
+                  <button
                     className={styles.moderation__delete}
-                    onClick={(event) => {
-                      handleImageDeleteClick(event);
+                    onClick={handleImageDeleteClick}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Delete photo"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        handleImageDeleteClick(e);
+                      }
                     }}
                   >
-                    <Image src="/icons/delete.svg" fill={true} alt="delete" />
-                  </i>
+                    <Image src="/icons/delete.svg" fill={true} alt="Delete" />
+                  </button>
                 )}
               </div>
             </>

@@ -67,22 +67,22 @@ export function ProfilePage() {
   }
 
   return (
-    <div className={styles.profileContainer}>
+    <div className={styles.profileContainer} aria-labelledby="profile-heading">
       <div className={styles.profile}>
         <div className={styles.header}>
-          <div className={styles.header__logo}>
+          <span className={styles.header__logo}>
             <Image src={imageSrc.imageSrc} alt="avatar" fill={true} />
-          </div>
+          </span>
           <span className={styles.header__email}>{user?.email}</span>
           <div className={styles.dateInfo}>
-            <span className={styles.dateInfo__createdAt}>
+            <time className={styles.dateInfo__createdAt}>
               Created at:&nbsp;
               {user?.createdAt?.toLocaleString().split("T")[0] || "N/A"}
-            </span>
-            <span className={styles.dateInfo__updatedAt}>
+            </time>
+            <time className={styles.dateInfo__updatedAt}>
               Updated at:&nbsp;
               {user?.updatedAt?.toLocaleString().split("T")[0] || "N/A"}
-            </span>
+            </time>
           </div>
         </div>
         <form className={styles.body} onSubmit={handleSubmit(onSubmit)}>

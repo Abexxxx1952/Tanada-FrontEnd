@@ -4,7 +4,11 @@ import styles from "./styles.module.css";
 
 export function NotFound() {
   return (
-    <div className={styles.notFoundContainer}>
+    <div
+      className={styles.notFoundContainer}
+      role="alert"
+      aria-live="assertive"
+    >
       <div className={styles.notFound}>
         <div className={styles.notFound__left}>
           <h2 className={styles.header}>
@@ -15,19 +19,19 @@ export function NotFound() {
           </span>
           <span className={styles.backLink}>
             back to&nbsp;
-            <Link href="/" className={styles.link}>
+            <Link href="/" className={styles.link} aria-label="Go back to Home">
               Home
             </Link>
           </span>
         </div>
-        <div className={styles.notFound__right}>
+        <span className={styles.notFound__right}>
           <Image
             src="/images/notFound.png"
             fill={true}
             alt="notFound"
             sizes="(max-width: 412px) 70vw, (max-width: 816px) 80vw, (max-width: 1200px) 90vw, 100vw"
           />
-        </div>
+        </span>
       </div>
     </div>
   );

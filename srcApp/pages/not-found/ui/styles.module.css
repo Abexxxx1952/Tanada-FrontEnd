@@ -56,11 +56,12 @@
 .link {
   color: #d269cc;
   font-size: 1.75rem;
-    line-height: 2.5rem;
+  line-height: 2.5rem;
   text-decoration-line: underline;
 }
 
 .notFound__right {
+  display: flex;
   width: 50%;
   height: 100%;
   position: relative;

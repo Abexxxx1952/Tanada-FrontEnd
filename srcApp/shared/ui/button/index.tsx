@@ -58,10 +58,13 @@ export function Button({
         if (textColor) e.currentTarget.style.color = textColor;
         if (focusTextColor) e.currentTarget.style.boxShadow = "none";
       }}
+      aria-label={loading ? "Loading" : undefined}
+      aria-disabled={disabled}
+      aria-busy={loading}
     >
       {icon && <img src={icon} className={styles.icon} alt="Icon" />}
       {loading ? (
-        <div className={styles.spinner}>
+        <div className={styles.spinner} aria-hidden="true">
           <svg viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10"></circle>
           </svg>

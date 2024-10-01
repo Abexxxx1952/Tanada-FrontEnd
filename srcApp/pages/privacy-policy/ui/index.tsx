@@ -2,8 +2,16 @@ import styles from "./styles.module.css";
 
 export function PrivacyPolicy() {
   return (
-    <div className={styles.policyContainer}>
-      <h1 className={styles.policyContainer__generalHeading}>Privacy Policy</h1>
+    <article
+      className={styles.policyContainer}
+      aria-labelledby="privacy-policy-heading"
+    >
+      <h1
+        className={styles.policyContainer__generalHeading}
+        id="privacy-policy-heading"
+      >
+        Privacy Policy
+      </h1>
       <p className={styles.policyContainer__paragraph}>
         We respect your privacy and are committed to protecting your personal
         data. This privacy policy will inform you about how we collect, use,
@@ -14,15 +22,15 @@ export function PrivacyPolicy() {
       <p className={styles.policyContainer__paragraph}>
         We may collect the following information:
       </p>
-      <ul className={styles.list}>
-        <li className={styles.list__item}>
+      <ul className={styles.list} role="list">
+        <li className={styles.list__item} role="listitem">
           Personal information: name, email address, phone number, etc.
         </li>
-        <li className={styles.list__item}>
+        <li className={styles.list__item} role="listitem">
           Usage data: information about how you use our application, including
           pages visited, time spent in the application, etc.
         </li>
-        <li className={styles.list__item}>
+        <li className={styles.list__item} role="listitem">
           Location data: geographical location of your device.
         </li>
       </ul>
@@ -31,17 +39,17 @@ export function PrivacyPolicy() {
       <p className={styles.policyContainer__paragraph}>
         The collected data is used for:
       </p>
-      <ul className={styles.list}>
-        <li className={styles.list__item}>
+      <ul className={styles.list} role="list">
+        <li className={styles.list__item} role="listitem">
           Providing and improving our services.
         </li>
-        <li className={styles.list__item}>
+        <li className={styles.list__item} role="listitem">
           Personalizing the user experience.
         </li>
-        <li className={styles.list__item}>
+        <li className={styles.list__item} role="listitem">
           Analyzing and researching to improve the application.
         </li>
-        <li className={styles.list__item}>
+        <li className={styles.list__item} role="listitem">
           Communicating with you about your use of the application.
         </li>
       </ul>
@@ -70,6 +78,6 @@ export function PrivacyPolicy() {
         If you have any questions or complaints regarding this privacy policy,
         please contact us at: [email@example.com].
       </p>
-    </div>
+    </article>
   );
 }

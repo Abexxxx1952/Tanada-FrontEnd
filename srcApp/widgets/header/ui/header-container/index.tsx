@@ -16,7 +16,11 @@ export function Header() {
     <header className={styles.header}>
       <Logo />
       <Menu />
-      <nav className={styles.navigation}>
+      <nav
+        className={styles.navigation}
+        role="navigation"
+        aria-label="Main Navigation"
+      >
         <NavigationList setMenuOpen={() => {}} />
       </nav>
       <AvatarWithDropdown />

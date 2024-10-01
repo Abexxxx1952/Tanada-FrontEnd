@@ -177,34 +177,48 @@ export const ImageUploader = ({
   }
 
   return (
-    <div className={styles.modal}>
+    <div
+      className={styles.modal}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+    >
       <div
         className={styles.overlay}
         onClick={() => setImageUploadModalOpen(false)}
+        role="button"
+        tabIndex={0}
+        aria-label="Close modal"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            setImageUploadModalOpen(false);
+          }
+        }}
       ></div>
 
       <div className={styles.content}>
-        <h2 className={styles.title}>
+        <h2 className={styles.title} id="modal-title">
           {selectedPhotoBase64 ? "Photo Uploaded" : "Upload photo"}
         </h2>
         <div className={styles.imageUploader}>
           {error && (
-            <div className={styles.imageError} onClick={handleInputClick}>
+            <button className={styles.imageError} onClick={handleInputClick}>
               <Image
                 src="icons/image-off.svg"
-                alt="no_image"
+                alt="No image icon"
                 width={80}
                 height={80}
                 style={{ margin: "auto" }}
               />
-            </div>
+            </button>
           )}
 
           {!selectedPhotoBase64 && (
             <>
               <Image
                 src="/icons/image-plus.svg"
-                alt="no_image"
+                alt="No image"
                 width={80}
                 height={80}
                 onClick={handleInputClick}
@@ -215,6 +229,14 @@ export const ImageUploader = ({
                 <strong
                   className={styles.strongText}
                   onClick={handleInputClick}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Browse files"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleInputClick();
+                    }
+                  }}
                 >
                   <u>Browse</u>
                 </strong>
@@ -231,14 +253,17 @@ export const ImageUploader = ({
           )}
         </div>
         {selectedPhotoBase64 && (
-          <div className={styles.uploadIcon} onClick={handleInputClick}>
+          <button className={styles.uploadIcon} onClick={handleInputClick}>
             <Image
-              src="/icons/upload.svg"
-              alt="upload icon"
+              src="/icons/upload_2.svg"
+              alt="Upload icon"
               fill={true}
-              style={{ objectFit: "contain", color: "var(--logoColor)" }}
+              style={{
+                objectFit: "contain",
+                color: "var(--notFoundBackgroundColor)",
+              }}
             />
-          </div>
+          </button>
         )}
         <input
           className={styles.fileInput}
@@ -247,6 +272,7 @@ export const ImageUploader = ({
           accept="image/*"
           id="picture"
           onChange={handleImageUpload}
+          aria-describedby="file-input-description"
         />
 
         <div className={styles.button}>

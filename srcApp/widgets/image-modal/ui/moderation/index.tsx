@@ -88,42 +88,70 @@ export function Moderation({
   return (
     <div className={styles.moderation}>
       <div className={styles.views}>
-        <div className={styles.views__icon}>
+        <span className={styles.views__icon}>
           <Image src="/icons/eye.svg" fill={true} alt="Eye" />
-        </div>
+        </span>
         <div className={styles.views__count}>{viewsCount}</div>
       </div>
 
       <div className={styles.arrow}>
-        <div
+        <button
           className={styles.arrow__left}
           onClick={() => handelChangePhoto(photos, currentPhotoIdx, "left")}
+          tabIndex={0}
+          aria-label="Previous photo"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              handelChangePhoto(photos, currentPhotoIdx, "left");
+            }
+          }}
         >
-          <Image src="/icons/arrow-left.svg" fill={true} alt="Eye" />
-        </div>
-        <div
+          <Image src="/icons/arrow-left.svg" fill={true} alt="Previous photo" />
+        </button>
+        <button
           className={styles.arrow__right}
           onClick={() => handelChangePhoto(photos, currentPhotoIdx, "right")}
+          tabIndex={0}
+          aria-label="Next photo"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              handelChangePhoto(photos, currentPhotoIdx, "right");
+            }
+          }}
         >
-          <Image src="/icons/arrow-right.svg" fill={true} alt="Eye" />
-        </div>
+          <Image src="/icons/arrow-right.svg" fill={true} alt="Next photo" />
+        </button>
       </div>
 
       {owner && (
-        <i
+        <button
           className={styles.moderation__upload}
           onClick={handleImageUploadClick}
+          tabIndex={0}
+          aria-label="Upload photo"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              handleImageUploadClick();
+            }
+          }}
         >
-          <Image src="/icons/upload.svg" fill={true} alt="upload" />
-        </i>
+          <Image src="/icons/upload_1.svg" fill={true} alt="Upload photo" />
+        </button>
       )}
       {owner && (
-        <i
+        <button
           className={styles.moderation__delete}
           onClick={handleImageDeleteClick}
+          tabIndex={0}
+          aria-label="Delete photo"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              handleImageDeleteClick();
+            }
+          }}
         >
-          <Image src="/icons/delete.svg" fill={true} alt="delete" />
-        </i>
+          <Image src="/icons/delete.svg" fill={true} alt="Delete photo" />
+        </button>
       )}
     </div>
   );

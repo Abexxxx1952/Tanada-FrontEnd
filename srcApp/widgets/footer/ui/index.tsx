@@ -5,8 +5,12 @@ import styles from "./styles.module.css";
 
 export function Footer() {
   return (
-    <footer className={styles.footer}>
-      <nav className={styles.footerContainer}>
+    <footer className={styles.footer} role="contentinfo">
+      <nav
+        className={styles.footerContainer}
+        role="navigation"
+        aria-label="Footer Navigation"
+      >
         <div className={styles.footer__colum}>
           <div className={styles.footer__logo}>
             <Logo />
@@ -21,7 +25,11 @@ export function Footer() {
             (elem) => {
               if (elem.type === "title") {
                 return (
-                  <Link href={elem.path} key={elem.value}>
+                  <Link
+                    href={elem.path}
+                    key={elem.value}
+                    aria-label={`Go to ${elem.value}`}
+                  >
                     <div className={styles.footer__title} key={elem.value}>
                       {elem.value}
                     </div>
@@ -30,7 +38,11 @@ export function Footer() {
               }
               if (elem.type === "text") {
                 return (
-                  <Link href={elem.path} key={elem.value}>
+                  <Link
+                    href={elem.path}
+                    key={elem.value}
+                    aria-label={`Go to ${elem.value}`}
+                  >
                     <div className={styles.footer__text} key={elem.value}>
                       {elem.value}
                     </div>
@@ -47,7 +59,11 @@ export function Footer() {
           ).map((elem) => {
             if (elem.type === "title") {
               return (
-                <Link href={elem.path} key={elem.value}>
+                <Link
+                  href={elem.path}
+                  key={elem.value}
+                  aria-label={`Go to ${elem.value}`}
+                >
                   <div className={styles.footer__title} key={elem.value}>
                     {elem.value}
                   </div>
@@ -56,7 +72,11 @@ export function Footer() {
             }
             if (elem.type === "text") {
               return (
-                <Link href={elem.path} key={elem.value}>
+                <Link
+                  href={elem.path}
+                  key={elem.value}
+                  aria-label={`Go to ${elem.value}`}
+                >
                   <div className={styles.footer__text} key={elem.value}>
                     {elem.value}
                   </div>

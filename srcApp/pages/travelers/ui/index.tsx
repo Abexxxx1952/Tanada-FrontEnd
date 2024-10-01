@@ -39,8 +39,14 @@ export function TravelersPage() {
   return (
     <div className={styles.travelersContainer}>
       <div className={styles.travelers}>
-        <h2 className={styles.travelers__title}>Travelers</h2>
-        <ul className={styles.travelers__usersList}>
+        <h2 className={styles.travelers__title} id="travelers-title">
+          Travelers
+        </h2>
+        <ul
+          className={styles.travelers__usersList}
+          aria-labelledby="travelers-title"
+          role="list"
+        >
           {users &&
             users?.map((user) => {
               return (

@@ -131,6 +131,15 @@
   cursor: pointer;
 }
 
+.arrow__left,
+.arrow__right,
+.moderation__upload,
+.moderation__delete {
+  border: none;
+  outline: none;
+  background: none;
+}
+
 @media screen and (max-height: 800px) {
   .moderation {
     height: 9.5%;
