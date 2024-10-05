@@ -4,16 +4,13 @@ import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
 import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
 import { ErrorData, UpdateResult } from "@/srcApp/shared/model/types";
-import { profileFormToUserFromServer } from "@/srcApp/entities/user/model/profileFormToUserFromServer";
-import { UserProfileFormData } from "@/srcApp/pages/profile/model/types";
+
 import { revalidateTag } from "next/cache";
 
 export async function updateUserData(
-  data: UserProfileFormData
+  body: UpdateUserDto
 ): Promise<UpdateResult | undefined | ErrorData> {
   const { access_token, refresh_token } = await getCookies();
-
-  const body: UpdateUserDto = profileFormToUserFromServer(data);
 
   try {
     if (access_token) {

@@ -18,7 +18,7 @@ type PhotoBoxProps = {
   photo: Photo;
   idx: number;
   owner: boolean;
-  user: UserFromServer | null;
+  userId: string | null;
   setCurrentPhotoIdx: React.Dispatch<React.SetStateAction<number | null>>;
   setImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setImageUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,7 +36,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       photo,
       idx,
       owner,
-      user,
+      userId,
       setCurrentPhotoIdx,
       setImageModalOpen,
       setImageUploadModalOpen,
@@ -52,7 +52,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       setImageModalOpen(true);
 
       (async function () {
-        await addViewPhoto(photo.id, user?.id);
+        await addViewPhoto(photo.id, userId);
       })();
     }
 
@@ -141,12 +141,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
                       }
                     }}
                   >
-                    <Image
-                      src="/icons/upload_1.svg"
-                      fill={true}
-                      alt="Upload"
-                     
-                    />
+                    <Image src="/icons/upload_1.svg" fill={true} alt="Upload" />
                   </button>
                 )}
                 {owner && (

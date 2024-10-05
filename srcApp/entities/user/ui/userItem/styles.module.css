@@ -26,14 +26,15 @@
 }
 
 .userItem__email {
+  margin-left: 1rem;
   font-size: 1.5rem;
-  width: 30%;
+  width: 25%;
 }
 
 .userItem__name {
   margin-left: 1rem;
   font-size: 1.5rem;
-  width: 25%;
+  width: 30%;
 }
 
 .userItem__createdAt {
@@ -90,7 +91,7 @@
 @media screen and (max-width: 1000px) {
   .userItem {
     flex-direction: column;
-    width: calc((100% - 1rem) / 2);
+    width: calc((100% - 3rem) / 2);
     height: auto;
     padding: 0.5rem;
   }

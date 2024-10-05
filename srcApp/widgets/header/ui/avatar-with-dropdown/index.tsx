@@ -49,7 +49,6 @@ export function AvatarWithDropdown() {
     try {
       await logoutUser();
       setUser(null);
-      router.replace("/");
       setDropdownOpen(false);
     } catch (error) {
       console.error("Failed to log out:", error);

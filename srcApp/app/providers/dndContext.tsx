@@ -30,7 +30,7 @@ interface DragAndDropContextProps {
   photos: Photo[] | null;
   photosSliced: Photo[] | null;
   setPhotos: Dispatch<SetStateAction<Photo[] | null>>;
-  user: UserFromServer | null;
+  userId: string | null;
 }
 
 export const DragAndDropContext = ({
@@ -38,7 +38,7 @@ export const DragAndDropContext = ({
   photos,
   photosSliced,
   setPhotos,
-  user,
+  userId,
 }: DragAndDropContextProps) => {
   const onDragStart = (event: DragStartEvent) => {
     const activeElement = document.getElementById(`${event.active.id}`);
@@ -57,11 +57,11 @@ export const DragAndDropContext = ({
       activeElement.style.transitionDelay = "0s";
     }
 
-    if (active.id !== over?.id && photos !== null && user !== null) {
+    if (active.id !== over?.id && photos !== null && userId !== null) {
       const oldIndex = photos.findIndex((photo) => photo.id === active.id);
       const newIndex = photos.findIndex((photo) => photo.id === over?.id);
 
-      swapSortId(photos[oldIndex], photos[newIndex], user.id, setPhotos);
+      swapSortId(photos[oldIndex], photos[newIndex], userId, setPhotos);
 
       setPhotos((prevPhotos: Photo[] | null) => {
         if (prevPhotos === null) {

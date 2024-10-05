@@ -6,7 +6,7 @@ import { revalidateTag } from "next/cache";
 
 export async function addViewPhoto(
   id: number,
-  userId: string | undefined
+  userId: string | null
 ): Promise<PhotoStats | undefined | ErrorData> {
   try {
     const response = await fetch(`${process.env.ADD_VIEW_PHOTO}/${id}`, {

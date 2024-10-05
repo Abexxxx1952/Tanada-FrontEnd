@@ -8,7 +8,7 @@
   position: absolute;
   top: calc(16 * var(--variableUnitsSize));
   left: 50%;
-  transform: translate(-40%);
+  transform: translate(-50%);
   z-index: 3;
 }
 .content {
@@ -41,6 +41,7 @@
 }
 
 .content__text {
+  text-align: center;
   color: var(--contentTextColor, #fff);
   font-family: Chronicle Display;
   font-size: 5.5rem;

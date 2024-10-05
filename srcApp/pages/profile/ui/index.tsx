@@ -15,11 +15,20 @@ import { userFromServerToProfileFormData } from "@/srcApp/pages/profile/model/us
 import { updateUserData } from "@/srcApp/entities/user/api/updateUserData";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
-import { UpdateResult } from "@/srcApp/shared/model/types";
+import { ErrorData, UpdateResult } from "@/srcApp/shared/model/types";
+import { fetchUserData } from "@/srcApp/entities/user/api/fetchUserData";
+import {
+  UpdateUserDto,
+  UserFromServer,
+} from "@/srcApp/entities/user/model/types";
+import { isErrorData } from "@/srcApp/shared/model/isErrorData";
+import { toast } from "react-toastify";
+import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
+import { profileFormToUserFromServer } from "@/srcApp/entities/user/model/profileFormToUserFromServer";
 import styles from "./styles.module.css";
 
 export function ProfilePage() {
-  const { user } = useAppContext();
+  const { user, setUser } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [body, setBody] = useState<HTMLBodyElement | null>(null);
   const router = useRouter();
@@ -58,12 +67,39 @@ export function ProfilePage() {
 
   function onSubmit(data: UserProfileFormData) {
     setLoading(true);
+
     (async () => {
-      const updateResult = await updateUserData(data);
+      const body: UpdateUserDto = profileFormToUserFromServer(data);
+
+      const updateResult = await updateUserData(body);
 
       notifyResponse<UpdateResult>(updateResult, "Data updated successfully");
+
+      const userOrError: UserFromServer | undefined | ErrorData =
+        await fetchUserData();
+
+      if (userOrError === undefined) {
+        setUser(null);
+      }
+
+      if (isErrorData(userOrError)) {
+        toast.error(
+          `Error: ${userOrError.status} ${
+            userOrError.statusText
+          }. Massage: ${JSON.stringify(userOrError)}`,
+          {
+            position: "top-right",
+          }
+        );
+        setUser(null);
+      }
+
+      if (isUserFromServer(userOrError)) {
+        setUser(userOrError);
+      }
     })();
     setLoading(false);
+    setTimeout(() => window.location.reload(), 0);
   }
 
   return (

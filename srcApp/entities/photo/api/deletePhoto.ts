@@ -8,7 +8,7 @@ import { revalidateTag } from "next/cache";
 
 export async function deletePhoto(
   photoId: number,
-  userId: string | undefined
+  userId: string | null
 ): Promise<Photo | undefined | ErrorData> {
   const { access_token, refresh_token } = await getCookies();
   try {

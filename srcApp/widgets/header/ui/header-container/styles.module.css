@@ -6,7 +6,7 @@
   top: 0;
   left: 0;
   right: 0;
-  margin: 2rem 5rem 0rem 5rem;
+  margin: 2rem 2.5rem 0rem 2.5rem;
   height: 2rem;
   font-size: 2rem;
   z-index: 10;
@@ -16,20 +16,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: calc(-7 * var(--variableUnitsSize));
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.header__currentUser {
+  font-size: 0.75rem;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 10;
+  color: var(--headerItemColor);
 }
 
 @media screen and (max-width: 1200px) {
   .header {
     font-size: 1.5rem;
-    margin: 1.75rem 4rem 0rem 4rem;
+    margin: 1.75rem 2rem 0rem 2rem;
   }
 }
 
 @media screen and (max-width: 900px) {
   .header {
     font-size: 1.2rem;
-    margin: 1.5rem 3rem 0rem 3rem;
+    margin: 1.5rem 1.5rem 0rem 1.5rem;
     height: 1.75rem;
   }
 }
@@ -43,7 +55,7 @@
 @media screen and (max-width: 630px) {
   .header {
     font-size: 1rem;
-    margin: 1.2rem 2rem 0rem 2rem;
+    margin: 1.2rem 1.2rem 0rem 1.2rem;
     height: 1.5rem;
   }
 }

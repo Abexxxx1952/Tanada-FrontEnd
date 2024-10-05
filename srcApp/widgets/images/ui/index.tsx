@@ -23,12 +23,12 @@ import { DragAndDropContext } from "@/srcApp/app/providers/dndContext";
 import styles from "./styles.module.css";
 
 type ImagesProps = {
-  user: UserFromServer | null;
+  userId: string | null;
   currentUser: UserFromServer | null;
   owner: boolean;
 };
 
-export function Images({ user, currentUser, owner }: ImagesProps) {
+export function Images({ userId, currentUser, owner }: ImagesProps) {
   const [imageModalOpen, setImageModalOpen] = useState<boolean>(false);
   const [imageUploadModalOpen, setImageUploadModalOpen] =
     useState<boolean>(false);
@@ -36,7 +36,7 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
     null
   );
   const [photos, setPhotos] = useState<Photo[] | null>(null);
-  const [photosSliced, setPhotosSliced] = useState<Photo[] | null>(null);
+  const [photosSliced, setPhotosSliced] = useState<Photo[] | []>([]);
   const [currentPhotoIdx, setCurrentPhotoIdx] = useState<number | null>(null);
   const [imageModificationMod, setImageModificationMod] =
     useState<ImageModificationMod | null>(null);
@@ -72,7 +72,7 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
       (async function () {
         const deletedResult = await deletePhoto(
           photos[currentPhotoIdx].id,
-          user?.id
+          userId
         );
         notifyResponse<Photo>(
           deletedResult,
@@ -174,7 +174,7 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
           photos={photos}
           photosSliced={photosSliced}
           setPhotos={setPhotos}
-          user={user}
+          userId={userId}
         >
           {photosSliced &&
             photosSliced.map((elem, idx) => {
@@ -185,7 +185,7 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
                   photo={elem}
                   idx={idx}
                   owner={owner}
-                  user={user}
+                  userId={userId}
                   setImageModalOpen={setImageModalOpen}
                   setImageUploadModalOpen={setImageUploadModalOpen}
                   setCurrentPhotoIdx={setCurrentPhotoIdx}
@@ -203,7 +203,7 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
             photo={elem}
             idx={idx}
             owner={owner}
-            user={user}
+            userId={userId}
             setImageModalOpen={setImageModalOpen}
             setImageUploadModalOpen={setImageUploadModalOpen}
             setCurrentPhotoIdx={setCurrentPhotoIdx}
@@ -219,7 +219,7 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
             photos={photosSliced}
             currentPhotoIdx={currentPhotoIdx}
             owner={owner}
-            user={user}
+            userId={userId}
             setCurrentPhotoIdx={setCurrentPhotoIdx}
             setImageModalOpen={setImageModalOpen}
             setImageUploadModalOpen={setImageUploadModalOpen}
@@ -228,6 +228,7 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
           />,
           portalRef.current
         )}
+
       {portalRef.current &&
         imageUploadModalOpen &&
         photosSliced &&
@@ -235,12 +236,12 @@ export function Images({ user, currentUser, owner }: ImagesProps) {
         createPortal(
           <ImageUploader
             imageUploadMod={imageUploadMod}
-            currentPhotoId={photosSliced[currentPhotoIdx].id}
+            currentPhotoId={photosSliced[currentPhotoIdx]?.id}
             setImageUploadModalOpen={setImageUploadModalOpen}
             setImageUploadMod={setImageUploadMod}
             setImageModificationMod={setImageModificationMod}
             setUpdateLink={setUpdateLink}
-            user={user}
+            userId={userId}
           />,
           portalRef.current
         )}

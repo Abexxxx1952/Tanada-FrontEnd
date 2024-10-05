@@ -46,7 +46,7 @@ export const validationSchema = z.object({
     .refine((value) => !value || z.string().url().safeParse(value).success, {
       message: "Country image URL must be a valid URL",
     }),
-  countryDescriptions: z.string().optional(),
+  countryDescription: z.string().optional(),
   yourPhotoUrl: z
     .string()
     .optional()

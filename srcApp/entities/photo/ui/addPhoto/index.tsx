@@ -40,7 +40,7 @@ export function AddPhoto({
         <Image src="/icons/circle-plus.svg" fill={true} alt="Add photo" />
       </span>
 
-      <div className={styles.tooltip}>
+      <div className={styles.tooltip} onClick={handleAddPhotoClick}>
         <Tooltip text="Add new photo" />
       </div>
     </div>

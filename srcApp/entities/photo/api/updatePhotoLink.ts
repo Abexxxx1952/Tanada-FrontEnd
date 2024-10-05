@@ -9,7 +9,7 @@ import { revalidateTag } from "next/cache";
 export async function updatePhotoLink(
   currentPhotoId: number,
   link: string,
-  userId: string | undefined
+  userId: string | null
 ): Promise<UpdateResult | undefined | ErrorData> {
   const { access_token, refresh_token } = await getCookies();
   try {

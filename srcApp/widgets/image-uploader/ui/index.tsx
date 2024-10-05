@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useImperativeDisableScroll } from "@/srcApp/shared/hooks/useImperativeDisableScroll";
 import { Button } from "@/srcApp/shared/ui/button";
@@ -19,7 +19,7 @@ import { addPhoto } from "@/srcApp/entities/photo/api/addPhoto";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
 import styles from "./styles.module.css";
-import { UserFromServer } from "@/srcApp/entities/user/model/types";
+import { DndContext, DragOverEvent, useDroppable } from "@dnd-kit/core";
 
 type ImageUploaderProps = {
   imageUploadMod: ImageUploadMod | null;
@@ -32,7 +32,7 @@ type ImageUploaderProps = {
     React.SetStateAction<ImageModificationMod | null>
   >;
   setUpdateLink: React.Dispatch<React.SetStateAction<string | null>>;
-  user: UserFromServer | null;
+  userId: string | null;
 };
 
 export const ImageUploader = ({
@@ -42,7 +42,7 @@ export const ImageUploader = ({
   setImageUploadMod,
   setImageModificationMod,
   setUpdateLink,
-  user,
+  userId,
 }: ImageUploaderProps) => {
   const [selectedPhotoBase64, setSelectedPhotoBase64] = useState<string | null>(
     null
@@ -50,6 +50,7 @@ export const ImageUploader = ({
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const body = document.querySelector("body");
@@ -66,31 +67,55 @@ export const ImageUploader = ({
     }
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  function imageUpload(file: File) {
+    if (!file.type.startsWith("image/")) {
+      alert("Load image only");
+      return;
+    }
+
+    setSelectedPhoto(file);
+    setError(false);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === "string") {
+        setSelectedPhotoBase64(reader.result);
+      }
+    };
+
+    reader.onerror = () => {
+      setError(true);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  function handleUploadIconClick(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
 
-      if (!file.type.startsWith("image/")) {
-        alert("Load image only");
-        return;
-      }
-
-      setSelectedPhoto(file);
-      setError(false);
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setSelectedPhotoBase64(reader.result);
-        }
-      };
-
-      reader.onerror = () => {
-        setError(true);
-      };
-
-      reader.readAsDataURL(file);
+      imageUpload(file);
     }
+  }
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const files = event.dataTransfer?.files;
+    if (files.length > 0) {
+      const file = files[0];
+
+      imageUpload(file);
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragOver(false);
   };
 
   async function handleUploadButton() {
@@ -143,7 +168,7 @@ export const ImageUploader = ({
       const updatePhotoResult = await updatePhotoLink(
         currentPhotoId,
         uploadedPhotoUrlResult,
-        user?.id
+        userId
       );
 
       notifyResponse<UpdateResult>(
@@ -163,7 +188,7 @@ export const ImageUploader = ({
       !isErrorData(uploadedPhotoUrlResult) &&
       uploadedPhotoUrlResult !== undefined
     ) {
-      const addPhotoResult = await addPhoto(uploadedPhotoUrlResult, user?.id);
+      const addPhotoResult = await addPhoto(uploadedPhotoUrlResult, userId);
 
       notifyResponse<Photo>(addPhotoResult, "Photo successfully added");
 
@@ -201,7 +226,15 @@ export const ImageUploader = ({
         <h2 className={styles.title} id="modal-title">
           {selectedPhotoBase64 ? "Photo Uploaded" : "Upload photo"}
         </h2>
-        <div className={styles.imageUploader}>
+
+        <div
+          className={`${styles.imageUploader} ${
+            isDragOver ? styles.dropZoneActive : ""
+          }`}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+        >
           {error && (
             <button className={styles.imageError} onClick={handleInputClick}>
               <Image
@@ -252,6 +285,7 @@ export const ImageUploader = ({
             />
           )}
         </div>
+
         {selectedPhotoBase64 && (
           <button className={styles.uploadIcon} onClick={handleInputClick}>
             <Image
@@ -271,7 +305,7 @@ export const ImageUploader = ({
           type="file"
           accept="image/*"
           id="picture"
-          onChange={handleImageUpload}
+          onChange={handleUploadIconClick}
           aria-describedby="file-input-description"
         />
 

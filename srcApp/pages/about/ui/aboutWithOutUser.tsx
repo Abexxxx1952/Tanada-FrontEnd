@@ -11,7 +11,7 @@ export function AboutWithOutUserPage() {
 
   const photoUrl = useImage(
     userDataFromPayload(currentUser, "yourPhotoUrl"),
-    "/images/me.png"
+    "/images/me.webp"
   );
   useLayoutEffect(() => {
     if (currentUser !== null) {

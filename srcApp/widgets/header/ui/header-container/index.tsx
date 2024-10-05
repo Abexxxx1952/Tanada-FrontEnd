@@ -1,17 +1,12 @@
 import { Logo } from "@/srcApp/shared/ui/logo";
 import { AvatarWithDropdown } from "../avatar-with-dropdown";
-import { useState } from "react";
 import { NavigationList } from "../navigation-list";
 import { Menu } from "../menu";
 import styles from "./styles.module.css";
+import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 
 export function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  function handleMenuClick() {
-    setMenuOpen(!menuOpen);
-  }
-
+  const { currentUser } = useAppContext();
   return (
     <header className={styles.header}>
       <Logo />
@@ -24,6 +19,11 @@ export function Header() {
         <NavigationList setMenuOpen={() => {}} />
       </nav>
       <AvatarWithDropdown />
+      <span className={styles.header__currentUser}>
+        {currentUser !== null
+          ? `Curren User: ${currentUser?.name}`
+          : `Curren User: All users`}
+      </span>
     </header>
   );
 }

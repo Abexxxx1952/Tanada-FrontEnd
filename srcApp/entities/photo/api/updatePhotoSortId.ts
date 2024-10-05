@@ -8,7 +8,7 @@ import { UpdateResult } from "@/srcApp/shared/model/types";
 export async function updatePhotoSortId(
   photoId: number,
   sortId: number,
-  userId: string | undefined,
+  userId: string | null,
   signal?: AbortSignal
 ): Promise<UpdateResult | undefined | ErrorData> {
   const { access_token, refresh_token } = await getCookies();

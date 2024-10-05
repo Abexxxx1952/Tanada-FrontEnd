@@ -42,7 +42,7 @@
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1050px) {
   .navigationContent {
     gap: 1.5rem;
   }
@@ -123,7 +123,6 @@
   }
   .active a {
     transform: scale(1.4);
-    
   }
 
   .navigationContent .navigationContent__item:nth-child(1) a::before {

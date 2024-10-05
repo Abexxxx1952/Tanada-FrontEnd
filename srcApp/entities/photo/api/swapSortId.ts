@@ -12,7 +12,7 @@ import { updatePhotoSortId } from "./updatePhotoSortId";
 const fetchCall = async (
   photoId: number,
   sortId: number,
-  userId: string | undefined,
+  userId: string | null,
   resolve: (value: UpdateResult) => void,
   reject: (reason?: any) => void,
   signal: AbortSignal

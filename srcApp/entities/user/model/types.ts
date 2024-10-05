@@ -41,5 +41,5 @@ export interface UpdateUserDto {
   name?: string;
   password?: string;
   icon?: string;
-  payload: Payload[];
+  payload?: Payload[];
 }

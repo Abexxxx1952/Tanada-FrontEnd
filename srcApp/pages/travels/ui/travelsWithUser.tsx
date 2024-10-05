@@ -15,15 +15,15 @@ export function TravelsWithUserPage({ userId }: TravelsWithUserPageProps) {
 
   const countryUrl1 = useImage(
     userDataFromPayload(currentUser, "countryImageUrl_1"),
-    "/images/schonada.jpg"
+    "/images/country.png"
   );
   const countryUrl2 = useImage(
     userDataFromPayload(currentUser, "countryImageUrl_2"),
-    "/images/schonada.jpg"
+    "/images/country.png"
   );
   const countryUrl3 = useImage(
     userDataFromPayload(currentUser, "countryImageUrl_3"),
-    "/images/schonada.jpg"
+    "/images/country.png"
   );
 
   return (

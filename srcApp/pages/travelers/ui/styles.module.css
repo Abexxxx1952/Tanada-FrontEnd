@@ -37,8 +37,7 @@
 .travelers__usersList {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 0.5rem;
+   padding: 0.5rem;
   gap: 0.7rem;
 }
 

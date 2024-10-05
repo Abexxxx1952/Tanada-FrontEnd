@@ -33,7 +33,7 @@ export function UserItem({ user, handleUserClick }: UserItemProps) {
         {user?.createdAt?.toLocaleString().split("T")[0] || "N/A"}
       </time>
       <div className={styles.userItem__photoLength}>
-        Number of photos:&nbsp;{user.photo.length}
+        Number of photos:&nbsp;{user?.photo.length}
       </div>
     </li>
   );

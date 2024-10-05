@@ -16,5 +16,5 @@ export function MainWithOutUserPage() {
     }
   }, []);
 
-  return <MainPage user={null} currentUser={null} owner={false} />;
+  return <MainPage userId={null} currentUser={null} owner={false} />;
 }

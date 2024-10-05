@@ -6,12 +6,12 @@ import { userDataFromPayload } from "@/srcApp/entities/user/model/userDataFromPa
 import styles from "./styles.module.css";
 
 type MainPageProps = {
-  user: UserFromServer | null;
+  userId: string | null;
   currentUser: UserFromServer | null;
   owner: boolean;
 };
 
-export function MainPage({ user, currentUser, owner }: MainPageProps) {
+export function MainPage({ userId, currentUser, owner }: MainPageProps) {
   return (
     <>
       <div className={styles.socialContainer}>
@@ -22,12 +22,12 @@ export function MainPage({ user, currentUser, owner }: MainPageProps) {
           <span className={styles.content__upperText}>A Hiking guide</span>
           <h1 className={styles.content__text}>
             {userDataFromPayload(currentUser, "mainTextContent") ??
-              "My adventures in Schonada!"}
+              "My adventures anywhere"}
           </h1>
         </div>
       </div>
       <div className={styles.imagesContainer}>
-        <Images user={user} currentUser={currentUser} owner={owner} />
+        <Images userId={userId} currentUser={currentUser} owner={owner} />
       </div>
     </>
   );

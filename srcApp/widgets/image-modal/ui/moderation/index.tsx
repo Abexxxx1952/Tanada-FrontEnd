@@ -13,7 +13,7 @@ type ModerationProps = {
   photos: Photo[] | null;
   currentPhotoIdx: number | null;
   owner: boolean;
-  user: UserFromServer | null;
+  userId: string | null;
   viewsCount: number | undefined;
   setCurrentPhotoIdx: React.Dispatch<React.SetStateAction<number | null>>;
   setImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +29,7 @@ export function Moderation({
   photos,
   currentPhotoIdx,
   owner,
-  user,
+  userId,
   viewsCount,
   setCurrentPhotoIdx,
   setImageModalOpen,
@@ -46,28 +46,28 @@ export function Moderation({
       if (currentPhotoIdx === 0) {
         setCurrentPhotoIdx(photos.length - 1);
         (async () => {
-          await addViewPhoto(photos[photos.length - 1].id, user?.id);
+          await addViewPhoto(photos[photos.length - 1].id, userId);
         })();
         return;
       }
 
       setCurrentPhotoIdx(currentPhotoIdx - 1);
       (async () => {
-        await addViewPhoto(photos[currentPhotoIdx - 1].id, user?.id);
+        await addViewPhoto(photos[currentPhotoIdx - 1].id, userId);
       })();
     }
     if (currentPhotoIdx !== null && photos && arrow === "right") {
       if (currentPhotoIdx === photos.length - 1) {
         setCurrentPhotoIdx(0);
         (async () => {
-          await addViewPhoto(photos[0].id, user?.id);
+          await addViewPhoto(photos[0].id, userId);
         })();
         return;
       }
 
       setCurrentPhotoIdx(currentPhotoIdx + 1);
       (async () => {
-        await addViewPhoto(photos[currentPhotoIdx + 1].id, user?.id);
+        await addViewPhoto(photos[currentPhotoIdx + 1].id, userId);
       })();
     }
   }

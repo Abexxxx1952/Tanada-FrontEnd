@@ -18,7 +18,7 @@ type LoginModalProps = {
   photos: Photo[] | null;
   currentPhotoIdx: number | null;
   owner: boolean;
-  user: UserFromServer | null;
+  userId: string | null;
   setCurrentPhotoIdx: React.Dispatch<React.SetStateAction<number | null>>;
   setImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setImageUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +33,7 @@ export function ImageModal({
   photos,
   currentPhotoIdx,
   owner,
-  user,
+  userId,
   setCurrentPhotoIdx,
   setImageModalOpen,
   setImageUploadModalOpen,
@@ -84,7 +84,7 @@ export function ImageModal({
           photos={photos}
           currentPhotoIdx={currentPhotoIdx}
           owner={owner}
-          user={user}
+          userId={userId}
           viewsCount={photo?.stats.viewsCount}
           setCurrentPhotoIdx={setCurrentPhotoIdx}
           setImageModalOpen={setImageModalOpen}

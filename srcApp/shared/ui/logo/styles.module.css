@@ -31,7 +31,7 @@
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .logo {
     max-width: 10rem;
     max-height: 1.2rem;

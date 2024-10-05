@@ -15,7 +15,9 @@
     cursor: pointer;
     height: 60%;
     aspect-ratio: 1.5 / 1;
-    margin-right: calc(8 * var(--variableUnitsSize));
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
     color: var(--contentTextColor);
     border: none;
     outline: none;

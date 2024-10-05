@@ -13,7 +13,7 @@ export function MainWithUserPage({ userId }: MainWithUserPageProps) {
 
   return (
     <MainPage
-      user={user}
+      userId={user?.id ?? null}
       currentUser={currentUser}
       owner={user?.id === userId}
     />
