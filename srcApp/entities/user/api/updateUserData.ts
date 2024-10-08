@@ -24,7 +24,6 @@ export async function updateUserData(
       });
 
       revalidateTag("userByCookies");
-      revalidateTag("userAll");
 
       if (!response.ok) {
         const errorData: ErrorData = await response.json();

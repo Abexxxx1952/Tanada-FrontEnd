@@ -182,14 +182,3 @@
   }
 }
 
-@media screen and (max-width: 450px) {
-  /* .navigation {
-    margin-left: calc(-2 * var(--variableUnitsSize));
-  } */
-}
-
-@media screen and (max-width: 400px) {
-  /*  .navigation {
-    margin-left: calc(-1 * var(--variableUnitsSize));
-  } */
-}

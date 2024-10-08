@@ -168,6 +168,7 @@ export function LoginModal({ setModalOpen }: LoginModalProps) {
           </span>
 
           {!registerModal && (
+            /*     ------------------Login Form------------------ */
             <div className={styles.loginBox}>
               <h2 className={styles.loginBox__title}>Login to your Account</h2>
               <div className={styles.loginBox__googleButton}>
@@ -226,6 +227,7 @@ export function LoginModal({ setModalOpen }: LoginModalProps) {
             </div>
           )}
           {registerModal && (
+            /*    -----------------Register Form----------------- */
             <div className={styles.loginBox}>
               <h2 className={styles.loginBox__title}>Registration</h2>
 

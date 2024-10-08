@@ -1,0 +1,78 @@
+.imageUploader {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #8743a7;
+  border-radius: 10px;
+  background-color: var(--imageUploadDndColor);
+  transition: all 0.3s ease;
+}
+
+.imageUploader_off {
+  width: 0;
+  height: 0;
+}
+.imageContainer {
+  position: relative;
+  cursor: pointer;
+  margin: auto;
+  width: 20%;
+  height: 20%;
+}
+.imageUploader.dropZoneActive {
+  border: 4px solid #007bff;
+  background-color: var(--imageUploadDndActiveColor);
+}
+
+.dndText {
+  font-size: 120%;
+  color: var(--bgLayoutColor);
+  margin-bottom: 5%;
+}
+
+.strongText {
+  color: var(--headerAccountColor);
+  cursor: pointer;
+}
+
+.fileInput {
+  display: none;
+}
+.imageError {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .dndText {
+    font-size: calc(1.75 * var(--variableUnitsSize));
+    margin: calc(1.75 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .dndText {
+    font-size: calc(2 * var(--variableUnitsSize));
+    margin: calc(2 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 756px) {
+  .dndText {
+    font-size: calc(2 * var(--variableUnitsSize));
+    margin: calc(2 * var(--variableUnitsSize));
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .dndText {
+    font-size: calc(1.5 * var(--variableUnitsSize));
+    margin: calc(2.75 * var(--variableUnitsSize));
+  }
+}

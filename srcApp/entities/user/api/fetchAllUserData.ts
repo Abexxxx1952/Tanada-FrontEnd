@@ -3,7 +3,6 @@ import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 
-
 let controller: AbortController | null = null;
 export async function fetchAllUserData(): Promise<
   UserFromServer[] | undefined | ErrorData
@@ -24,6 +23,7 @@ export async function fetchAllUserData(): Promise<
       cache: "force-cache",
       next: {
         tags: ["userAll"],
+        revalidate: 60 * 15,
       },
       signal,
     });

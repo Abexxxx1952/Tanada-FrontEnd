@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import React, { useRef, useState } from "react";
 import { useImperativeDisableScroll } from "@/srcApp/shared/hooks/useImperativeDisableScroll";
 import { Button } from "@/srcApp/shared/ui/button";
 import { createSignedUrl } from "@/srcApp/entities/photo/api/createSignedUrl";
@@ -18,8 +17,10 @@ import {
 import { addPhoto } from "@/srcApp/entities/photo/api/addPhoto";
 import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
+import { DropZone } from "@/srcApp/shared/ui/drop-zone";
+import { UploadIcon } from "@/srcApp/shared/ui/upload-icon";
+import { uploadImage } from "@/srcApp/shared/model/uploadImage";
 import styles from "./styles.module.css";
-import { DndContext, DragOverEvent, useDroppable } from "@dnd-kit/core";
 
 type ImageUploaderProps = {
   imageUploadMod: ImageUploadMod | null;
@@ -49,8 +50,7 @@ export const ImageUploader = ({
   );
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-  const [isDragOver, setIsDragOver] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const body = document.querySelector("body");
@@ -67,107 +67,14 @@ export const ImageUploader = ({
     }
   };
 
-  function imageUpload(file: File) {
-    if (!file.type.startsWith("image/")) {
-      alert("Load image only");
-      return;
-    }
-
-    setSelectedPhoto(file);
-    setError(false);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      if (typeof reader.result === "string") {
-        setSelectedPhotoBase64(reader.result);
-      }
-    };
-
-    reader.onerror = () => {
-      setError(true);
-    };
-
-    reader.readAsDataURL(file);
-  }
-
-  function handleUploadIconClick(event: React.ChangeEvent<HTMLInputElement>) {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-
-      imageUpload(file);
-    }
-  }
-
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const files = event.dataTransfer?.files;
-    if (files.length > 0) {
-      const file = files[0];
-
-      imageUpload(file);
-    }
-  };
-
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragOver(true);
-  };
-
-  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragOver(false);
-  };
-
   async function handleUploadButton() {
     setLoading(true);
-    let signedUrlResult: CreateSignedUrlResponse | undefined | ErrorData;
-    let uploadedPhotoUrlResult: string | undefined | ErrorData;
+    const uploadedPhotoUrl = await uploadImage(selectedPhoto);
 
-    if (selectedPhoto) {
-      signedUrlResult = await createSignedUrl(selectedPhoto.name);
-    }
-
-    if (isErrorData(signedUrlResult)) {
-      toast.error(
-        `Error: ${signedUrlResult.status} ${
-          signedUrlResult.statusText
-        }. Massage: ${JSON.stringify(signedUrlResult)}`,
-        {
-          position: "top-right",
-        }
-      );
-    }
-
-    if (
-      !isErrorData(signedUrlResult) &&
-      signedUrlResult !== undefined &&
-      selectedPhoto
-    ) {
-      uploadedPhotoUrlResult = await uploadPhoto(
-        signedUrlResult,
-        selectedPhoto
-      );
-    }
-
-    if (isErrorData(uploadedPhotoUrlResult)) {
-      toast.error(
-        `Error: ${uploadedPhotoUrlResult.status} ${
-          uploadedPhotoUrlResult.statusText
-        }. Massage: ${JSON.stringify(signedUrlResult)}`,
-        {
-          position: "top-right",
-        }
-      );
-    }
-
-    if (
-      imageUploadMod === "update" &&
-      !isErrorData(uploadedPhotoUrlResult) &&
-      uploadedPhotoUrlResult !== undefined
-    ) {
+    if (imageUploadMod === "update" && uploadedPhotoUrl !== undefined) {
       const updatePhotoResult = await updatePhotoLink(
         currentPhotoId,
-        uploadedPhotoUrlResult,
+        uploadedPhotoUrl,
         userId
       );
 
@@ -176,19 +83,15 @@ export const ImageUploader = ({
         `Photo with id: ${currentPhotoId} updated successfully`
       );
 
-      if (!isErrorData(updatePhotoResult) && updatePhotoResult !== undefined) {
-        setUpdateLink(uploadedPhotoUrlResult);
+      if (updatePhotoResult !== undefined) {
+        setUpdateLink(uploadedPhotoUrl);
         setImageModificationMod("updated");
       }
       setImageUploadMod(null);
       setImageUploadModalOpen(false);
     }
-    if (
-      imageUploadMod === "add" &&
-      !isErrorData(uploadedPhotoUrlResult) &&
-      uploadedPhotoUrlResult !== undefined
-    ) {
-      const addPhotoResult = await addPhoto(uploadedPhotoUrlResult, userId);
+    if (imageUploadMod === "add" && uploadedPhotoUrl !== undefined) {
+      const addPhotoResult = await addPhoto(uploadedPhotoUrl, userId);
 
       notifyResponse<Photo>(addPhotoResult, "Photo successfully added");
 
@@ -226,88 +129,22 @@ export const ImageUploader = ({
         <h2 className={styles.title} id="modal-title">
           {selectedPhotoBase64 ? "Photo Uploaded" : "Upload photo"}
         </h2>
-
-        <div
-          className={`${styles.imageUploader} ${
-            isDragOver ? styles.dropZoneActive : ""
-          }`}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-        >
-          {error && (
-            <button className={styles.imageError} onClick={handleInputClick}>
-              <Image
-                src="icons/image-off.svg"
-                alt="No image icon"
-                width={80}
-                height={80}
-                style={{ margin: "auto" }}
-              />
-            </button>
-          )}
-
-          {!selectedPhotoBase64 && (
-            <>
-              <Image
-                src="/icons/image-plus.svg"
-                alt="No image"
-                width={80}
-                height={80}
-                onClick={handleInputClick}
-                style={{ margin: "auto", cursor: "pointer" }}
-              />
-              <h3 className={styles.dndText}>
-                Drag and Drop photo or&nbsp;
-                <strong
-                  className={styles.strongText}
-                  onClick={handleInputClick}
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Browse files"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      handleInputClick();
-                    }
-                  }}
-                >
-                  <u>Browse</u>
-                </strong>
-              </h3>
-            </>
-          )}
-          {selectedPhotoBase64 && (
-            <Image
-              src={selectedPhotoBase64}
-              alt="Uploaded image"
-              fill={true}
-              style={{ objectFit: "cover" }}
-            />
-          )}
+        <div className={styles.imageUploaderContainer}>
+          <DropZone
+            selectedPhotoBase64={selectedPhotoBase64}
+            setSelectedPhotoBase64={setSelectedPhotoBase64}
+            setSelectedPhoto={setSelectedPhoto}
+            handleInputClick={handleInputClick}
+            ref={fileInputRef}
+            id={"image-uploader"}
+          />
         </div>
 
         {selectedPhotoBase64 && (
-          <button className={styles.uploadIcon} onClick={handleInputClick}>
-            <Image
-              src="/icons/upload_2.svg"
-              alt="Upload icon"
-              fill={true}
-              style={{
-                objectFit: "contain",
-                color: "var(--notFoundBackgroundColor)",
-              }}
-            />
-          </button>
+          <div className={styles.uploadIconContainer}>
+            <UploadIcon handleInputClick={handleInputClick} />
+          </div>
         )}
-        <input
-          className={styles.fileInput}
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          id="picture"
-          onChange={handleUploadIconClick}
-          aria-describedby="file-input-description"
-        />
 
         <div className={styles.button}>
           <Button

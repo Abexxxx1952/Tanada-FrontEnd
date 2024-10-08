@@ -24,7 +24,7 @@
 .header__currentUser {
   font-size: 0.75rem;
   position: absolute;
-  top: 100%;
+  top: 120%;
   left: 50%;
   transform: translate(-50%);
   z-index: 10;

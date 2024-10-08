@@ -6,7 +6,7 @@ import { useIcon } from "@/srcApp/shared/hooks/useIcon";
 import { Input } from "@/srcApp/shared/ui/input";
 import { Button } from "@/srcApp/shared/ui/button";
 import { TextArea } from "@/srcApp/shared/ui/text-area";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 import { UserProfileFormData } from "@/srcApp/pages/profile/model/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,11 +26,24 @@ import { toast } from "react-toastify";
 import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
 import { profileFormToUserFromServer } from "@/srcApp/entities/user/model/profileFormToUserFromServer";
 import styles from "./styles.module.css";
+import { DropZone } from "@/srcApp/shared/ui/drop-zone";
+import { uploadImage } from "@/srcApp/shared/model/uploadImage";
 
 export function ProfilePage() {
   const { user, setUser } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [body, setBody] = useState<HTMLBodyElement | null>(null);
+  const [iconBase64, setIconBase64] = useState<string | null>(null);
+  const [icon, setIcon] = useState<File | null>(null);
+  const [countryImageBase64, setCountryImageBase64] = useState<string | null>(
+    null
+  );
+  const [countryImage, setCountryImage] = useState<File | null>(null);
+  const [yourPhotoBase64, setYourPhotoBase64] = useState<string | null>(null);
+  const [yourPhoto, setYourPhoto] = useState<File | null>(null);
+  const iconInputRef = useRef<HTMLInputElement>(null);
+  const countryImageInputRef = useRef<HTMLInputElement>(null);
+  const yourPhotoInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const imageSrc = useIcon(
@@ -53,7 +66,11 @@ export function ProfilePage() {
   });
 
   useKeyboardHandler(body, [
-    ["Enter", handleSubmit(onSubmit)],
+    [
+      "Enter",
+      handleSubmit((data) => onSubmit(data, icon, countryImage, yourPhoto)),
+      [icon, countryImage, yourPhoto],
+    ],
     ["Escape", () => router.push("/")],
   ]);
 
@@ -65,41 +82,103 @@ export function ProfilePage() {
     reset(defaultValues);
   }, [user, reset]);
 
-  function onSubmit(data: UserProfileFormData) {
+  const handleIconInputClick = () => {
+    if (iconInputRef.current) {
+      iconInputRef.current.click();
+    }
+  };
+  const handleCountryImageInputClick = () => {
+    if (countryImageInputRef.current) {
+      countryImageInputRef.current.click();
+    }
+  };
+  const handleYourPhotoInputClick = () => {
+    if (yourPhotoInputRef.current) {
+      yourPhotoInputRef.current.click();
+    }
+  };
+
+  function onSubmit(
+    data: UserProfileFormData,
+    icon: File | null,
+    countryImage: File | null,
+    yourPhoto: File | null
+  ) {
     setLoading(true);
-
+    const uploadPromises = [];
     (async () => {
-      const body: UpdateUserDto = profileFormToUserFromServer(data);
-
-      const updateResult = await updateUserData(body);
-
-      notifyResponse<UpdateResult>(updateResult, "Data updated successfully");
-
-      const userOrError: UserFromServer | undefined | ErrorData =
-        await fetchUserData();
-
-      if (userOrError === undefined) {
-        setUser(null);
-      }
-
-      if (isErrorData(userOrError)) {
-        toast.error(
-          `Error: ${userOrError.status} ${
-            userOrError.statusText
-          }. Massage: ${JSON.stringify(userOrError)}`,
-          {
-            position: "top-right",
-          }
+      if (icon !== null) {
+        uploadPromises.push(
+          uploadImage(icon).then((iconUrl) => {
+            if (iconUrl !== undefined) data.icon = iconUrl;
+          })
         );
-        setUser(null);
       }
 
-      if (isUserFromServer(userOrError)) {
-        setUser(userOrError);
+      if (countryImage !== null) {
+        uploadPromises.push(
+          uploadImage(countryImage).then((countryImageUrl) => {
+            if (countryImageUrl !== undefined)
+              data.countryImageUrl = countryImageUrl;
+          })
+        );
+      }
+
+      if (yourPhoto !== null) {
+        uploadPromises.push(
+          uploadImage(yourPhoto).then((yourPhotoUrl) => {
+            if (yourPhotoUrl !== undefined) data.yourPhotoUrl = yourPhotoUrl;
+          })
+        );
+      }
+
+      try {
+        await Promise.all(uploadPromises);
+
+        const body: UpdateUserDto = profileFormToUserFromServer(data);
+
+        const updateResult = await updateUserData(body);
+
+        await fetch("/api/revalidateUserByCookies", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        notifyResponse<UpdateResult>(updateResult, "Data updated successfully");
+
+        const userOrError: UserFromServer | undefined | ErrorData =
+          await fetchUserData();
+
+        if (userOrError === undefined) {
+          setUser(null);
+        }
+
+        if (isErrorData(userOrError)) {
+          toast.error(
+            `Error: ${userOrError.status} ${
+              userOrError.statusText
+            }. Massage: ${JSON.stringify(userOrError)}`,
+            {
+              position: "top-right",
+            }
+          );
+          setUser(null);
+        }
+
+        if (isUserFromServer(userOrError)) {
+          setUser(userOrError);
+        }
+      } catch (error) {
+        toast.error("An unexpected error occurred.", {
+          position: "top-right",
+        });
+      } finally {
+        setLoading(false);
+        setTimeout(() => window.location.reload(), 0);
       }
     })();
-    setLoading(false);
-    setTimeout(() => window.location.reload(), 0);
   }
 
   return (
@@ -121,7 +200,12 @@ export function ProfilePage() {
             </time>
           </div>
         </div>
-        <form className={styles.body} onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={styles.body}
+          onSubmit={handleSubmit((data) =>
+            onSubmit(data, icon, countryImage, yourPhoto)
+          )}
+        >
           <div className={styles.body__input}>
             <Controller
               name="name"
@@ -153,20 +237,29 @@ export function ProfilePage() {
               )}
             />
           </div>
-          <div className={styles.body__input}>
-            <Controller
-              name="icon"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  text="Icon"
-                  placeholder="Icon url"
-                  color="var(--contentTextColor)"
-                  error={errors.icon?.message}
-                  {...field}
-                />
-              )}
-            />
+          <div
+            className={`${
+              iconBase64 ? styles.body__dropZone_icon : styles.body__dropZone
+            }`}
+          >
+            <label
+              htmlFor={"dropzone-icon"}
+              className={` ${
+                iconBase64 ? styles.labelIcon : styles.labelDropZone
+              }`}
+            >
+              Icon
+            </label>
+            <span className={`${iconBase64 ? styles.iconField : ""}`}>
+              <DropZone
+                id={"dropzone-icon"}
+                selectedPhotoBase64={iconBase64}
+                setSelectedPhotoBase64={setIconBase64}
+                setSelectedPhoto={setIcon}
+                handleInputClick={handleIconInputClick}
+                ref={iconInputRef}
+              />
+            </span>
           </div>
           <div className={styles.body__input}>
             <Controller
@@ -260,21 +353,35 @@ export function ProfilePage() {
               )}
             />
           </div>
-          <div className={styles.body__input}>
-            <Controller
-              name="countryImageUrl"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  text="Country image url"
-                  placeholder="Country image url"
-                  color="var(--contentTextColor)"
-                  error={errors.countryImageUrl?.message}
-                  {...field}
-                />
-              )}
-            />
+          <div
+            className={`${
+              countryImageBase64
+                ? styles.body__dropZone_country
+                : styles.body__dropZone
+            }`}
+          >
+            <label
+              htmlFor={"dropzone-country"}
+              className={` ${
+                countryImageBase64 ? styles.labelCountry : styles.labelDropZone
+              }`}
+            >
+              Country
+            </label>
+            <span
+              className={`${countryImageBase64 ? styles.countryField : ""}`}
+            >
+              <DropZone
+                id={"dropzone-country"}
+                selectedPhotoBase64={countryImageBase64}
+                setSelectedPhotoBase64={setCountryImageBase64}
+                setSelectedPhoto={setCountryImage}
+                handleInputClick={handleCountryImageInputClick}
+                ref={countryImageInputRef}
+              />
+            </span>
           </div>
+
           <div className={styles.body__textarea}>
             <Controller
               name="countryDescription"
@@ -290,21 +397,33 @@ export function ProfilePage() {
               )}
             />
           </div>
-          <div className={styles.body__input}>
-            <Controller
-              name="yourPhotoUrl"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  text="Your photo url"
-                  placeholder="Your photo url"
-                  color="var(--contentTextColor)"
-                  error={errors.yourPhotoUrl?.message}
-                  {...field}
-                />
-              )}
-            />
+          <div
+            className={`${
+              yourPhotoBase64
+                ? styles.body__dropZone_yourPhoto
+                : styles.body__dropZone
+            }`}
+          >
+            <label
+              htmlFor={"dropzone-yourPhoto"}
+              className={` ${
+                yourPhotoBase64 ? styles.labelYourPhoto : styles.labelDropZone
+              }`}
+            >
+              Your photo url
+            </label>
+            <span className={`${yourPhotoBase64 ? styles.yourPhotoField : ""}`}>
+              <DropZone
+                id={"dropzone-yourPhoto"}
+                selectedPhotoBase64={yourPhotoBase64}
+                setSelectedPhotoBase64={setYourPhotoBase64}
+                setSelectedPhoto={setYourPhoto}
+                handleInputClick={handleYourPhotoInputClick}
+                ref={yourPhotoInputRef}
+              />
+            </span>
           </div>
+
           <div className={styles.body__textarea}>
             <Controller
               name="aboutYourself"

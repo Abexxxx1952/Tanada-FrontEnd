@@ -20,7 +20,7 @@ export function BaseLayout({ children }: PropsWithChildren) {
           <LoadingSite />
         </div>
       )}
-      <div className={styles.bgContainer}>
+      <section className={styles.bgContainer}>
         <span className={styles.bgContainer__hg}>
           <Image
             src="/images/HG.png"
@@ -61,7 +61,7 @@ export function BaseLayout({ children }: PropsWithChildren) {
           </span>
         </Parallax>
         <div className={styles.bgContainer__downGradient} />
-      </div>
+      </section>
 
       {children}
     </body>

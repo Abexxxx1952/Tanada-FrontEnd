@@ -79,10 +79,89 @@
   margin: 0.5rem 1rem 1rem 1rem;
 }
 
+.body__dropZone {
+  height: 12rem;
+  width: 90%;
+  margin: 1rem 1rem 1rem 1rem;
+}
+
+.labelDropZone,
+.labelIcon,
+.labelCountry,
+.labelYourPhoto {
+  font-size: 0.8em;
+  opacity: 0.8;
+  position: relative;
+  top: -5%;
+}
+.labelDropZone {
+  left: 2%;
+}
+
+.labelCountry {
+  top: -3%;
+}
+
+.labelYourPhoto {
+  top: -3%;
+}
+
+.iconField,
+.countryField,
+.yourPhotoField {
+  display: block;
+  position: relative;
+  margin: auto;
+}
+
+.iconField {
+  width: 30%;
+  height: 100%;
+}
+
+.countryField {
+  width: 90%;
+  height: 100%;
+}
+
+.yourPhotoField {
+  width: 90%;
+  height: 100%;
+}
+.body__dropZone_icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 12rem;
+  width: 90%;
+  margin: 1rem 1rem 1rem 1rem;
+}
+
+.body__dropZone_country {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 24rem;
+  width: 90%;
+  margin: 1rem 1rem 1rem 1rem;
+}
+
+.body__dropZone_yourPhoto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 24rem;
+  width: 90%;
+  margin: 1rem 1rem 1rem 1rem;
+}
+
 .body__textarea {
   width: 90%;
   height: 7.5rem;
-  margin: 1rem 1rem 1rem 1rem;
+  margin: 0.5rem 1rem 1rem 1rem;
 }
 
 .body__textarea + .body__input {

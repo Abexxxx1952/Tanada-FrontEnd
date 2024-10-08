@@ -21,10 +21,6 @@ function App({ children }: PropsWithChildren) {
     }
   }, []);
 
-  return (
-    <main className={styles.main} ref={mainRef}>
-      {children}
-    </main>
-  );
+  return <main className={styles.main}  ref={mainRef} >{children}</main>;
 }
 export default withProviders(App);
