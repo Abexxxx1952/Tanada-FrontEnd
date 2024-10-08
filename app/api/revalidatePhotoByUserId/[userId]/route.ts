@@ -1,7 +1,8 @@
+import { type NextRequest } from "next/server";
 import { revalidateTag } from "next/cache";
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { userId: string } }
 ) {
   const userId = params.userId;

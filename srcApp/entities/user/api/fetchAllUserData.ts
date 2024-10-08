@@ -20,7 +20,7 @@ export async function fetchAllUserData(): Promise<
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "force-cache",
+
       next: {
         tags: ["userAll"],
         revalidate: 60 * 15,

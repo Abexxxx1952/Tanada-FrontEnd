@@ -13,7 +13,7 @@
   border-radius: calc(3 * var(--variableUnitsSize));
   overflow: hidden;
   width: calc(40 * var(--variableUnitsSize));
-  height: calc(50 * var(--variableUnitsSize));
+  height: calc(48 * var(--variableUnitsSize));
   margin-right: calc(3 * var(--variableUnitsSize));
 }
 .about__img img {
@@ -37,7 +37,7 @@
   }
   .about__img {
     width: calc(44 * var(--variableUnitsSize));
-    height: calc(54 * var(--variableUnitsSize));
+    height: calc(52 * var(--variableUnitsSize));
   }
 }
 
