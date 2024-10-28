@@ -1,24 +1,27 @@
 "use client";
-import { ErrorData, UpdateResult } from "@/srcApp/shared/model/types";
+import { UpdateResult } from "@/srcApp/shared/model/types";
 import { Photo } from "@/srcApp/entities/photo/model/types";
-import { UserFromServer } from "@/srcApp/entities/user/model/types";
-import { toast } from "react-toastify";
-import { shuffleArray } from "@/srcApp/shared/model/shuffleArray";
-import { fetchAllPhoto } from "./fetchAllPhotoData";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { fetchAllPhotoByUserId } from "./fetchPhotoDataByUserId";
-import { updatePhotoSortId } from "./updatePhotoSortId";
+import { updatePhoToSortId } from "./updatePhotoSortId";
+import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
+import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
 
 const fetchCall = async (
   photoId: number,
   sortId: number,
-  userId: string | null,
+  access_token: string,
   resolve: (value: UpdateResult) => void,
   reject: (reason?: any) => void,
   signal: AbortSignal
 ): Promise<void> => {
   try {
-    const response = await updatePhotoSortId(photoId, sortId, userId, signal);
+    const response = await updatePhoToSortId(
+      photoId,
+      sortId,
+      access_token,
+      signal
+    );
 
     if (isErrorData(response) || response === undefined) {
       throw new Error("Fetch call failed");
@@ -33,11 +36,17 @@ const fetchCall = async (
 const revertCall = async (
   id: number,
   sortId: number,
+  access_token: string,
   userId: string,
   setPhotos: React.Dispatch<React.SetStateAction<Photo[] | null>>
 ): Promise<UpdateResult | undefined> => {
   try {
-    const response = await updatePhotoSortId(id, sortId, userId, undefined);
+    const response = await updatePhoToSortId(
+      id,
+      sortId,
+      access_token,
+      undefined
+    );
 
     if (isErrorData(response) || response === undefined) {
       throw new Error("RevertCall failed");
@@ -77,64 +86,92 @@ export async function swapSortId(
   userId: string,
   setPhotos: React.Dispatch<React.SetStateAction<Photo[] | null>>
 ): Promise<[UpdateResult, UpdateResult] | undefined> {
-  const controller1 = new AbortController();
-  const controller2 = new AbortController();
+  const { access_token, refresh_token } = await getCookies();
 
-  const {
-    promise: cancellablePromise1,
-    resolve: resolve1,
-    reject: reject1,
-  } = Promise.withResolvers<UpdateResult>();
-  const {
-    promise: cancellablePromise2,
-    resolve: resolve2,
-    reject: reject2,
-  } = Promise.withResolvers<UpdateResult>();
+  if (access_token) {
+    const controller1 = new AbortController();
+    const controller2 = new AbortController();
 
-  // Monitoring the state of promises
-  const cancellablePromise1State = trackPromiseState(cancellablePromise1);
-  const cancellablePromise2State = trackPromiseState(cancellablePromise2);
+    const {
+      promise: cancellablePromise1,
+      resolve: resolve1,
+      reject: reject1,
+    } = Promise.withResolvers<UpdateResult>();
 
-  // Start the first fetch call to swap sortId
-  fetchCall(
-    photo_1.id,
-    photo_2.sortId,
-    userId,
-    resolve1,
-    reject1,
-    controller1.signal
-  );
+    const {
+      promise: cancellablePromise2,
+      resolve: resolve2,
+      reject: reject2,
+    } = Promise.withResolvers<UpdateResult>();
 
-  // Start the second fetch call to swap sortId
-  fetchCall(
-    photo_2.id,
-    photo_1.sortId,
-    userId,
-    resolve2,
-    reject2,
-    controller2.signal
-  );
+    // Monitoring the state of promises
+    const cancellablePromise1State = trackPromiseState(cancellablePromise1);
+    const cancellablePromise2State = trackPromiseState(cancellablePromise2);
 
-  try {
-    const results = await Promise.all([
-      cancellablePromise1,
-      cancellablePromise2,
-    ]);
+    // Start the first fetch call to swap sortId
+    fetchCall(
+      photo_1.id,
+      photo_2.sortId,
+      access_token,
+      resolve1,
+      reject1,
+      controller1.signal
+    );
 
-    return results;
-  } catch (error) {
-    // If one of the promises is rejected, abort the other one
-    controller1.abort();
-    controller2.abort();
+    // Start the second fetch call to swap sortId
+    fetchCall(
+      photo_2.id,
+      photo_1.sortId,
+      access_token,
+      resolve2,
+      reject2,
+      controller2.signal
+    );
 
-    // If the request has already completed, make a request to revert the original sortIds
-    if (cancellablePromise1State.isFulfilled()) {
-      await revertCall(photo_1.id, photo_1.sortId, userId, setPhotos);
+    try {
+      const results = await Promise.all([
+        cancellablePromise1,
+        cancellablePromise2,
+      ]);
+
+      return results;
+    } catch (error) {
+      // If one of the promises is rejected, abort the other one
+      controller1.abort();
+      controller2.abort();
+
+      // If the request has already completed, make a request to revert the original sortIds
+      if (cancellablePromise1State.isFulfilled()) {
+        await revertCall(
+          photo_1.id,
+          photo_1.sortId,
+          access_token,
+          userId,
+          setPhotos
+        );
+      }
+      if (cancellablePromise2State.isFulfilled()) {
+        await revertCall(
+          photo_2.id,
+          photo_2.sortId,
+          access_token,
+          userId,
+          setPhotos
+        );
+      }
+
+      console.log(error);
+    } finally {
+      await fetch(`/api/revalidatePhotoByUserId/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
     }
-    if (cancellablePromise2State.isFulfilled()) {
-      await revertCall(photo_2.id, photo_2.sortId, userId, setPhotos);
-    }
-
-    console.log(error);
+  }
+  if (!access_token && refresh_token) {
+    return await refreshTokens(refresh_token, swapSortId);
   }
 }

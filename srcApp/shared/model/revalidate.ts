@@ -1,14 +1,12 @@
 "use server";
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
-import { Photo } from "@/srcApp/entities/photo/model/types";
-import { shuffleArray } from "@/srcApp/shared/model/shuffleArray";
 
 let controller: AbortController | null = null;
-
-export async function fetchAllPhoto(): Promise<
-  Photo[] | undefined | ErrorData
-> {
+export async function getUserDataForRevalidate(
+  access_token: string
+): Promise<UserFromServer | undefined | ErrorData> {
   if (controller) {
     controller.abort();
   }
@@ -17,13 +15,11 @@ export async function fetchAllPhoto(): Promise<
   const { signal } = controller;
 
   try {
-    const response = await fetch(`${process.env.GET_ALL_PHOTOS_PATH}`, {
+    const response = await fetch(`${process.env.GET_USER_DATA_PATH}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      },
-      next: {
-        tags: ["photoAll"],
+        Authorization: `Bearer ${access_token}`,
       },
       signal,
     });
@@ -34,9 +30,9 @@ export async function fetchAllPhoto(): Promise<
       throw errorData;
     }
 
-    const data: Photo[] = await response.json();
+    const data: UserFromServer = await response.json();
 
-    return shuffleArray(data);
+    return data;
   } catch (error: unknown) {
     if (isErrorData(error)) {
       return error;

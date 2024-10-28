@@ -36,7 +36,6 @@ export async function fetchAllPhotoByUserId(
         headers: {
           "Content-Type": "application/json",
         },
-        cache: "force-cache",
         next: {
           tags: [`photoById${userId}`],
         },

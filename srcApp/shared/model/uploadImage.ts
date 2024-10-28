@@ -1,3 +1,4 @@
+"use client";
 import { createSignedUrl } from "@/srcApp/entities/photo/api/createSignedUrl";
 import { CreateSignedUrlResponse } from "@/srcApp/entities/photo/model/types";
 import { ErrorData } from "./types";

@@ -12,18 +12,9 @@ export async function fetchPhotoByUser(
   user: UserFromServer | null,
   setPhotos: React.Dispatch<React.SetStateAction<Photo[] | null>>
 ): Promise<undefined> {
-  let controller = new AbortController();
-  let signal = controller.signal;
-
   if (user === null) {
-    if (controller) {
-      controller.abort();
-    }
-
-    controller = new AbortController();
-    signal = controller.signal;
-
     const photoOrError: Photo[] | undefined | ErrorData = await fetchAllPhoto();
+
     if (isErrorData(photoOrError)) {
       toast.error(
         `Error: ${photoOrError.status} ${
@@ -41,13 +32,6 @@ export async function fetchPhotoByUser(
   }
 
   if (user !== null) {
-    if (controller) {
-      controller.abort();
-    }
-
-    controller = new AbortController();
-    signal = controller.signal;
-
     const photoOrError: Photo[] | undefined | ErrorData =
       await fetchAllPhotoByUserId(user.id);
 
