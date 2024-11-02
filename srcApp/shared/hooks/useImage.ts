@@ -13,8 +13,8 @@ export const useImage = (
       img.src = imageUrl;
 
       img.onload = () => {
-        setIsImageLoaded(true);
         setImageSrc(imageUrl || defaultUrl);
+        setIsImageLoaded(true);
       };
       img.onerror = () => {
         setImageSrc(defaultUrl);

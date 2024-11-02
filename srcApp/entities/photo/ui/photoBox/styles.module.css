@@ -3,11 +3,10 @@
   display: flex;
   align-self: center;
   justify-content: center;
-  width: calc(20 * var(--variableUnitsSize));
-  height: calc(20 * var(--variableUnitsSize));
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 2rem;
   overflow: hidden;
-  margin: 1rem;
   transition: scale 0.3s;
 }
 
@@ -120,77 +119,4 @@
   right: 3%;
   width: 15%;
   height: 60%;
-}
-
-@media screen and (max-width: 1500px) {
-  .images__itemContainer {
-    width: calc(24 * var(--variableUnitsSize));
-    height: calc(24 * var(--variableUnitsSize));
-  }
-}
-
-@media screen and (max-width: 1220px) {
-  .images__itemContainer {
-    width: calc(26 * var(--variableUnitsSize));
-    height: calc(26 * var(--variableUnitsSize));
-  }
-}
-
-@media screen and (max-width: 1050px) {
-  .images__itemContainer {
-    width: calc(36 * var(--variableUnitsSize));
-    height: calc(36 * var(--variableUnitsSize));
-  }
-}
-
-@media screen and (max-width: 860px) {
-  .images__itemContainer {
-    width: calc(32 * var(--variableUnitsSize));
-    height: calc(32 * var(--variableUnitsSize));
-  }
-}
-@media screen and (max-width: 790px) {
-  .images__itemContainer {
-    width: calc(28 * var(--variableUnitsSize));
-    height: calc(28 * var(--variableUnitsSize));
-  }
-}
-@media screen and (max-width: 730px) {
-  .images__itemContainer {
-    width: calc(53 * var(--variableUnitsSize));
-    height: calc(53 * var(--variableUnitsSize));
-  }
-}
-
-@media screen and (max-width: 670px) {
-  .images__itemContainer {
-    width: calc(48 * var(--variableUnitsSize));
-    height: calc(48 * var(--variableUnitsSize));
-  }
-}
-@media screen and (max-width: 590px) {
-  .images__itemContainer {
-    width: calc(44 * var(--variableUnitsSize));
-    height: calc(44 * var(--variableUnitsSize));
-  }
-}
-@media screen and (max-width: 540px) {
-  .images__itemContainer {
-    width: calc(38 * var(--variableUnitsSize));
-    height: calc(38 * var(--variableUnitsSize));
-  }
-}
-
-@media screen and (max-width: 470px) {
-  .images__itemContainer {
-    width: calc(34 * var(--variableUnitsSize));
-    height: calc(34 * var(--variableUnitsSize));
-  }
-}
-
-@media screen and (max-width: 410px) {
-  .images__itemContainer {
-    width: calc(28 * var(--variableUnitsSize));
-    height: calc(28 * var(--variableUnitsSize));
-  }
 }

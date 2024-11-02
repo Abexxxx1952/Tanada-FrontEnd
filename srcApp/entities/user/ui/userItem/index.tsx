@@ -22,6 +22,7 @@ export function UserItem({ user, handleUserClick }: UserItemProps) {
           src={user.icon || "/icons/header-account.svg"}
           fill={true}
           alt={`${user.name || "User"} icon`}
+          sizes="(max-width: 416px) 70vw, (max-width: 816px) 80vw, (max-width: 1900px) 90vw, 100vw"
         />
       </span>
       <div className={styles.userItem__email}>{user.email}</div>
