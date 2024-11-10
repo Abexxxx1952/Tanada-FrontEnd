@@ -6,15 +6,15 @@ import { shuffleArray } from "@/srcApp/shared/model/shuffleArray";
 
 let controller: AbortController | null = null;
 
-export async function fetchAllPhoto(): Promise<
-  Photo[] | undefined | ErrorData
-> {
-  if (controller) {
-    controller.abort();
+export async function fetchAllPhoto(
+  abortControllerRef: React.MutableRefObject<AbortController | null>
+): Promise<Photo[] | undefined | ErrorData> {
+  if (abortControllerRef.current) {
+    abortControllerRef.current.abort();
   }
 
-  controller = new AbortController();
-  const { signal } = controller;
+  abortControllerRef.current = new AbortController();
+  const { signal } = abortControllerRef.current;
 
   try {
     const response = await fetch(`${process.env.GET_ALL_PHOTOS_PATH}`, {

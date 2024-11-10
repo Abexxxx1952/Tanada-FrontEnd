@@ -6,14 +6,15 @@ import { Photo } from "@/srcApp/entities/photo/model/types";
 let controller: AbortController | null = null;
 
 export async function fetchAllPhotoByUserId(
-  userId: string
+  userId: string,
+  abortControllerRef: React.MutableRefObject<AbortController | null>
 ): Promise<Photo[] | undefined | ErrorData> {
-  if (controller) {
-    controller.abort();
+  if (abortControllerRef.current) {
+    abortControllerRef.current.abort();
   }
 
-  controller = new AbortController();
-  const { signal } = controller;
+  abortControllerRef.current = new AbortController();
+  const { signal } = abortControllerRef.current;
 
   try {
     const condition = {

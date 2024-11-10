@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import {
   closestCenter,
   DndContext,
@@ -22,8 +22,7 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { Photo } from "@/srcApp/entities/photo/model/types";
-import { swapSortId } from "@/srcApp/entities/photo/api/swapSortId";
-import { UserFromServer } from "@/srcApp/entities/user/model/types";
+import { swapSortId } from "@/srcApp/entities/photo/model/swapSortId";
 
 interface DragAndDropContextProps {
   children: React.ReactNode;
@@ -40,6 +39,8 @@ export const DragAndDropContext = ({
   setPhotos,
   userId,
 }: DragAndDropContextProps) => {
+  const abortControllerRef1 = useRef<AbortController | null>(null);
+  const abortControllerRef2 = useRef<AbortController | null>(null);
   const onDragStart = (event: DragStartEvent) => {
     const activeElement = document.getElementById(`${event.active.id}`);
     if (activeElement) {
@@ -61,7 +62,14 @@ export const DragAndDropContext = ({
       const oldIndex = photos.findIndex((photo) => photo.id === active.id);
       const newIndex = photos.findIndex((photo) => photo.id === over?.id);
 
-      swapSortId(photos[oldIndex], photos[newIndex], userId, setPhotos);
+      swapSortId(
+        photos[oldIndex],
+        photos[newIndex],
+        userId,
+        setPhotos,
+        abortControllerRef1,
+        abortControllerRef2
+      );
 
       setPhotos((prevPhotos: Photo[] | null) => {
         if (prevPhotos === null) {

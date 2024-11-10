@@ -2,14 +2,10 @@
 import React, { useRef, useState } from "react";
 import { useImperativeDisableScroll } from "@/srcApp/shared/hooks/useImperativeDisableScroll";
 import { Button } from "@/srcApp/shared/ui/button";
-import { createSignedUrl } from "@/srcApp/entities/photo/api/createSignedUrl";
-import { ErrorData, UpdateResult } from "@/srcApp/shared/model/types";
-import { uploadPhoto } from "@/srcApp/entities/photo/api/uploadPhoto";
+import { UpdateResult } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { updatePhotoLink } from "@/srcApp/entities/photo/api/updatePhotoLink";
-import { toast } from "react-toastify";
 import {
-  CreateSignedUrlResponse,
   ImageModificationMod,
   ImageUploadMod,
   Photo,

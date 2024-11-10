@@ -2,8 +2,8 @@
 import { UpdateResult } from "@/srcApp/shared/model/types";
 import { Photo } from "@/srcApp/entities/photo/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
-import { fetchAllPhotoByUserId } from "./fetchPhotoDataByUserId";
-import { updatePhoToSortId } from "./updatePhotoSortId";
+import { fetchAllPhotoByUserId } from "../api/fetchPhotoDataByUserId";
+import { updatePhoToSortId } from "../api/updatePhotoSortId";
 import { getCookies } from "@/srcApp/features/auth/cookies/model/getCookies";
 import { refreshTokens } from "@/srcApp/features/auth/refresh-tokens/model/refresh-tokens";
 
@@ -13,14 +13,14 @@ const fetchCall = async (
   access_token: string,
   resolve: (value: UpdateResult) => void,
   reject: (reason?: any) => void,
-  signal: AbortSignal
+  abortControllerRef: React.MutableRefObject<AbortController | null>
 ): Promise<void> => {
   try {
     const response = await updatePhoToSortId(
       photoId,
       sortId,
       access_token,
-      signal
+      abortControllerRef.current?.signal
     );
 
     if (isErrorData(response) || response === undefined) {
@@ -38,7 +38,8 @@ const revertCall = async (
   sortId: number,
   access_token: string,
   userId: string,
-  setPhotos: React.Dispatch<React.SetStateAction<Photo[] | null>>
+  setPhotos: React.Dispatch<React.SetStateAction<Photo[] | null>>,
+  abortControllerRef: React.MutableRefObject<AbortController | null>
 ): Promise<UpdateResult | undefined> => {
   try {
     const response = await updatePhoToSortId(
@@ -54,7 +55,7 @@ const revertCall = async (
 
     return response;
   } catch (error) {
-    const result = await fetchAllPhotoByUserId(userId);
+    const result = await fetchAllPhotoByUserId(userId, abortControllerRef);
     if (!isErrorData(result) && result !== undefined) {
       setPhotos(result);
     }
@@ -84,13 +85,15 @@ export async function swapSortId(
   photo_1: Photo,
   photo_2: Photo,
   userId: string,
-  setPhotos: React.Dispatch<React.SetStateAction<Photo[] | null>>
+  setPhotos: React.Dispatch<React.SetStateAction<Photo[] | null>>,
+  abortControllerRef1: React.MutableRefObject<AbortController | null>,
+  abortControllerRef2: React.MutableRefObject<AbortController | null>
 ): Promise<[UpdateResult, UpdateResult] | undefined> {
   const { access_token, refresh_token } = await getCookies();
 
   if (access_token) {
-    const controller1 = new AbortController();
-    const controller2 = new AbortController();
+    abortControllerRef1.current = new AbortController();
+    abortControllerRef2.current = new AbortController();
 
     const {
       promise: cancellablePromise1,
@@ -115,7 +118,7 @@ export async function swapSortId(
       access_token,
       resolve1,
       reject1,
-      controller1.signal
+      abortControllerRef1
     );
 
     // Start the second fetch call to swap sortId
@@ -125,7 +128,7 @@ export async function swapSortId(
       access_token,
       resolve2,
       reject2,
-      controller2.signal
+      abortControllerRef2
     );
 
     try {
@@ -137,8 +140,8 @@ export async function swapSortId(
       return results;
     } catch (error) {
       // If one of the promises is rejected, abort the other one
-      controller1.abort();
-      controller2.abort();
+      abortControllerRef1.current.abort();
+      abortControllerRef2.current.abort();
 
       // If the request has already completed, make a request to revert the original sortIds
       if (cancellablePromise1State.isFulfilled()) {
@@ -147,7 +150,8 @@ export async function swapSortId(
           photo_1.sortId,
           access_token,
           userId,
-          setPhotos
+          setPhotos,
+          abortControllerRef1
         );
       }
       if (cancellablePromise2State.isFulfilled()) {
@@ -156,7 +160,8 @@ export async function swapSortId(
           photo_2.sortId,
           access_token,
           userId,
-          setPhotos
+          setPhotos,
+          abortControllerRef2
         );
       }
 

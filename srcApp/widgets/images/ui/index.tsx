@@ -1,4 +1,3 @@
-"use client";
 import { PhotoBox } from "@/srcApp/entities/photo/ui/photoBox";
 import { useEffect, useRef, useState, createRef } from "react";
 import { createPortal } from "react-dom";
@@ -10,7 +9,7 @@ import {
   ImageModificationMod,
   ImageUploadMod,
 } from "@/srcApp/entities/photo/model/types";
-import { fetchPhotoByUser } from "@/srcApp/entities/photo/api/fetchPhotoByUser";
+import { fetchPhotoByUser } from "@/srcApp/entities/photo/model/fetchPhotoByUser";
 import { deletePhoto } from "@/srcApp/entities/photo/api/deletePhoto";
 import { notifyResponse } from "@/srcApp/shared/model/notifyResponse";
 import {
@@ -42,8 +41,11 @@ export function Images({ userId, currentUser, owner }: ImagesProps) {
     useState<ImageModificationMod | null>(null);
   const [updateLink, setUpdateLink] = useState<string | null>(null);
 
+  const abortControllerRef = useRef<AbortController | null>(null);
   const portalRef = useRef<HTMLElement | null>(null);
   const photoRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
+
+  portalRef.current = document.getElementById("portal");
 
   if (photosSliced !== null) {
     photoRefs.current = photosSliced.map(() => createRef<HTMLDivElement>());
@@ -57,10 +59,12 @@ export function Images({ userId, currentUser, owner }: ImagesProps) {
   );
 
   useEffect(() => {
-    portalRef.current = document.getElementById("portal");
     (async function () {
-      await fetchPhotoByUser(currentUser, setPhotos);
+      await fetchPhotoByUser(currentUser, setPhotos, abortControllerRef);
     })();
+    return () => {
+      abortControllerRef.current?.abort();
+    };
   }, [currentUser]);
 
   useEffect(() => {
@@ -90,7 +94,7 @@ export function Images({ userId, currentUser, owner }: ImagesProps) {
     }
     if (imageModificationMod === "added") {
       (async function () {
-        await fetchPhotoByUser(currentUser, setPhotos);
+        await fetchPhotoByUser(currentUser, setPhotos, abortControllerRef);
       })();
       setImageModificationMod(null);
     }

@@ -11,6 +11,7 @@
   margin-top: calc(-69 * var(--variableUnitsSize));
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: calc(5 * var(--variableUnitsSize));
 }
 .statsContainer:last-child {
   padding-bottom: 3rem;

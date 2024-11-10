@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 
 export const useImage = (
   imageUrl: string | null | undefined,
   defaultUrl: string
 ): { imageSrc: string; isImageLoaded: boolean | null } => {
-  const [imageSrc, setImageSrc] = useState<string>(defaultUrl);
+  const [imageSrc, setImageSrc] = useState<string>("");
   const [isImageLoaded, setIsImageLoaded] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -13,7 +14,7 @@ export const useImage = (
       img.src = imageUrl;
 
       img.onload = () => {
-        setImageSrc(imageUrl || defaultUrl);
+        setImageSrc(imageUrl);
         setIsImageLoaded(true);
       };
       img.onerror = () => {

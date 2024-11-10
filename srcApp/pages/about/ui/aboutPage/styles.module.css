@@ -6,6 +6,7 @@
   margin-top: calc(-67 * var(--variableUnitsSize));
   margin-left: calc(5 * var(--variableUnitsSize));
   margin-right: calc(5 * var(--variableUnitsSize));
+  margin-bottom: calc(5 * var(--variableUnitsSize));
 }
 
 .about__img {
