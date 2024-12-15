@@ -15,7 +15,9 @@ import { toast } from "react-toastify";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 import { useIcon } from "@/srcApp/shared/hooks/useIcon";
 import { useClickOutside } from "@/srcApp/shared/hooks/useClickOutside";
+import { loginUser } from "@/srcApp/features/auth/login/model/login-user";
 import styles from "./styles.module.css";
+
 
 export function AvatarWithDropdown() {
   const { user, setUser, currentUser, setCurrentUser } = useAppContext();
@@ -61,9 +63,16 @@ export function AvatarWithDropdown() {
     (async () => {
       const userOrError: UserFromServer | undefined | ErrorData =
         await fetchUserData();
-
+        
       if (userOrError === undefined) {
+        const testUser = await loginUser(process.env.NEXT_PUBLIC_TEST_USER_EMAIL || "", process.env.NEXT_PUBLIC_TEST_USER_PASSWORD || "");
+        
+        if (isUserFromServer(testUser)) {
+          setUser(testUser);
+          setCurrentUser(testUser);
+        }
         setUser(null);
+        router.push("/");
       }
 
       if (isErrorData(userOrError)) {

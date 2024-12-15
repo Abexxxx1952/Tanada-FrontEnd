@@ -7,7 +7,7 @@ import {
   ImageUploadMod,
 } from "@/srcApp/entities/photo/model/types";
 import styles from "./styles.module.css";
-import { UserFromServer } from "@/srcApp/entities/user/model/types";
+
 
 type ModerationProps = {
   photos: Photo[] | null;
