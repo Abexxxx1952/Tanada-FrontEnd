@@ -63,6 +63,9 @@
 .bgContainer__hg {
   height: calc(50 * var(--variableUnitsSize));
   overflow: hidden;
+  mask-image: url(./../../../../public/images/ink_lv2.gif);
+  mask-size: cover;
+  mask-position: center;
 }
 
 .bgContainer__upperGradient {
@@ -78,12 +81,18 @@
   height: calc(35 * var(--variableUnitsSize));
   overflow: hidden;
   margin-top: calc(-40 * var(--variableUnitsSize));
+  mask-image: url(./../../../../public/images/ink_lv2.gif);
+  mask-size: cover;
+  mask-position: center;
 }
 
 .bgContainer__vg {
   height: calc(42 * var(--variableUnitsSize));
   margin-top: calc(-15 * var(--variableUnitsSize));
   overflow: hidden;
+  mask-image: url(./../../../../public/images/ink_lv2.gif);
+  mask-size: cover;
+  mask-position: center;
 }
 
 .bgContainer__downGradient {

@@ -45,8 +45,6 @@ export function Images({ userId, currentUser, owner }: ImagesProps) {
   const portalRef = useRef<HTMLElement | null>(null);
   const photoRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
-  portalRef.current = document.getElementById("portal");
-
   if (photosSliced !== null) {
     photoRefs.current = photosSliced.map(() => createRef<HTMLDivElement>());
   }
@@ -57,6 +55,10 @@ export function Images({ userId, currentUser, owner }: ImagesProps) {
     addStep,
     photoRefs.current[photoRefs.current.length - 1]
   );
+
+  useEffect(() => {
+    portalRef.current = document.getElementById("portal");
+  }, []);
 
   useEffect(() => {
     (async function () {

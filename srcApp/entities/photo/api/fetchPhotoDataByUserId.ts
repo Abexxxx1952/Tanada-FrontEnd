@@ -3,8 +3,6 @@ import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { Photo } from "@/srcApp/entities/photo/model/types";
 
-let controller: AbortController | null = null;
-
 export async function fetchAllPhotoByUserId(
   userId: string,
   abortControllerRef: React.MutableRefObject<AbortController | null>

@@ -18,8 +18,7 @@ export function AboutPage({ currentUser, photoUrl }: AboutPageProps) {
       <span className={styles.about__img}>
         <Image
           src={photoUrl.imageSrc}
-          width={800}
-          height={1000}
+          fill={true}
           alt="Photo"
           sizes="(max-width: 416px) 60vw, (max-width: 816px) 70vw, (max-width: 1400px) 80vw, (max-width: 1900px) 90vw, 100vw"
         />

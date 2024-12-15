@@ -4,8 +4,6 @@ import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { Photo } from "@/srcApp/entities/photo/model/types";
 import { shuffleArray } from "@/srcApp/shared/model/shuffleArray";
 
-let controller: AbortController | null = null;
-
 export async function fetchAllPhoto(
   abortControllerRef: React.MutableRefObject<AbortController | null>
 ): Promise<Photo[] | undefined | ErrorData> {

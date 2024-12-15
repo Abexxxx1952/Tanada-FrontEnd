@@ -1,17 +1,9 @@
 "use client";
-import dynamic from "next/dynamic";
 import { Social } from "@/srcApp/widgets/social";
-/* import { Images } from "@/srcApp/widgets/images"; */
+import { Images } from "@/srcApp/widgets/images";
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { userDataFromPayload } from "@/srcApp/entities/user/model/userDataFromPayload";
 import styles from "./styles.module.css";
-
-const Images = dynamic(
-  () => import("@/srcApp/widgets/images").then((mod) => mod.Images),
-  {
-    ssr: false,
-  }
-);
 
 type MainPageProps = {
   userId: string | null;
