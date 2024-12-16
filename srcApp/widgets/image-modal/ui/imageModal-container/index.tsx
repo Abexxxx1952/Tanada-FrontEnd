@@ -80,6 +80,16 @@ export function ImageModal({
             style={{ margin: "auto" }}
           />
         )}
+        <div className={styles.author}>
+          <span className={styles.author__avatar}>
+            <Image
+              src={photo?.user.icon || "/icons/header-account.svg"}
+              fill={true}
+              alt="Avatar icon"
+            />
+          </span>
+          <span className={styles.author__name}>{photo?.user.name}</span>
+        </div>
         <Moderation
           photos={photos}
           currentPhotoIdx={currentPhotoIdx}

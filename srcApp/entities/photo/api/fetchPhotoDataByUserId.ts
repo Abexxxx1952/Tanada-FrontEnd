@@ -24,12 +24,13 @@ export async function fetchAllPhotoByUserId(
       order: {
         sortId: "ASC",
       },
+      relations: ['user'],
     };
 
     const queryParam = encodeURIComponent(JSON.stringify(condition));
 
     const response = await fetch(
-      `${process.env.GET_ALL_PHOTOS_BY_USER_ID_PATH}?condition=${queryParam}`,
+      `${process.env.GET_ALL_PHOTOS_BY_CONDITION}?condition=${queryParam}`,
       {
         method: "GET",
         headers: {

@@ -15,7 +15,18 @@ export async function fetchAllPhoto(
   const { signal } = abortControllerRef.current;
 
   try {
-    const response = await fetch(`${process.env.GET_ALL_PHOTOS_PATH}`, {
+
+    const condition = {
+      order: {
+        sortId: "ASC",
+      },
+      relations: ['user'],
+    };
+
+    const queryParam = encodeURIComponent(JSON.stringify(condition));
+
+
+    const response = await fetch(`${process.env.GET_ALL_PHOTOS_BY_CONDITION}?condition=${queryParam}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

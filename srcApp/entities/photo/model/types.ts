@@ -1,11 +1,16 @@
+import { UserFromServer } from "@/srcApp/entities/user/model/types";
+
 export type Photo = {
   id: number;
   link: string;
   sortId: number;
   createdAt: string;
   updatedAt: string;
+  user: UserFromServer;
   stats: PhotoStats;
 };
+
+
 
 export type PhotoStats = {
   id: number;

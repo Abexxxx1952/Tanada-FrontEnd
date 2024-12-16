@@ -40,6 +40,35 @@
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.342);
 }
 
+.author {
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  height: 7%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #fff;
+}
+
+.author__avatar {
+  position: relative;
+  margin-left: 2%;
+  height: 80%;
+  border-radius: 50%;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+.author__name {
+  margin-left: 2%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
 .moderation {
   display: flex;
   align-items: center;

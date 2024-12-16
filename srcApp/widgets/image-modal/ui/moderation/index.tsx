@@ -8,7 +8,6 @@ import {
 } from "@/srcApp/entities/photo/model/types";
 import styles from "./styles.module.css";
 
-
 type ModerationProps = {
   photos: Photo[] | null;
   currentPhotoIdx: number | null;

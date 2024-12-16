@@ -24,6 +24,17 @@
   cursor: pointer;
 }
 
+.author {
+  position: absolute;
+  top: -15%;
+  width: 100%;
+  height: 15%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  transition: 0.2s;
+}
 .moderation {
   position: absolute;
   bottom: -15%;
@@ -95,9 +106,23 @@
   }
 }
 
+.images__itemContainer:hover .author,
+.images__itemContainer:focus-visible .author {
+  top: 0;
+}
+
 .images__itemContainer:hover .moderation,
 .images__itemContainer:focus-visible .moderation {
   bottom: 0;
+}
+
+.author__avatar {
+  position: relative;
+  margin-left: 3%;
+  height: 80%;
+  border-radius: 50%;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
 }
 
 .moderation__viewsIcon {
@@ -112,6 +137,16 @@
   right: 20%;
   width: 15%;
   height: 60%;
+}
+
+.author__name {
+  position: absolute;
+  right: 5%;
+  width: 70%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
 }
 
 .moderation__delete {

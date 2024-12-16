@@ -73,7 +73,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       }
     }
 
-    /*  ----------------- DnD ---------------- */
+    /* ---------------------- DnD ---------------------- */
 
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({
@@ -84,8 +84,8 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
       transform: CSS.Transform.toString(transform),
     };
 
-    /*   ---------------------------------------------------------------------- */
-
+    /* --------------------------------------------------- */
+    console.log("photo", photo);
     return (
       <div
         className={styles.images__itemContainer}
@@ -130,6 +130,16 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
                 style={{ margin: "auto" }}
               />
             )}
+            <div className={styles.author}>
+              <span className={styles.author__avatar}>
+                <Image
+                  src={photo.user.icon || "/icons/header-account.svg"}
+                  fill={true}
+                  alt="Avatar icon"
+                />
+              </span>
+              <span className={styles.author__name}>{photo.user.name}</span>
+            </div>
             <div className={styles.moderation}>
               <span className={styles.moderation__viewsIcon}>
                 <Image src="/icons/eye.svg" fill={true} alt="View icon" />

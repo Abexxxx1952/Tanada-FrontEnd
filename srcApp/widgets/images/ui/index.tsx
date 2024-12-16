@@ -133,7 +133,7 @@ export function Images({ userId, currentUser, owner }: ImagesProps) {
       });
     }
   };
-
+  /*  --------------------------------------- */
   return (
     <>
       <div className={styles.sliderContainer}>
