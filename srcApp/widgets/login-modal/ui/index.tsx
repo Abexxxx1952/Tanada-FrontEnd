@@ -183,8 +183,8 @@ export function LoginModal({ setModalOpen }: LoginModalProps) {
               </span>
               <div className={styles.loginBox__emailInput}>
                 <Input
-                  text="Email"
-                  placeholder="email@gmail.com"
+                  text={`Email (example: ${process.env.NEXT_PUBLIC_TEST_USER_EMAIL})`}
+                  placeholder="Enter your email"
                   type="email"
                   onChange={handleInput}
                   value={email}
@@ -194,8 +194,8 @@ export function LoginModal({ setModalOpen }: LoginModalProps) {
               </div>
               <div className={styles.loginBox__passwordInput}>
                 <Input
-                  text="Password"
-                  placeholder="**********"
+                  text={`Password (example: ${process.env.NEXT_PUBLIC_TEST_USER_PASSWORD})`}
+                  placeholder="Enter your password"
                   type="password"
                   onChange={handleInput}
                   value={password}

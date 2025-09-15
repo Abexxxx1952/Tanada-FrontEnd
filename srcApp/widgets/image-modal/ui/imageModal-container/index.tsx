@@ -12,7 +12,6 @@ import { useKeyboardHandler } from "@/srcApp/shared/hooks/useKeyboardHandler";
 import { useImage } from "@/srcApp/shared/hooks/useImage";
 import { Moderation } from "../moderation";
 import styles from "./styles.module.css";
-import { UserFromServer } from "@/srcApp/entities/user/model/types";
 
 type LoginModalProps = {
   photos: Photo[] | null;

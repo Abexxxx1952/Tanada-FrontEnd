@@ -41,3 +41,7 @@ a {
 *:visited {
   color: inherit;
 }
+
+html {
+  scrollbar-gutter: stable;
+}

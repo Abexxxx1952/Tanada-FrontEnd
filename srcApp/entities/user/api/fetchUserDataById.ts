@@ -2,7 +2,6 @@
 import { UserFromServer } from "@/srcApp/entities/user/model/types";
 import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
-import { revalidatePath } from "next/cache";
 
 let controller: AbortController | null = null;
 export async function fetchUserDataById(

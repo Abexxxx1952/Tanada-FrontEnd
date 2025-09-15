@@ -164,8 +164,6 @@ export async function swapSortId(
           abortControllerRef2
         );
       }
-
-      console.log(error);
     } finally {
       await fetch(`/api/revalidatePhotoByUserId/${userId}`, {
         method: "GET",

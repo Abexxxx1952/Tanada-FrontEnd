@@ -85,7 +85,7 @@ const PhotoBox = forwardRef<HTMLDivElement, PhotoBoxProps>(
     };
 
     /* --------------------------------------------------- */
-    console.log("photo", photo);
+
     return (
       <div
         className={styles.images__itemContainer}

@@ -19,7 +19,7 @@ import { loginUser } from "@/srcApp/features/auth/login/model/login-user";
 import styles from "./styles.module.css";
 
 export function AvatarWithDropdown() {
-  const { user, setUser, currentUser, setCurrentUser } = useAppContext();
+  const { user, setUser, setCurrentUser } = useAppContext();
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
 
@@ -50,6 +50,7 @@ export function AvatarWithDropdown() {
     try {
       await logoutUser();
       setUser(null);
+      setCurrentUser(null);
       setDropdownOpen(false);
     } catch (error) {
       console.error("Failed to log out:", error);
@@ -63,7 +64,7 @@ export function AvatarWithDropdown() {
       const userOrError: UserFromServer | undefined | ErrorData =
         await fetchUserData();
 
-      if (userOrError === undefined) {
+      /*       if (userOrError === undefined) {
         const testUser = await loginUser(
           process.env.NEXT_PUBLIC_TEST_USER_EMAIL || "",
           process.env.NEXT_PUBLIC_TEST_USER_PASSWORD || ""
@@ -74,7 +75,7 @@ export function AvatarWithDropdown() {
           return router.push("/");
         }
         setUser(null);
-      }
+      } */
 
       if (isErrorData(userOrError)) {
         toast.error(

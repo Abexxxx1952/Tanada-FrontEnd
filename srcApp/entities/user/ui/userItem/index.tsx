@@ -9,6 +9,8 @@ type UserItemProps = {
 };
 
 export function UserItem({ user, handleUserClick }: UserItemProps) {
+  console.log("user", user);
+
   return (
     <li
       className={styles.userItem}

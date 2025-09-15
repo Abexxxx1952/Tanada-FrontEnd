@@ -3,7 +3,7 @@ import { ErrorData } from "@/srcApp/shared/model/types";
 import { isErrorData } from "@/srcApp/shared/model/isErrorData";
 import { fetchUserDataById } from "@/srcApp/entities/user/api/fetchUserDataById";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { isUserFromServer } from "@/srcApp/entities/user/model/isUserFromServer";
 import { useAppContext } from "@/srcApp/shared/hooks/useAppContext";
 
